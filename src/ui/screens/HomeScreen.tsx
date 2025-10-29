@@ -7,12 +7,17 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  Alert,
+  Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { useArticleStore } from '../../store/articleStore';
 import { Article } from '../../domain/Article';
+import { ArticleContextMenu } from '../components/ArticleContextMenu';
+import { RenameModal } from '../components/RenameModal';
+import { ArticleRepository } from '../../data/repositories/ArticleRepository';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -21,10 +26,29 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const { articles, loading, fetchArticles } = useArticleStore();
+  const { articles, loading, fetchArticles, updateArticle, deleteArticle } =
+    useArticleStore();
   const [selectedTab, setSelectedTab] = useState<
     'all' | 'favorites' | 'archived'
   >('all');
+  const [contextMenu, setContextMenu] = useState<{
+    visible: boolean;
+    article: Article | null;
+    position: { x: number; y: number };
+  }>({
+    visible: false,
+    article: null,
+    position: { x: 0, y: 0 },
+  });
+  const [renameModal, setRenameModal] = useState<{
+    visible: boolean;
+    article: Article | null;
+  }>({
+    visible: false,
+    article: null,
+  });
+
+  const articleRepo = new ArticleRepository();
 
   useEffect(() => {
     loadArticles();
@@ -43,10 +67,99 @@ const HomeScreen: React.FC = () => {
     fetchArticles(filters);
   };
 
+  const handleLongPress = (article: Article, event: any) => {
+    const { pageX, pageY } = event.nativeEvent;
+    const screenWidth = Dimensions.get('window').width;
+
+    // Adjust position to keep menu on screen
+    const menuWidth = 150;
+    const adjustedX =
+      pageX + menuWidth > screenWidth ? pageX - menuWidth : pageX;
+
+    setContextMenu({
+      visible: true,
+      article,
+      position: { x: adjustedX, y: pageY },
+    });
+  };
+
+  const closeContextMenu = () => {
+    setContextMenu({
+      visible: false,
+      article: null,
+      position: { x: 0, y: 0 },
+    });
+  };
+
+  const handleRename = () => {
+    if (contextMenu.article) {
+      setRenameModal({
+        visible: true,
+        article: contextMenu.article,
+      });
+    }
+    closeContextMenu();
+  };
+
+  const handleArchive = async () => {
+    if (contextMenu.article) {
+      try {
+        await articleRepo.toggleArchive(contextMenu.article.id);
+        updateArticle(contextMenu.article.id, {
+          archived: !contextMenu.article.archived,
+        });
+        loadArticles();
+      } catch (error) {
+        Alert.alert('Error', 'Failed to archive article');
+      }
+    }
+    closeContextMenu();
+  };
+
+  const handleDelete = () => {
+    if (contextMenu.article) {
+      Alert.alert(
+        'Delete Article',
+        'Are you sure you want to delete this article? This action cannot be undone.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Delete',
+            style: 'destructive',
+            onPress: async () => {
+              try {
+                await deleteArticle(contextMenu.article!.id);
+                loadArticles();
+              } catch (error) {
+                Alert.alert('Error', 'Failed to delete article');
+              }
+            },
+          },
+        ],
+      );
+    }
+    closeContextMenu();
+  };
+
+  const handleSaveRename = async (newTitle: string) => {
+    if (renameModal.article) {
+      try {
+        await articleRepo.update(renameModal.article.id, { title: newTitle });
+        updateArticle(renameModal.article.id, { title: newTitle });
+        loadArticles();
+      } catch (error) {
+        Alert.alert('Error', 'Failed to rename article');
+      }
+    }
+    setRenameModal({ visible: false, article: null });
+  };
+
   const renderArticleCard = ({ item }: { item: Article }) => (
     <TouchableOpacity
       style={styles.card}
       onPress={() => navigation.navigate('Reader', { articleId: item.id })}
+      onLongPress={event => handleLongPress(item, event)}
+      delayLongPress={500}
     >
       <Text style={styles.domain}>{item.domain}</Text>
       <Text style={styles.title} numberOfLines={2}>
@@ -152,6 +265,24 @@ const HomeScreen: React.FC = () => {
       >
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
+
+      {/* Context Menu */}
+      <ArticleContextMenu
+        visible={contextMenu.visible}
+        onClose={closeContextMenu}
+        onRename={handleRename}
+        onArchive={handleArchive}
+        onDelete={handleDelete}
+        position={contextMenu.position}
+      />
+
+      {/* Rename Modal */}
+      <RenameModal
+        visible={renameModal.visible}
+        currentTitle={renameModal.article?.title || ''}
+        onClose={() => setRenameModal({ visible: false, article: null })}
+        onSave={handleSaveRename}
+      />
     </SafeAreaView>
   );
 };

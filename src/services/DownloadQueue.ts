@@ -132,11 +132,8 @@ export class DownloadQueue {
         FileSystem.getExtensionFromUrl(asset.srcUrl) ||
         'bin';
 
-      // Generate filename
-      const filename = FileSystem.generateAssetFilename(
-        asset.srcUrl,
-        extension,
-      );
+      // Use the hash from the asset record as filename
+      const filename = `${asset.hash}.${extension}`;
       const localPath = `${FileSystem.getArticleAssetsDirectory(
         asset.articleId,
       )}/${filename}`;
@@ -144,6 +141,7 @@ export class DownloadQueue {
       // Save file
       const base64Data = await response.base64();
       await RNFetchBlob.fs.writeFile(localPath, base64Data, 'base64');
+      console.log(`Saved asset to: ${localPath}`);
 
       // Update asset in database
       await this.assetRepo.updateStatus(asset.id, 'done');

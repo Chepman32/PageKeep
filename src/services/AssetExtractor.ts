@@ -1,3 +1,6 @@
+import { Asset } from '../domain/Article';
+import { SimpleHTMLParser } from '../utils/htmlParser';
+
 export interface ExtractedAsset {
   type: 'image' | 'css' | 'font' | 'other';
   srcUrl: string;
@@ -8,62 +11,52 @@ export class AssetExtractor {
     const assets: ExtractedAsset[] = [];
     const seen = new Set<string>();
 
-    // Extract images from img tags
-    const imgRegex = /<img[^>]+src=["']([^"']+)["']/gi;
-    let match;
-    while ((match = imgRegex.exec(html)) !== null) {
-      const url = this.makeAbsoluteUrl(match[1], baseUrl);
-      if (url && !seen.has(url)) {
-        assets.push({ type: 'image', srcUrl: url });
-        seen.add(url);
+    // Extract images
+    const images = SimpleHTMLParser.extractImages(html);
+    images.forEach(src => {
+      const absoluteUrl = this.makeAbsoluteUrl(src, baseUrl);
+      if (absoluteUrl && !seen.has(absoluteUrl)) {
+        assets.push({ type: 'image', srcUrl: absoluteUrl });
+        seen.add(absoluteUrl);
       }
-    }
+    });
 
-    // Extract images from srcset
-    const srcsetRegex = /<img[^>]+srcset=["']([^"']+)["']/gi;
-    while ((match = srcsetRegex.exec(html)) !== null) {
-      const urls = this.parseSrcset(match[1]);
-      urls.forEach(url => {
-        const absoluteUrl = this.makeAbsoluteUrl(url, baseUrl);
-        if (absoluteUrl && !seen.has(absoluteUrl)) {
-          assets.push({ type: 'image', srcUrl: absoluteUrl });
-          seen.add(absoluteUrl);
-        }
-      });
-    }
-
-    // Extract CSS from link tags
-    const cssRegex =
-      /<link[^>]+rel=["']stylesheet["'][^>]+href=["']([^"']+)["']/gi;
-    while ((match = cssRegex.exec(html)) !== null) {
-      const url = this.makeAbsoluteUrl(match[1], baseUrl);
-      if (url && !seen.has(url)) {
-        assets.push({ type: 'css', srcUrl: url });
-        seen.add(url);
+    // Extract CSS links
+    const cssLinks = SimpleHTMLParser.extractLinks(html, 'stylesheet');
+    cssLinks.forEach(href => {
+      const absoluteUrl = this.makeAbsoluteUrl(href, baseUrl);
+      if (absoluteUrl && !seen.has(absoluteUrl)) {
+        assets.push({ type: 'css', srcUrl: absoluteUrl });
+        seen.add(absoluteUrl);
       }
-    }
+    });
 
     // Extract background images from inline styles
-    const bgRegex = /background(?:-image)?:\s*url\(['"]?([^'"()]+)['"]?\)/gi;
-    while ((match = bgRegex.exec(html)) !== null) {
-      const url = this.makeAbsoluteUrl(match[1], baseUrl);
-      if (url && !seen.has(url)) {
-        assets.push({ type: 'image', srcUrl: url });
-        seen.add(url);
+    const bgImages = this.extractBackgroundImages(html);
+    bgImages.forEach(url => {
+      const absoluteUrl = this.makeAbsoluteUrl(url, baseUrl);
+      if (absoluteUrl && !seen.has(absoluteUrl)) {
+        assets.push({ type: 'image', srcUrl: absoluteUrl });
+        seen.add(absoluteUrl);
       }
-    }
-
-    // Extract fonts from @font-face
-    const fontRegex = /@font-face[^}]*url\(['"]?([^'"()]+)['"]?\)/gi;
-    while ((match = fontRegex.exec(html)) !== null) {
-      const url = this.makeAbsoluteUrl(match[1], baseUrl);
-      if (url && !seen.has(url)) {
-        assets.push({ type: 'font', srcUrl: url });
-        seen.add(url);
-      }
-    }
+    });
 
     return assets;
+  }
+
+  private extractBackgroundImages(html: string): string[] {
+    const urls: string[] = [];
+    const styleRegex = /style=["'][^"']*background[^"']*:([^"']*)/gi;
+    let match;
+
+    while ((match = styleRegex.exec(html)) !== null) {
+      const urlMatch = match[1].match(/url\(['"]?([^'"()]+)['"]?\)/);
+      if (urlMatch) {
+        urls.push(urlMatch[1]);
+      }
+    }
+
+    return urls;
   }
 
   private makeAbsoluteUrl(url: string, baseUrl: string): string | null {
@@ -90,13 +83,6 @@ export class AssetExtractor {
     } catch {
       return null;
     }
-  }
-
-  private parseSrcset(srcset: string): string[] {
-    return srcset
-      .split(',')
-      .map(entry => entry.trim().split(/\s+/)[0])
-      .filter(Boolean);
   }
 
   filterAssetsByType(

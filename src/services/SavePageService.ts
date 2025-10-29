@@ -36,6 +36,10 @@ export class SavePageService {
 
       // 3. Extract assets
       let extractedAssets = this.assetExtractor.extract(readable.content, url);
+      console.log(
+        `Extracted ${extractedAssets.length} assets:`,
+        extractedAssets.map(a => a.srcUrl),
+      );
 
       // Filter assets based on options
       if (options.downloadAssets !== false) {
@@ -50,6 +54,8 @@ export class SavePageService {
       } else {
         extractedAssets = [];
       }
+
+      console.log(`After filtering: ${extractedAssets.length} assets`);
 
       // 4. Create article record
       const domain = this.readabilityService.extractDomain(url);
@@ -79,21 +85,37 @@ export class SavePageService {
       // 6. Create asset records and queue for download
       const assets: Asset[] = [];
       for (const extracted of extractedAssets) {
+        const hash = CryptoJS.SHA1(extracted.srcUrl).toString();
+        const extension =
+          FileSystem.getExtensionFromUrl(extracted.srcUrl) || 'bin';
+        const filename = `${hash}.${extension}`;
+        const localPath = `${FileSystem.getArticleAssetsDirectory(
+          articleId,
+        )}/${filename}`;
+
         const assetId = await this.assetRepo.create({
           articleId,
           type: extracted.type,
           srcUrl: extracted.srcUrl,
-          localPath: '',
+          localPath,
           byteSize: 0,
           mime: '',
           status: 'queued',
-          hash: CryptoJS.SHA1(extracted.srcUrl).toString(),
+          hash,
         });
 
-        const asset = await this.assetRepo.findByArticleId(articleId);
-        if (asset) {
-          assets.push(...asset);
-        }
+        // Create asset object for HTML rewriting
+        assets.push({
+          id: assetId,
+          articleId,
+          type: extracted.type,
+          srcUrl: extracted.srcUrl,
+          localPath,
+          byteSize: 0,
+          mime: '',
+          status: 'queued',
+          hash,
+        });
       }
 
       // 7. Rewrite HTML with local paths

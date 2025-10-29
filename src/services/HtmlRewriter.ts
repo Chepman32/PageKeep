@@ -1,6 +1,5 @@
 import { Asset } from '../domain/Article';
 import { FileSystem } from '../utils/fileSystem';
-import { SimpleHTMLParser } from '../utils/htmlParser';
 
 export class HtmlRewriter {
   async rewrite(
@@ -11,42 +10,65 @@ export class HtmlRewriter {
     // Create asset URL map
     const assetMap = new Map<string, string>();
     assets.forEach(asset => {
-      assetMap.set(
-        asset.srcUrl,
-        `./assets/${FileSystem.generateAssetFilename(asset.srcUrl)}`,
+      // Use the hash-based filename
+      const extension = FileSystem.getExtensionFromUrl(asset.srcUrl) || 'bin';
+      assetMap.set(asset.srcUrl, `./assets/${asset.hash}.${extension}`);
+    });
+
+    // Start with the original HTML
+    let processedHtml = html;
+
+    // Remove only the most problematic elements
+    processedHtml = processedHtml
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<noscript[^>]*>[\s\S]*?<\/noscript>/gi, '');
+
+    // Replace asset URLs
+    assetMap.forEach((newUrl, oldUrl) => {
+      // Simple string replacement for now
+      processedHtml = processedHtml.replace(
+        new RegExp(oldUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+        newUrl,
       );
     });
 
-    // Clean HTML
-    let cleanedHtml = SimpleHTMLParser.removeUnwantedElements(html);
-
-    // Replace asset URLs
-    cleanedHtml = SimpleHTMLParser.replaceUrls(cleanedHtml, assetMap);
-
-    // Add base reader CSS and theme placeholder
+    // Add our CSS and JavaScript
     const readerCSS = this.getBaseReaderCSS();
     const bridgeScript = this.getBridgeScript();
 
-    // Insert CSS and script
-    if (cleanedHtml.includes('</head>')) {
-      cleanedHtml = cleanedHtml.replace(
-        '</head>',
-        `<style id="pn-base">${readerCSS}</style><style id="pn-theme"></style></head>`,
-      );
+    // Ensure we have a proper HTML structure
+    if (!processedHtml.includes('<!DOCTYPE html>')) {
+      processedHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style id="pn-base">${readerCSS}</style>
+  <style id="pn-theme"></style>
+</head>
+<body>
+${processedHtml}
+<script>${bridgeScript}</script>
+</body>
+</html>`;
     } else {
-      cleanedHtml = `<head><style id="pn-base">${readerCSS}</style><style id="pn-theme"></style></head>${cleanedHtml}`;
+      // Try to inject into existing structure
+      if (processedHtml.includes('</head>')) {
+        processedHtml = processedHtml.replace(
+          '</head>',
+          `<style id="pn-base">${readerCSS}</style><style id="pn-theme"></style></head>`,
+        );
+      }
+
+      if (processedHtml.includes('</body>')) {
+        processedHtml = processedHtml.replace(
+          '</body>',
+          `<script>${bridgeScript}</script></body>`,
+        );
+      }
     }
 
-    if (cleanedHtml.includes('</body>')) {
-      cleanedHtml = cleanedHtml.replace(
-        '</body>',
-        `<script>${bridgeScript}</script></body>`,
-      );
-    } else {
-      cleanedHtml = `${cleanedHtml}<script>${bridgeScript}</script>`;
-    }
-
-    return cleanedHtml;
+    return processedHtml;
   }
 
   injectTheme(html: string, themeCSS: string): string {
@@ -78,6 +100,8 @@ export class HtmlRewriter {
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        max-width: 100%;
+        overflow-x: hidden;
       }
       
       img {
@@ -165,95 +189,31 @@ export class HtmlRewriter {
   private getBridgeScript(): string {
     return `
       (function() {
-        let scrollTimeout;
-        
         window.PageNestBridge = {
           reportScroll: function() {
-            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-              type: 'scroll',
-              progress: Math.max(0, Math.min(1, scrollPercent)),
-              scrollY: window.scrollY
-            }));
-          },
-          
-          reportSelection: function() {
-            const selection = window.getSelection();
-            if (selection && selection.rangeCount > 0) {
-              const range = selection.getRangeAt(0);
+            try {
+              const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
               window.ReactNativeWebView.postMessage(JSON.stringify({
-                type: 'selection',
-                text: selection.toString(),
-                range: {
-                  startContainer: getNodePath(range.startContainer),
-                  startOffset: range.startOffset,
-                  endContainer: getNodePath(range.endContainer),
-                  endOffset: range.endOffset
-                }
+                type: 'scroll',
+                progress: Math.max(0, Math.min(1, scrollPercent || 0)),
+                scrollY: window.scrollY
               }));
+            } catch (e) {
+              console.error('Error reporting scroll:', e);
             }
           },
           
           setTheme: function(css) {
-            const style = document.getElementById('pn-theme');
-            if (style) {
-              style.textContent = css;
-            }
-          },
-          
-          scrollToAnnotation: function(rangeJson) {
             try {
-              const range = restoreRange(rangeJson);
-              if (range && range.startContainer && range.startContainer.parentElement) {
-                range.startContainer.parentElement.scrollIntoView({ 
-                  behavior: 'smooth',
-                  block: 'center'
-                });
+              const style = document.getElementById('pn-theme');
+              if (style) {
+                style.textContent = css;
               }
             } catch (e) {
-              console.error('Error scrolling to annotation:', e);
+              console.error('Error setting theme:', e);
             }
           }
         };
-        
-        function getNodePath(node) {
-          const path = [];
-          while (node && node !== document.body) {
-            const parent = node.parentNode;
-            if (parent) {
-              const index = Array.from(parent.childNodes).indexOf(node);
-              path.unshift(index);
-            }
-            node = parent;
-          }
-          return path.join(',');
-        }
-        
-        function restoreRange(rangeJson) {
-          try {
-            const range = document.createRange();
-            const startPath = rangeJson.startContainer.split(',').map(Number);
-            const endPath = rangeJson.endContainer.split(',').map(Number);
-            
-            let startNode = document.body;
-            for (const index of startPath) {
-              startNode = startNode.childNodes[index];
-            }
-            
-            let endNode = document.body;
-            for (const index of endPath) {
-              endNode = endNode.childNodes[index];
-            }
-            
-            range.setStart(startNode, rangeJson.startOffset);
-            range.setEnd(endNode, rangeJson.endOffset);
-            
-            return range;
-          } catch (e) {
-            console.error('Error restoring range:', e);
-            return null;
-          }
-        }
         
         function throttle(func, wait) {
           let timeout;
@@ -267,11 +227,6 @@ export class HtmlRewriter {
         
         // Auto-report scroll
         window.addEventListener('scroll', throttle(window.PageNestBridge.reportScroll, 100));
-        
-        // Report selection on mouseup
-        document.addEventListener('mouseup', function() {
-          setTimeout(window.PageNestBridge.reportSelection, 10);
-        });
         
         // Report initial scroll position
         setTimeout(window.PageNestBridge.reportScroll, 100);

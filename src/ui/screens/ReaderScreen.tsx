@@ -56,7 +56,25 @@ const ReaderScreen: React.FC = () => {
         readerDefaults.margins,
       );
 
-      const styledHtml = html.replace(
+      // Ensure proper HTML structure and encoding
+      let styledHtml = html;
+      
+      // Add proper HTML structure if missing
+      if (!styledHtml.includes('<!DOCTYPE html>')) {
+        styledHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+${styledHtml}
+</body>
+</html>`;
+      }
+      
+      // Inject theme
+      styledHtml = styledHtml.replace(
         '<style id="pn-theme"></style>',
         `<style id="pn-theme">${themeCSS}</style>`,
       );
@@ -111,12 +129,15 @@ const ReaderScreen: React.FC = () => {
       {/* WebView */}
       <WebView
         source={{
-          html: htmlContent,
-          baseUrl: FileSystem.getArticleDirectory(articleId),
+          uri: `file://${FileSystem.getArticleHtmlPath(articleId)}`,
         }}
         style={styles.webview}
         onMessage={handleMessage}
-        allowingReadAccessToURL={FileSystem.getArticleDirectory(articleId)}
+        allowingReadAccessToURL={`file://${FileSystem.getArticleDirectory(
+          articleId,
+        )}`}
+        allowFileAccess={true}
+        allowUniversalAccessFromFileURLs={true}
         originWhitelist={['*']}
         javaScriptEnabled={true}
         domStorageEnabled={true}
