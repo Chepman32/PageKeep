@@ -1,0 +1,49 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "done": "Done",
+    "back": "Back",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "No articles yet",
+    "emptyHint": "Tap the + button to save your first article",
+    "tabs": {
+      "all": "All",
+      "favorites": "Favorites",
+      "archived": "Archived"
+    }
+  },
+  "reader": {
+    "fontSize": "Font Size",
+    "theme": "Theme",
+    "lineHeight": "Line Height",
+    "margins": "Margins"
+  },
+  "add": {
+    "title": "Add Article",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Save Article",
+    "hint": "Tip: You can also use the Share Extension from Safari to save articles directly."
+  },
+  "search": {
+    "placeholder": "Search articles...",
+    "recentSearches": "Recent Searches",
+    "noResults": "No results found"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "readerDefaults": "Reader Defaults",
+    "downloadSettings": "Download Settings",
+    "storage": "Storage",
+    "about": "About"
+  }
+}

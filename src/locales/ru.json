@@ -1,0 +1,49 @@
+{
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "done": "Готово",
+    "back": "Назад",
+    "search": "Поиск",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успешно"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Пока нет статей",
+    "emptyHint": "Нажмите кнопку +, чтобы сохранить первую статью",
+    "tabs": {
+      "all": "Все",
+      "favorites": "Избранное",
+      "archived": "Архив"
+    }
+  },
+  "reader": {
+    "fontSize": "Размер шрифта",
+    "theme": "Тема",
+    "lineHeight": "Межстрочный интервал",
+    "margins": "Поля"
+  },
+  "add": {
+    "title": "Добавить статью",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Сохранить статью",
+    "hint": "Совет: Вы также можете использовать Share Extension из Safari для сохранения статей напрямую."
+  },
+  "search": {
+    "placeholder": "Поиск статей...",
+    "recentSearches": "Недавние поиски",
+    "noResults": "Ничего не найдено"
+  },
+  "settings": {
+    "title": "Настройки",
+    "account": "Аккаунт",
+    "readerDefaults": "Настройки чтения",
+    "downloadSettings": "Настройки загрузки",
+    "storage": "Хранилище",
+    "about": "О приложении"
+  }
+}
