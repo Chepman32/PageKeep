@@ -311,7 +311,22 @@ export class SavePageService {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+
+        // Add helpful context for common errors
+        if (response.status === 401) {
+          errorMessage += ' - This website requires authentication or is blocking automated access.';
+        } else if (response.status === 403) {
+          errorMessage += ' - Access forbidden. The website may be blocking our request.';
+        } else if (response.status === 404) {
+          errorMessage += ' - Page not found. The URL may be incorrect or the article was removed.';
+        } else if (response.status === 429) {
+          errorMessage += ' - Too many requests. Try again later.';
+        } else if (response.status >= 500) {
+          errorMessage += ' - Server error. The website may be down.';
+        }
+
+        throw new Error(errorMessage);
       }
 
       return await response.text();
