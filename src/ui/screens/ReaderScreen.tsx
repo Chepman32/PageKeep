@@ -51,8 +51,8 @@ const ReaderScreen: React.FC = () => {
 
       // Check for images in HTML
       const imgCount = (html.match(/<img/g) || []).length;
-      const localImgCount = (html.match(/\.\/assets\/image_/g) || []).length;
-      console.log(`🖼️  Found ${imgCount} <img> tags, ${localImgCount} with local paths`);
+      const localImgCount = (html.match(/file:\/\/.*\/assets\/image_/g) || []).length;
+      console.log(`🖼️  Found ${imgCount} <img> tags, ${localImgCount} with file:// paths`);
 
       // Inject theme
       const theme =

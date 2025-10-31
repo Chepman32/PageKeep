@@ -68,15 +68,25 @@ export class SavePageService {
         imageMap,
       );
 
-      // Debug: Log first image mapping
+      // Debug: Check if replacements worked
       const firstMapping = Array.from(imageMap.entries())[0];
       if (firstMapping) {
-        console.log(`Sample mapping: ${firstMapping[0]} -> ${firstMapping[1]}`);
+        const [remoteUrl, localPath] = firstMapping;
+        console.log(`Sample mapping:`);
+        console.log(`  From: ${remoteUrl.substring(0, 80)}...`);
+        console.log(`  To: ${localPath.substring(localPath.length - 60)}`);
+
         // Check if replacement happened
-        if (rewrittenHtml.includes(firstMapping[1])) {
-          console.log('✅ Image path replaced in HTML');
+        if (rewrittenHtml.includes(localPath)) {
+          console.log('  ✅ Local path found in HTML');
         } else {
-          console.log('❌ Image path NOT found in HTML');
+          console.log('  ❌ Local path NOT in HTML');
+
+          // Check what's actually in the HTML
+          const imgTag = rewrittenHtml.match(new RegExp(`<img[^>]*src=["'][^"']{0,100}${remoteUrl.substring(remoteUrl.length - 20)}[^"']*["'][^>]*>`, 'i'));
+          if (imgTag) {
+            console.log(`  Found img tag: ${imgTag[0].substring(0, 150)}...`);
+          }
         }
       }
 
@@ -248,9 +258,11 @@ export class SavePageService {
         const base64Data = await response.base64();
         await RNFetchBlob.fs.writeFile(localPath, base64Data, 'base64');
 
-        // Map old URL to new absolute file:// path for iOS WebView compatibility
-        const absoluteFilePath = `file://${assetsDir}/${filename}`;
-        imageMap.set(imageUrl, absoluteFilePath);
+        // Use data URLs for maximum compatibility with WebView
+        // Data URLs embed the image directly in HTML, avoiding file:// security issues
+        const mimeType = contentType.split(';')[0] || `image/${extension}`;
+        const dataUrl = `data:${mimeType};base64,${base64Data}`;
+        imageMap.set(imageUrl, dataUrl);
 
         console.log(`Saved image: ${filename}`);
         imageIndex++;
