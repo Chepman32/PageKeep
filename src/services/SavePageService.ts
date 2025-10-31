@@ -70,11 +70,12 @@ export class SavePageService {
         },
       });
 
-      // 8. Save basic metadata
+      // 8. Save basic metadata with processing flag
       await FileSystem.writeArticleMeta(articleId, {
         title: readable.title,
         url,
         savedAt: Date.now(),
+        processingComplete: false, // Will be set to true after background processing
       });
 
       // 9. Update FTS5 index
@@ -115,8 +116,15 @@ export class SavePageService {
       console.log('Background processing started for:', articleId);
 
       // 1. Extract all image URLs from HTML
+      // Debug: Check what HTML Readability extracted
+      const htmlSnippet = readable.content.substring(0, 1000);
+      console.log('HTML snippet from Readability:', htmlSnippet);
+
       const imageUrls = this.extractImageUrls(readable.content, url);
       console.log(`Found ${imageUrls.length} images to download`);
+      if (imageUrls.length > 0) {
+        console.log('First few images:', imageUrls.slice(0, 5));
+      }
 
       // 2. Download images and get mapping of old URL to new URL
       const imageMap = await this.downloadImages(articleId, imageUrls);
@@ -124,22 +132,55 @@ export class SavePageService {
       // 3. Rewrite HTML with local image paths (only if we downloaded images)
       if (imageMap.size > 0) {
         console.log(`Rewriting HTML with ${imageMap.size} image mappings`);
+
+        // Log the main article image mapping
+        const soraImage = Array.from(imageMap.entries()).find(([url]) =>
+          url.includes('sora.jpg')
+        );
+        if (soraImage) {
+          console.log(`Main image (sora.jpg): ${soraImage[0]}`);
+          console.log(`Embedded as data URL of length: ${soraImage[1].length}`);
+        }
+
         const rewrittenHtml = this.htmlRewriter.rewrite(
           readable.content,
           url,
           imageMap,
         );
 
+        // Verify the replacement worked
+        if (soraImage && rewrittenHtml.includes(soraImage[1].substring(0, 50))) {
+          console.log('✅ Main image successfully embedded in HTML');
+        } else if (soraImage) {
+          console.log('❌ Main image NOT found in rewritten HTML');
+        }
+
         // 4. Update HTML file with images
         await FileSystem.writeArticleHtml(articleId, rewrittenHtml);
         console.log('HTML updated with downloaded images');
       }
 
+      // 5. Update metadata to indicate processing is complete
+      const meta = await FileSystem.readArticleMeta(articleId);
+      await FileSystem.writeArticleMeta(articleId, {
+        ...meta,
+        processingComplete: true,
+      });
+
       console.log('✅ Background processing completed for:', articleId);
     } catch (error) {
       console.error('❌ Error in background processing:', error);
-      // Don't delete the article - it exists with basic content
-      // User can still read it, just without locally cached images
+      // Mark as complete even if image download failed
+      // User can still read the article with the basic HTML
+      try {
+        const meta = await FileSystem.readArticleMeta(articleId);
+        await FileSystem.writeArticleMeta(articleId, {
+          ...meta,
+          processingComplete: true,
+        });
+      } catch (metaError) {
+        console.error('Failed to update metadata after error:', metaError);
+      }
     }
   }
 
@@ -233,11 +274,12 @@ export class SavePageService {
         },
       });
 
-      // 11. Save metadata
+      // 11. Save metadata (processing is already complete for synchronous save)
       await FileSystem.writeArticleMeta(articleId, {
         title: readable.title,
         url,
         savedAt: Date.now(),
+        processingComplete: true,
       });
 
       // 12. Update FTS5 index
@@ -310,6 +352,43 @@ export class SavePageService {
     const dataSrcRegex = /<img[^>]+data-src=["']([^"']+)["']/gi;
     while ((match = dataSrcRegex.exec(html)) !== null) {
       const src = match[1];
+      const absoluteUrl = this.makeAbsoluteUrl(src, baseUrl);
+      if (absoluteUrl) {
+        imageUrls.add(absoluteUrl);
+      }
+    }
+
+    // Extract from <picture><source> elements
+    const sourceRegex = /<source[^>]+srcset=["']([^"']+)["']/gi;
+    while ((match = sourceRegex.exec(html)) !== null) {
+      const srcset = match[1];
+      // srcset format: "url1 1x, url2 2x" or "url1 100w, url2 200w"
+      const urls = srcset.split(',').map(part => part.trim().split(/\s+/)[0]);
+      urls.forEach(url => {
+        const absoluteUrl = this.makeAbsoluteUrl(url, baseUrl);
+        if (absoluteUrl) {
+          imageUrls.add(absoluteUrl);
+        }
+      });
+    }
+
+    // Extract from data-srcset (lazy loading with srcset)
+    const dataSrcsetRegex = /<img[^>]+data-srcset=["']([^"']+)["']/gi;
+    while ((match = dataSrcsetRegex.exec(html)) !== null) {
+      const srcset = match[1];
+      const urls = srcset.split(',').map(part => part.trim().split(/\s+/)[0]);
+      urls.forEach(url => {
+        const absoluteUrl = this.makeAbsoluteUrl(url, baseUrl);
+        if (absoluteUrl) {
+          imageUrls.add(absoluteUrl);
+        }
+      });
+    }
+
+    // Extract from CSS background-image in style attributes
+    const bgImageRegex = /background-image:\s*url\(["']?([^"')]+)["']?\)/gi;
+    while ((match = bgImageRegex.exec(html)) !== null) {
+      const src = decodeHtmlEntities(match[1]);
       const absoluteUrl = this.makeAbsoluteUrl(src, baseUrl);
       if (absoluteUrl) {
         imageUrls.add(absoluteUrl);

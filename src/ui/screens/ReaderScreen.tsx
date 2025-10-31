@@ -30,6 +30,37 @@ const ReaderScreen: React.FC = () => {
 
   const articleRepo = new ArticleRepository();
 
+  /**
+   * Waits for background processing to complete before showing the page
+   * This prevents showing unstyled pages before images are downloaded
+   */
+  const waitForProcessingComplete = async (
+    articleId: string,
+  ): Promise<void> => {
+    const maxWaitTime = 30000; // Maximum 30 seconds
+    const pollInterval = 500; // Check every 500ms
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < maxWaitTime) {
+      try {
+        const meta = await FileSystem.readArticleMeta(articleId);
+        if (meta.processingComplete === true) {
+          console.log('✅ Processing complete, showing page');
+          return;
+        }
+        console.log('⏳ Waiting for background processing...');
+        await new Promise<void>(resolve => setTimeout(() => resolve(), pollInterval));
+      } catch (error) {
+        // If meta file doesn't exist or can't be read, assume processing is complete
+        console.log('⚠️ Could not read metadata, proceeding anyway');
+        return;
+      }
+    }
+
+    // Timeout reached, show page anyway
+    console.log('⏱️ Processing timeout reached, showing page');
+  };
+
   useEffect(() => {
     loadArticle();
   }, [articleId]);
@@ -43,6 +74,9 @@ const ReaderScreen: React.FC = () => {
       }
 
       setTitle(article.title);
+
+      // Wait for background processing to complete
+      await waitForProcessingComplete(articleId);
 
       // Read HTML from disk
       let html = await FileSystem.readArticleHtml(articleId);
