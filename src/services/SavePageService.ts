@@ -56,7 +56,9 @@ export class SavePageService {
 
       // 6. Save a basic version of the HTML without images (for instant viewing)
       const htmlPath = FileSystem.getArticleHtmlPath(articleId);
-      await FileSystem.writeArticleHtml(articleId, readable.content);
+      // Use HtmlRewriter to create properly structured HTML (without images for now)
+      const basicHtml = this.htmlRewriter.rewrite(readable.content, url, new Map());
+      await FileSystem.writeArticleHtml(articleId, basicHtml);
       console.log(`Initial HTML saved to: ${htmlPath}`);
 
       // 7. Save article content record

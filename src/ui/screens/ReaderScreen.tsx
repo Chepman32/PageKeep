@@ -24,41 +24,64 @@ const ReaderScreen: React.FC = () => {
   const { articleId } = route.params;
   const { readerDefaults } = useSettingsStore();
 
-  const [htmlContent, setHtmlContent] = useState<string>('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start as false, only show spinner if needed
   const [title, setTitle] = useState('');
+  const [shouldReload, setShouldReload] = useState(0); // Used to force WebView reload
+  const webViewRef = React.useRef<any>(null);
 
   const articleRepo = new ArticleRepository();
 
   /**
    * Waits for background processing to complete before showing the page
    * This prevents showing unstyled pages before images are downloaded
+   * ONLY waits if processingComplete is explicitly false (meaning processing is ongoing)
    */
   const waitForProcessingComplete = async (
     articleId: string,
   ): Promise<void> => {
-    const maxWaitTime = 30000; // Maximum 30 seconds
-    const pollInterval = 500; // Check every 500ms
-    const startTime = Date.now();
+    try {
+      const meta = await FileSystem.readArticleMeta(articleId);
 
-    while (Date.now() - startTime < maxWaitTime) {
-      try {
-        const meta = await FileSystem.readArticleMeta(articleId);
-        if (meta.processingComplete === true) {
-          console.log('✅ Processing complete, showing page');
-          return;
-        }
-        console.log('⏳ Waiting for background processing...');
-        await new Promise<void>(resolve => setTimeout(() => resolve(), pollInterval));
-      } catch (error) {
-        // If meta file doesn't exist or can't be read, assume processing is complete
-        console.log('⚠️ Could not read metadata, proceeding anyway');
+      // If processing is already complete or flag doesn't exist, return immediately
+      if (meta.processingComplete !== false) {
+        console.log('✅ Processing already complete or not needed, showing page');
         return;
       }
-    }
 
-    // Timeout reached, show page anyway
-    console.log('⏱️ Processing timeout reached, showing page');
+      // Processing is ongoing (processingComplete === false), so show spinner and wait
+      console.log('⏳ Background processing in progress, waiting...');
+      setLoading(true); // Only show spinner when actually waiting
+
+      const maxWaitTime = 30000; // Maximum 30 seconds
+      const pollInterval = 500; // Check every 500ms
+      const startTime = Date.now();
+
+      while (Date.now() - startTime < maxWaitTime) {
+        await new Promise<void>(resolve => setTimeout(() => resolve(), pollInterval));
+
+        try {
+          const updatedMeta = await FileSystem.readArticleMeta(articleId);
+          if (updatedMeta.processingComplete === true) {
+            console.log('✅ Processing complete, showing page');
+            setLoading(false);
+            return;
+          }
+          console.log('⏳ Still waiting for background processing...');
+        } catch (error) {
+          console.log('⚠️ Error reading metadata, proceeding anyway');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Timeout reached, show page anyway
+      console.log('⏱️ Processing timeout reached, showing page');
+      setLoading(false);
+    } catch (error) {
+      // If meta file doesn't exist, assume processing is complete (old articles)
+      console.log('⚠️ No metadata file, proceeding anyway');
+      return;
+    }
   };
 
   useEffect(() => {
@@ -75,58 +98,12 @@ const ReaderScreen: React.FC = () => {
 
       setTitle(article.title);
 
-      // Wait for background processing to complete
+      // Wait for background processing to complete (only if needed)
+      // This function will set loading to false when done
       await waitForProcessingComplete(articleId);
 
-      // Read HTML from disk
-      let html = await FileSystem.readArticleHtml(articleId);
-
-      console.log(`📄 Loaded HTML length: ${html.length} chars`);
-
-      // Check for images in HTML
-      const imgCount = (html.match(/<img/g) || []).length;
-      const localImgCount = (html.match(/file:\/\/.*\/assets\/image_/g) || []).length;
-      console.log(`🖼️  Found ${imgCount} <img> tags, ${localImgCount} with file:// paths`);
-
-      // Inject theme
-      const theme =
-        themes[readerDefaults.theme as keyof typeof themes] || themes.light;
-      const themeCSS = generateReaderCSS(
-        theme,
-        readerDefaults.fontSize,
-        readerDefaults.lineHeight,
-        readerDefaults.margins,
-      );
-
-      // Inject theme CSS into the theme placeholder
-      html = html.replace(
-        '<style id="pn-theme"></style>',
-        `<style id="pn-theme">${themeCSS}</style>`,
-      );
-
-      // Write the styled HTML back to disk so WebView can load it via file:// URI
-      await FileSystem.writeArticleHtml(articleId, html);
-
-      const htmlPath = FileSystem.getArticleHtmlPath(articleId);
-      const articleDir = FileSystem.getArticleDirectory(articleId);
-      console.log(`📝 HTML path: ${htmlPath}`);
-      console.log(`📁 Article dir: ${articleDir}`);
-
-      // Check if image files exist
-      const RNFS = await import('react-native-fs');
-      const assetsDir = `${articleDir}/assets`;
-      try {
-        const files = await RNFS.default.readDir(assetsDir);
-        console.log(`📂 Found ${files.length} files in assets directory`);
-        files.slice(0, 3).forEach(file => {
-          console.log(`  - ${file.name} (${file.size} bytes)`);
-        });
-      } catch (error) {
-        console.error('❌ Could not read assets directory:', error);
-      }
-
-      setHtmlContent(html);
-      setLoading(false);
+      // Trigger WebView to reload the file (which now has images embedded)
+      setShouldReload(prev => prev + 1);
     } catch (error) {
       console.error('Error loading article:', error);
       setLoading(false);
@@ -152,15 +129,30 @@ const ReaderScreen: React.FC = () => {
 
   const handleWebViewLoad = () => {
     console.log('✅ WebView loaded successfully');
-  };
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#3A84F7" />
-      </View>
+    // Inject theme CSS after page loads
+    const theme =
+      themes[readerDefaults.theme as keyof typeof themes] || themes.light;
+    const themeCSS = generateReaderCSS(
+      theme,
+      readerDefaults.fontSize,
+      readerDefaults.lineHeight,
+      readerDefaults.margins,
     );
-  }
+
+    // Inject theme via JavaScript
+    const jsCode = `
+      (function() {
+        const style = document.getElementById('pn-theme');
+        if (style) {
+          style.textContent = ${JSON.stringify(themeCSS)};
+        }
+      })();
+      true; // Required for iOS
+    `;
+
+    webViewRef.current?.injectJavaScript(jsCode);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -180,8 +172,15 @@ const ReaderScreen: React.FC = () => {
         <View style={styles.headerSpacer} />
       </View>
 
-      {/* WebView */}
-      <WebView
+      {/* Loading or WebView */}
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#3A84F7" />
+        </View>
+      ) : (
+        <WebView
+        ref={webViewRef}
+        key={shouldReload} // Forces WebView to reload when shouldReload changes
         source={{
           uri: `file://${FileSystem.getArticleHtmlPath(articleId)}`,
         }}
@@ -198,7 +197,8 @@ const ReaderScreen: React.FC = () => {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         mixedContentMode="always"
-      />
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
   },
   header: {
     flexDirection: 'row',
