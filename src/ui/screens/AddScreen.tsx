@@ -40,12 +40,13 @@ const AddScreen: React.FC = () => {
     setLoading(true);
 
     try {
-      const articleId = await savePageService.saveFromUrl(url, {});
+      // Start saving in background and get articleId immediately
+      const articleId = await savePageService.saveFromUrlFast(url, {});
 
-      // Refresh articles list
-      await fetchArticles();
+      // Show success immediately (background processing continues)
+      setLoading(false);
 
-      Alert.alert('Success', 'Article saved successfully!', [
+      Alert.alert('Success', 'Article is being saved!', [
         {
           text: 'View',
           onPress: () => {
@@ -61,11 +62,15 @@ const AddScreen: React.FC = () => {
       ]);
 
       setUrl('');
+
+      // Refresh articles list in background
+      fetchArticles().catch(err =>
+        console.error('Error refreshing articles:', err)
+      );
     } catch (error) {
+      setLoading(false);
       console.error('Error saving article:', error);
       Alert.alert('Error', 'Failed to save article. Please try again.');
-    } finally {
-      setLoading(false);
     }
   };
 

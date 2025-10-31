@@ -16,6 +16,133 @@ export class SavePageService {
   private articleRepo = new ArticleRepository();
   private searchRepo = new SearchRepository();
 
+  /**
+   * Fast save - creates article immediately and processes content in background
+   */
+  async saveFromUrlFast(url: string, options: SaveOptions = {}): Promise<string> {
+    try {
+      console.log('Fast saving article from URL:', url);
+
+      // 1. Fetch HTML (this is unavoidable)
+      const html = await this.fetchHtml(url);
+
+      // 2. Parse with Readability
+      const readable = await this.readabilityService.extract(html, url);
+
+      // 3. Extract domain and calculate reading metrics
+      const domain = this.readabilityService.extractDomain(url);
+      const wordCount = this.readabilityService.countWords(readable.textContent);
+      const readingTime = this.readabilityService.calculateReadingTime(wordCount);
+
+      // 4. Create article record IMMEDIATELY
+      const articleId = await this.articleRepo.create({
+        title: readable.title,
+        url,
+        domain,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        archived: false,
+        favorite: false,
+        readProgress: 0,
+        readingTime,
+        wordCount,
+        hasAssets: false,
+      });
+
+      console.log('Created article (fast):', articleId);
+
+      // 5. Create article directory and save basic content immediately
+      await FileSystem.createArticleDirectory(articleId);
+
+      // 6. Save a basic version of the HTML without images (for instant viewing)
+      const htmlPath = FileSystem.getArticleHtmlPath(articleId);
+      await FileSystem.writeArticleHtml(articleId, readable.content);
+      console.log(`Initial HTML saved to: ${htmlPath}`);
+
+      // 7. Save article content record
+      await this.articleRepo.createContent({
+        articleId,
+        htmlPath,
+        meta: {
+          author: readable.byline,
+          excerpt: readable.excerpt,
+          siteName: readable.siteName,
+        },
+      });
+
+      // 8. Save basic metadata
+      await FileSystem.writeArticleMeta(articleId, {
+        title: readable.title,
+        url,
+        savedAt: Date.now(),
+      });
+
+      // 9. Update FTS5 index
+      await this.searchRepo.updateArticleIndex(articleId, {
+        title: readable.title,
+        plainText: readable.textContent,
+        tags: [],
+        annotations: [],
+      });
+
+      // 10. Process images and update HTML in background (non-blocking)
+      this.processArticleContentInBackground(
+        articleId,
+        url,
+        readable,
+      ).catch(error => {
+        console.error('Error processing article content in background:', error);
+      });
+
+      // Return immediately
+      return articleId;
+    } catch (error) {
+      console.error('❌ Error fast-saving page:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Background processing of images and content
+   * Updates the existing HTML with downloaded images
+   */
+  private async processArticleContentInBackground(
+    articleId: string,
+    url: string,
+    readable: any,
+  ): Promise<void> {
+    try {
+      console.log('Background processing started for:', articleId);
+
+      // 1. Extract all image URLs from HTML
+      const imageUrls = this.extractImageUrls(readable.content, url);
+      console.log(`Found ${imageUrls.length} images to download`);
+
+      // 2. Download images and get mapping of old URL to new URL
+      const imageMap = await this.downloadImages(articleId, imageUrls);
+
+      // 3. Rewrite HTML with local image paths (only if we downloaded images)
+      if (imageMap.size > 0) {
+        console.log(`Rewriting HTML with ${imageMap.size} image mappings`);
+        const rewrittenHtml = this.htmlRewriter.rewrite(
+          readable.content,
+          url,
+          imageMap,
+        );
+
+        // 4. Update HTML file with images
+        await FileSystem.writeArticleHtml(articleId, rewrittenHtml);
+        console.log('HTML updated with downloaded images');
+      }
+
+      console.log('✅ Background processing completed for:', articleId);
+    } catch (error) {
+      console.error('❌ Error in background processing:', error);
+      // Don't delete the article - it exists with basic content
+      // User can still read it, just without locally cached images
+    }
+  }
+
   async saveFromUrl(url: string, options: SaveOptions = {}): Promise<string> {
     let articleId: string | null = null;
 
