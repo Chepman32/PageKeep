@@ -1,89 +1,83 @@
-import { Asset } from '../domain/Article';
-import { FileSystem } from '../utils/fileSystem';
-
 export class HtmlRewriter {
-  async rewrite(
+  rewrite(
     html: string,
-    articleId: string,
-    assets: Asset[],
-  ): Promise<string> {
-    // Create asset URL map
-    const assetMap = new Map<string, string>();
-    assets.forEach(asset => {
-      // Use the hash-based filename
-      const extension = FileSystem.getExtensionFromUrl(asset.srcUrl) || 'bin';
-      assetMap.set(asset.srcUrl, `./assets/${asset.hash}.${extension}`);
-    });
-
+    baseUrl: string,
+    imageMap: Map<string, string>,
+  ): string {
     // Start with the original HTML
     let processedHtml = html;
 
-    // Remove only the most problematic elements
+    // Remove scripts and extract noscript content
     processedHtml = processedHtml
       .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-      .replace(/<noscript[^>]*>[\s\S]*?<\/noscript>/gi, '');
+      .replace(/<noscript[^>]*>([\s\S]*?)<\/noscript>/gi, '$1');
 
-    // Replace asset URLs
-    assetMap.forEach((newUrl, oldUrl) => {
-      // Simple string replacement for now
-      processedHtml = processedHtml.replace(
-        new RegExp(oldUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
-        newUrl,
-      );
+    // Convert lazy-loading attributes to standard ones
+    processedHtml = this.convertLazyLoadAttributes(processedHtml);
+
+    // Replace all image URLs with local paths
+    imageMap.forEach((localPath, remoteUrl) => {
+      // Escape special regex characters
+      const escapedUrl = remoteUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedUrl, 'g');
+      processedHtml = processedHtml.replace(regex, localPath);
+
+      // Also replace HTML-entity-encoded version (&amp; instead of &)
+      const encodedUrl = remoteUrl.replace(/&/g, '&amp;');
+      const escapedEncodedUrl = encodedUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const encodedRegex = new RegExp(escapedEncodedUrl, 'g');
+      processedHtml = processedHtml.replace(encodedRegex, localPath);
     });
 
-    // Add our CSS and JavaScript
+    // Wrap in proper HTML structure with base styles and theme placeholder
     const readerCSS = this.getBaseReaderCSS();
     const bridgeScript = this.getBridgeScript();
 
-    // Ensure we have a proper HTML structure
-    if (!processedHtml.includes('<!DOCTYPE html>')) {
-      processedHtml = `<!DOCTYPE html>
+    const finalHtml = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="${baseUrl}">
   <style id="pn-base">${readerCSS}</style>
   <style id="pn-theme"></style>
 </head>
-<body>
+<body class="pn-reader">
 ${processedHtml}
 <script>${bridgeScript}</script>
 </body>
 </html>`;
-    } else {
-      // Try to inject into existing structure
-      if (processedHtml.includes('</head>')) {
-        processedHtml = processedHtml.replace(
-          '</head>',
-          `<style id="pn-base">${readerCSS}</style><style id="pn-theme"></style></head>`,
-        );
-      }
 
-      if (processedHtml.includes('</body>')) {
-        processedHtml = processedHtml.replace(
-          '</body>',
-          `<script>${bridgeScript}</script></body>`,
-        );
-      }
-    }
-
-    return processedHtml;
+    return finalHtml;
   }
 
-  injectTheme(html: string, themeCSS: string): string {
-    return html.replace(
-      /<style id="pn-theme">.*?<\/style>/s,
-      `<style id="pn-theme">${themeCSS}</style>`,
+  private convertLazyLoadAttributes(html: string): string {
+    // Convert data-src to src for images
+    html = html.replace(
+      /<img([^>]+)data-src=["']([^"']+)["']/gi,
+      (match, before, dataSrc) => {
+        // If there's already a src, replace it, otherwise add it
+        if (/src=["']/.test(before)) {
+          return match.replace(/src=["'][^"']*["']/, `src="${dataSrc}"`);
+        } else {
+          return `<img${before}src="${dataSrc}"`;
+        }
+      }
     );
-  }
 
-  injectBridge(html: string): string {
-    const bridgeScript = this.getBridgeScript();
-    if (html.includes('</body>')) {
-      return html.replace('</body>', `<script>${bridgeScript}</script></body>`);
-    }
-    return `${html}<script>${bridgeScript}</script>`;
+    // Convert data-srcset to srcset
+    html = html.replace(
+      /<img([^>]+)data-srcset=["']([^"']+)["']/gi,
+      (match, before, dataSrcset) => {
+        if (/srcset=["']/.test(before)) {
+          return match.replace(/srcset=["'][^"']*["']/, `srcset="${dataSrcset}"`);
+        } else {
+          return `<img${before}srcset="${dataSrcset}"`;
+        }
+      }
+    );
+
+    return html;
   }
 
   private getBaseReaderCSS(): string {
@@ -202,7 +196,7 @@ ${processedHtml}
               console.error('Error reporting scroll:', e);
             }
           },
-          
+
           setTheme: function(css) {
             try {
               const style = document.getElementById('pn-theme');
@@ -214,7 +208,7 @@ ${processedHtml}
             }
           }
         };
-        
+
         function throttle(func, wait) {
           let timeout;
           return function() {
@@ -224,10 +218,10 @@ ${processedHtml}
             timeout = setTimeout(() => func.apply(context, args), wait);
           };
         }
-        
+
         // Auto-report scroll
         window.addEventListener('scroll', throttle(window.PageNestBridge.reportScroll, 100));
-        
+
         // Report initial scroll position
         setTimeout(window.PageNestBridge.reportScroll, 100);
       })();

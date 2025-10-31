@@ -47,6 +47,36 @@ export class AssetRepository {
     this.db.execute('UPDATE assets SET status = ? WHERE id = ?', [status, id]);
   }
 
+  async update(
+    id: string,
+    updates: Partial<Omit<Asset, 'id' | 'articleId' | 'hash'>>,
+  ): Promise<void> {
+    const fields: string[] = [];
+    const values: any[] = [];
+
+    if (updates.localPath !== undefined) {
+      fields.push('local_path = ?');
+      values.push(updates.localPath);
+    }
+    if (updates.status !== undefined) {
+      fields.push('status = ?');
+      values.push(updates.status);
+    }
+    if (updates.mime !== undefined) {
+      fields.push('mime = ?');
+      values.push(updates.mime);
+    }
+    if (updates.byteSize !== undefined) {
+      fields.push('byte_size = ?');
+      values.push(updates.byteSize);
+    }
+
+    if (fields.length > 0) {
+      values.push(id);
+      this.db.execute(`UPDATE assets SET ${fields.join(', ')} WHERE id = ?`, values);
+    }
+  }
+
   async deleteByArticleId(articleId: string): Promise<void> {
     this.db.execute('DELETE FROM assets WHERE article_id = ?', [articleId]);
   }

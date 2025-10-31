@@ -1,71 +1,40 @@
 import { ReadabilityService } from './ReadabilityService';
 import { HtmlRewriter } from './HtmlRewriter';
-import { AssetExtractor } from './AssetExtractor';
-import { DownloadQueue } from './DownloadQueue';
 import { ArticleRepository } from '../data/repositories/ArticleRepository';
-import { AssetRepository } from '../data/repositories/AssetRepository';
 import { SearchRepository } from '../data/repositories/SearchRepository';
 import { FileSystem } from '../utils/fileSystem';
-import { Article, Asset } from '../domain/Article';
-import CryptoJS from 'crypto-js';
+import RNFetchBlob from 'react-native-blob-util';
 
 export interface SaveOptions {
   tags?: string[];
   collections?: string[];
-  downloadAssets?: boolean;
-  downloadImages?: boolean;
-  downloadStyles?: boolean;
-  downloadFonts?: boolean;
 }
 
 export class SavePageService {
   private readabilityService = new ReadabilityService();
   private htmlRewriter = new HtmlRewriter();
-  private assetExtractor = new AssetExtractor();
   private articleRepo = new ArticleRepository();
-  private assetRepo = new AssetRepository();
   private searchRepo = new SearchRepository();
 
   async saveFromUrl(url: string, options: SaveOptions = {}): Promise<string> {
+    let articleId: string | null = null;
+
     try {
+      console.log('Saving article from URL:', url);
+
       // 1. Fetch HTML
       const html = await this.fetchHtml(url);
 
       // 2. Parse with Readability
       const readable = await this.readabilityService.extract(html, url);
 
-      // 3. Extract assets
-      let extractedAssets = this.assetExtractor.extract(readable.content, url);
-      console.log(
-        `Extracted ${extractedAssets.length} assets:`,
-        extractedAssets.map(a => a.srcUrl),
-      );
-
-      // Filter assets based on options
-      if (options.downloadAssets !== false) {
-        extractedAssets = this.assetExtractor.filterAssetsByType(
-          extractedAssets,
-          {
-            images: options.downloadImages !== false,
-            styles: options.downloadStyles !== false,
-            fonts: options.downloadFonts !== false,
-          },
-        );
-      } else {
-        extractedAssets = [];
-      }
-
-      console.log(`After filtering: ${extractedAssets.length} assets`);
+      // 3. Extract domain and calculate reading metrics
+      const domain = this.readabilityService.extractDomain(url);
+      const wordCount = this.readabilityService.countWords(readable.textContent);
+      const readingTime = this.readabilityService.calculateReadingTime(wordCount);
 
       // 4. Create article record
-      const domain = this.readabilityService.extractDomain(url);
-      const wordCount = this.readabilityService.countWords(
-        readable.textContent,
-      );
-      const readingTime =
-        this.readabilityService.calculateReadingTime(wordCount);
-
-      const articleId = await this.articleRepo.create({
+      articleId = await this.articleRepo.create({
         title: readable.title,
         url,
         domain,
@@ -76,62 +45,47 @@ export class SavePageService {
         readProgress: 0,
         readingTime,
         wordCount,
-        hasAssets: extractedAssets.length > 0,
+        hasAssets: false,
       });
+
+      console.log('Created article:', articleId);
 
       // 5. Create article directory
       await FileSystem.createArticleDirectory(articleId);
 
-      // 6. Create asset records and queue for download
-      const assets: Asset[] = [];
-      for (const extracted of extractedAssets) {
-        const hash = CryptoJS.SHA1(extracted.srcUrl).toString();
-        const extension =
-          FileSystem.getExtensionFromUrl(extracted.srcUrl) || 'bin';
-        const filename = `${hash}.${extension}`;
-        const localPath = `${FileSystem.getArticleAssetsDirectory(
-          articleId,
-        )}/${filename}`;
+      // 6. Extract all image URLs from HTML
+      const imageUrls = this.extractImageUrls(readable.content, url);
+      console.log(`Found ${imageUrls.length} images to download`);
 
-        const assetId = await this.assetRepo.create({
-          articleId,
-          type: extracted.type,
-          srcUrl: extracted.srcUrl,
-          localPath,
-          byteSize: 0,
-          mime: '',
-          status: 'queued',
-          hash,
-        });
+      // 7. Download images and get mapping of old URL to new URL
+      const imageMap = await this.downloadImages(articleId, imageUrls);
 
-        // Create asset object for HTML rewriting
-        assets.push({
-          id: assetId,
-          articleId,
-          type: extracted.type,
-          srcUrl: extracted.srcUrl,
-          localPath,
-          byteSize: 0,
-          mime: '',
-          status: 'queued',
-          hash,
-        });
+      // 8. Rewrite HTML with local image paths
+      console.log(`Rewriting HTML with ${imageMap.size} image mappings`);
+      const rewrittenHtml = this.htmlRewriter.rewrite(
+        readable.content,
+        url,
+        imageMap,
+      );
+
+      // Debug: Log first image mapping
+      const firstMapping = Array.from(imageMap.entries())[0];
+      if (firstMapping) {
+        console.log(`Sample mapping: ${firstMapping[0]} -> ${firstMapping[1]}`);
+        // Check if replacement happened
+        if (rewrittenHtml.includes(firstMapping[1])) {
+          console.log('✅ Image path replaced in HTML');
+        } else {
+          console.log('❌ Image path NOT found in HTML');
+        }
       }
 
-      // 7. Rewrite HTML with local paths
-      const rewrittenHtml = await this.htmlRewriter.rewrite(
-        readable.content,
-        articleId,
-        assets,
-      );
+      // 9. Save HTML to file system
+      const htmlPath = FileSystem.getArticleHtmlPath(articleId);
+      await FileSystem.writeArticleHtml(articleId, rewrittenHtml);
+      console.log(`HTML saved to: ${htmlPath}`);
 
-      // 8. Save HTML to file system
-      const htmlPath = await FileSystem.writeArticleHtml(
-        articleId,
-        rewrittenHtml,
-      );
-
-      // 9. Save article content
+      // 10. Save article content
       await this.articleRepo.createContent({
         articleId,
         htmlPath,
@@ -142,14 +96,14 @@ export class SavePageService {
         },
       });
 
-      // 10. Save metadata
+      // 11. Save metadata
       await FileSystem.writeArticleMeta(articleId, {
         title: readable.title,
         url,
         savedAt: Date.now(),
       });
 
-      // 11. Update FTS5 index
+      // 12. Update FTS5 index
       await this.searchRepo.updateArticleIndex(articleId, {
         title: readable.title,
         plainText: readable.textContent,
@@ -157,45 +111,182 @@ export class SavePageService {
         annotations: [],
       });
 
-      // 12. Start downloading assets
-      if (assets.length > 0) {
-        const downloadQueue = new DownloadQueue();
-        downloadQueue.enqueue(assets);
-        downloadQueue.start();
-      }
-
+      console.log('✅ Article saved successfully:', articleId);
       return articleId;
     } catch (error) {
-      console.error('Error saving page:', error);
+      console.error('❌ Error saving page:', error);
+
+      // Cleanup: Delete article from database if it was created
+      if (articleId) {
+        try {
+          await this.articleRepo.delete(articleId);
+          console.log('Cleaned up failed article:', articleId);
+        } catch (cleanupError) {
+          console.error('Failed to cleanup article:', cleanupError);
+        }
+      }
+
       throw error;
     }
   }
 
-  async saveFromHtml(
-    html: string,
-    url: string,
-    options: SaveOptions = {},
-  ): Promise<string> {
-    // Similar to saveFromUrl but skip the fetch step
-    return this.saveFromUrl(url, options);
+  private extractImageUrls(html: string, baseUrl: string): string[] {
+    const imageUrls = new Set<string>();
+
+    // Decode HTML entities helper
+    const decodeHtmlEntities = (str: string): string => {
+      return str
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'");
+    };
+
+    // Extract from <img> src attributes
+    const imgRegex = /<img[^>]+src=["']([^"']+)["']/gi;
+    let match;
+
+    while ((match = imgRegex.exec(html)) !== null) {
+      const src = decodeHtmlEntities(match[1]);
+      const absoluteUrl = this.makeAbsoluteUrl(src, baseUrl);
+      if (absoluteUrl) {
+        imageUrls.add(absoluteUrl);
+      }
+    }
+
+    // Extract from <img> srcset attributes
+    const srcsetRegex = /<img[^>]+srcset=["']([^"']+)["']/gi;
+    while ((match = srcsetRegex.exec(html)) !== null) {
+      const srcset = match[1];
+      // srcset format: "url1 1x, url2 2x" or "url1 100w, url2 200w"
+      const urls = srcset.split(',').map(part => part.trim().split(/\s+/)[0]);
+      urls.forEach(url => {
+        const absoluteUrl = this.makeAbsoluteUrl(url, baseUrl);
+        if (absoluteUrl) {
+          imageUrls.add(absoluteUrl);
+        }
+      });
+    }
+
+    // Extract from data-src (lazy loading)
+    const dataSrcRegex = /<img[^>]+data-src=["']([^"']+)["']/gi;
+    while ((match = dataSrcRegex.exec(html)) !== null) {
+      const src = match[1];
+      const absoluteUrl = this.makeAbsoluteUrl(src, baseUrl);
+      if (absoluteUrl) {
+        imageUrls.add(absoluteUrl);
+      }
+    }
+
+    return Array.from(imageUrls);
   }
 
-  async retryFailedAssets(articleId: string): Promise<void> {
-    const failedAssets = await this.assetRepo.findFailedAssets(articleId);
+  private makeAbsoluteUrl(url: string, baseUrl: string): string | null {
+    try {
+      // Skip data URLs and blob URLs
+      if (url.startsWith('data:') || url.startsWith('blob:')) {
+        return null;
+      }
 
-    if (failedAssets.length === 0) {
-      return;
+      // Handle protocol-relative URLs (//example.com/image.jpg)
+      if (url.startsWith('//')) {
+        return `https:${url}`;
+      }
+
+      // If already absolute, return as is
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+      }
+
+      // Make absolute
+      const base = new URL(baseUrl);
+      const absolute = new URL(url, base);
+      return absolute.href;
+    } catch {
+      return null;
+    }
+  }
+
+  private async downloadImages(
+    articleId: string,
+    imageUrls: string[],
+  ): Promise<Map<string, string>> {
+    const imageMap = new Map<string, string>();
+    const assetsDir = FileSystem.getArticleAssetsDirectory(articleId);
+
+    // Assets directory is already created by FileSystem.createArticleDirectory()
+    // No need to create it again
+
+    let imageIndex = 0;
+
+    for (const imageUrl of imageUrls) {
+      try {
+        console.log(`Downloading image ${imageIndex + 1}/${imageUrls.length}:`, imageUrl);
+
+        // Download image
+        const response = await RNFetchBlob.config({
+          fileCache: false,
+        }).fetch('GET', imageUrl);
+
+        if (response.respInfo.status !== 200) {
+          console.warn(`Failed to download image: ${imageUrl} (status ${response.respInfo.status})`);
+          continue;
+        }
+
+        // Get file extension from Content-Type or URL
+        const contentType = response.respInfo.headers['Content-Type'] ||
+                          response.respInfo.headers['content-type'] || '';
+        const extension = this.getExtensionFromContentType(contentType) ||
+                         this.getExtensionFromUrl(imageUrl) || 'jpg';
+
+        // Generate filename
+        const filename = `image_${imageIndex}.${extension}`;
+        const localPath = `${assetsDir}/${filename}`;
+
+        // Save file
+        const base64Data = await response.base64();
+        await RNFetchBlob.fs.writeFile(localPath, base64Data, 'base64');
+
+        // Map old URL to new absolute file:// path for iOS WebView compatibility
+        const absoluteFilePath = `file://${assetsDir}/${filename}`;
+        imageMap.set(imageUrl, absoluteFilePath);
+
+        console.log(`Saved image: ${filename}`);
+        imageIndex++;
+      } catch (error) {
+        console.error(`Error downloading image ${imageUrl}:`, error);
+      }
     }
 
-    // Reset status to queued
-    for (const asset of failedAssets) {
-      await this.assetRepo.updateStatus(asset.id, 'queued');
-    }
+    console.log(`Downloaded ${imageIndex} images successfully`);
+    return imageMap;
+  }
 
-    // Start download queue
-    const downloadQueue = new DownloadQueue();
-    downloadQueue.enqueue(failedAssets);
-    downloadQueue.start();
+  private getExtensionFromContentType(contentType: string): string | null {
+    const mimeType = contentType.split(';')[0].trim().toLowerCase();
+    const mimeMap: { [key: string]: string } = {
+      'image/jpeg': 'jpg',
+      'image/jpg': 'jpg',
+      'image/png': 'png',
+      'image/gif': 'gif',
+      'image/webp': 'webp',
+      'image/svg+xml': 'svg',
+      'image/bmp': 'bmp',
+    };
+    return mimeMap[mimeType] || null;
+  }
+
+  private getExtensionFromUrl(url: string): string | null {
+    try {
+      // Extract path from URL
+      const urlObj = new URL(url);
+      const path = urlObj.href.split('?')[0]; // Remove query params
+      const match = path.match(/\.([a-zA-Z0-9]+)$/);
+      return match ? match[1].toLowerCase() : null;
+    } catch {
+      return null;
+    }
   }
 
   private async fetchHtml(url: string): Promise<string> {

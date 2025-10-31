@@ -52,7 +52,7 @@ export const generateReaderCSS = (
   margins: number,
 ): string => {
   return `
-    body {
+    body.pn-reader {
       background-color: ${theme.colors.background};
       color: ${theme.colors.text};
       font-size: ${fontSize}px;
@@ -60,24 +60,31 @@ export const generateReaderCSS = (
       padding: ${margins}px;
     }
     
-    a {
+    body.pn-reader a {
       color: ${theme.colors.accent};
     }
     
-    mark, .highlight {
+    body.pn-reader mark,
+    body.pn-reader .highlight {
       background-color: ${theme.colors.highlight};
     }
     
-    h1, h2, h3, h4, h5, h6 {
+    body.pn-reader h1,
+    body.pn-reader h2,
+    body.pn-reader h3,
+    body.pn-reader h4,
+    body.pn-reader h5,
+    body.pn-reader h6 {
       color: ${theme.colors.text};
     }
     
-    blockquote {
+    body.pn-reader blockquote {
       border-left-color: ${theme.colors.border};
       color: ${theme.colors.secondary};
     }
     
-    pre, code {
+    body.pn-reader pre,
+    body.pn-reader code {
       background-color: ${theme.colors.card};
       border: 1px solid ${theme.colors.border};
     }

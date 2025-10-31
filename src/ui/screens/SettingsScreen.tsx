@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useSettingsStore } from '../../store/settingsStore';
 import { useIAPStore } from '../../store/iapStore';
 import { FileSystem } from '../../utils/fileSystem';
+import { SavePageService } from '../../services/SavePageService';
 
 const SettingsScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -36,6 +37,7 @@ const SettingsScreen: React.FC = () => {
     const bytes = await FileSystem.getTotalStorageUsed();
     setStorageUsed(FileSystem.formatBytes(bytes));
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -138,6 +140,7 @@ const SettingsScreen: React.FC = () => {
           </View>
         </View>
 
+
         {/* About */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>About</Text>
@@ -222,6 +225,19 @@ const styles = StyleSheet.create({
   rowValue: {
     fontSize: 16,
     color: '#616161',
+  },
+  actionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  actionText: {
+    fontSize: 16,
+    color: '#3A84F7',
+    fontWeight: '500',
   },
 });
 

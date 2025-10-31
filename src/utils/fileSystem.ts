@@ -72,9 +72,9 @@ export const FileSystem = {
 
   getExtensionFromUrl(url: string): string | null {
     try {
-      const urlObj = new URL(url);
-      const pathname = urlObj.pathname;
-      const match = pathname.match(/\.([a-zA-Z0-9]+)$/);
+      // Extract path from URL by removing protocol and domain
+      const path = url.split('?')[0]; // Remove query params
+      const match = path.match(/\.([a-zA-Z0-9]+)$/);
       return match ? match[1] : null;
     } catch {
       return null;

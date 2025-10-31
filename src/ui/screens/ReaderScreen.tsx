@@ -44,7 +44,15 @@ const ReaderScreen: React.FC = () => {
 
       setTitle(article.title);
 
-      const html = await FileSystem.readArticleHtml(articleId);
+      // Read HTML from disk
+      let html = await FileSystem.readArticleHtml(articleId);
+
+      console.log(`📄 Loaded HTML length: ${html.length} chars`);
+
+      // Check for images in HTML
+      const imgCount = (html.match(/<img/g) || []).length;
+      const localImgCount = (html.match(/\.\/assets\/image_/g) || []).length;
+      console.log(`🖼️  Found ${imgCount} <img> tags, ${localImgCount} with local paths`);
 
       // Inject theme
       const theme =
@@ -56,30 +64,34 @@ const ReaderScreen: React.FC = () => {
         readerDefaults.margins,
       );
 
-      // Ensure proper HTML structure and encoding
-      let styledHtml = html;
-      
-      // Add proper HTML structure if missing
-      if (!styledHtml.includes('<!DOCTYPE html>')) {
-        styledHtml = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-${styledHtml}
-</body>
-</html>`;
-      }
-      
-      // Inject theme
-      styledHtml = styledHtml.replace(
+      // Inject theme CSS into the theme placeholder
+      html = html.replace(
         '<style id="pn-theme"></style>',
         `<style id="pn-theme">${themeCSS}</style>`,
       );
 
-      setHtmlContent(styledHtml);
+      // Write the styled HTML back to disk so WebView can load it via file:// URI
+      await FileSystem.writeArticleHtml(articleId, html);
+
+      const htmlPath = FileSystem.getArticleHtmlPath(articleId);
+      const articleDir = FileSystem.getArticleDirectory(articleId);
+      console.log(`📝 HTML path: ${htmlPath}`);
+      console.log(`📁 Article dir: ${articleDir}`);
+
+      // Check if image files exist
+      const RNFS = await import('react-native-fs');
+      const assetsDir = `${articleDir}/assets`;
+      try {
+        const files = await RNFS.default.readDir(assetsDir);
+        console.log(`📂 Found ${files.length} files in assets directory`);
+        files.slice(0, 3).forEach(file => {
+          console.log(`  - ${file.name} (${file.size} bytes)`);
+        });
+      } catch (error) {
+        console.error('❌ Could not read assets directory:', error);
+      }
+
+      setHtmlContent(html);
       setLoading(false);
     } catch (error) {
       console.error('Error loading article:', error);
@@ -98,6 +110,14 @@ ${styledHtml}
     } catch (error) {
       console.error('Error handling message:', error);
     }
+  };
+
+  const handleWebViewError = (event: any) => {
+    console.error('❌ WebView error:', event.nativeEvent);
+  };
+
+  const handleWebViewLoad = () => {
+    console.log('✅ WebView loaded successfully');
   };
 
   if (loading) {
@@ -133,6 +153,8 @@ ${styledHtml}
         }}
         style={styles.webview}
         onMessage={handleMessage}
+        onError={handleWebViewError}
+        onLoad={handleWebViewLoad}
         allowingReadAccessToURL={`file://${FileSystem.getArticleDirectory(
           articleId,
         )}`}
@@ -141,6 +163,7 @@ ${styledHtml}
         originWhitelist={['*']}
         javaScriptEnabled={true}
         domStorageEnabled={true}
+        mixedContentMode="always"
       />
     </SafeAreaView>
   );

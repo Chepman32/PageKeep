@@ -40,12 +40,7 @@ const AddScreen: React.FC = () => {
     setLoading(true);
 
     try {
-      const articleId = await savePageService.saveFromUrl(url, {
-        downloadAssets: true,
-        downloadImages: true,
-        downloadStyles: true,
-        downloadFonts: true,
-      });
+      const articleId = await savePageService.saveFromUrl(url, {});
 
       // Refresh articles list
       await fetchArticles();

@@ -17,25 +17,19 @@ export class ReadabilityService {
       const title = this.extractTitle(html);
       const byline = this.extractByline(html);
       const siteName = this.extractSiteName(html);
-      
-      // For now, let's be very conservative with content extraction
-      // Just remove scripts and keep most of the original structure
-      let content = html
-        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-        .replace(/<noscript[^>]*>[\s\S]*?<\/noscript>/gi, '');
-      
-      // Try to extract just the body content if it exists
-      const bodyMatch = content.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-      if (bodyMatch) {
-        content = bodyMatch[1];
-      }
-      
-      const textContent = this.extractPlainText(content);
-      
+
+      // Preserve the original page structure but strip unsafe elements
+      const sanitizedHtml = this.sanitizeHtml(html);
+
+      // Use body content for text statistics to avoid nav/footers as much as possible
+      const bodyMatch = sanitizedHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+      const bodyHtml = bodyMatch ? bodyMatch[1] : sanitizedHtml;
+      const textContent = this.extractPlainText(bodyHtml);
+
       return {
         title,
         byline,
-        content,
+        content: sanitizedHtml,
         textContent,
         length: textContent.length,
         excerpt: this.createExcerpt(textContent),
@@ -43,14 +37,19 @@ export class ReadabilityService {
       };
     } catch (error) {
       console.error('Content extraction error:', error);
-      
+
+      const sanitized = this.sanitizeHtml(html);
+      const fallbackText = this.extractPlainText(sanitized);
+
       // Fallback: return the original HTML with minimal processing
       return {
         title: this.extractTitle(html) || 'Article',
-        content: html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ''),
-        textContent: this.extractPlainText(html),
-        length: html.length,
-        excerpt: 'Article content',
+        byline: this.extractByline(html),
+        content: sanitized,
+        textContent: fallbackText,
+        length: fallbackText.length,
+        excerpt: this.createExcerpt(fallbackText),
+        siteName: this.extractSiteName(html),
       };
     }
   }
@@ -124,9 +123,18 @@ export class ReadabilityService {
   extractDomain(url: string): string {
     try {
       const urlObj = new URL(url);
-      return urlObj.hostname.replace('www.', '');
+      // Extract hostname from the URL string
+      const match = urlObj.href.match(/^https?:\/\/([^\/]+)/);
+      if (match) {
+        return match[1].replace('www.', '');
+      }
+      return 'unknown';
     } catch {
       return 'unknown';
     }
+  }
+
+  private sanitizeHtml(html: string): string {
+    return html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
   }
 }

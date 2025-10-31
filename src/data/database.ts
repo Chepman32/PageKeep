@@ -1,27 +1,71 @@
 import { open, QuickSQLiteConnection } from 'react-native-quick-sqlite';
+import { Platform } from 'react-native';
 
 let dbInstance: QuickSQLiteConnection | null = null;
 
 export const getDatabase = (): QuickSQLiteConnection => {
   if (!dbInstance) {
-    dbInstance = open({ name: 'pagenest.db' });
-    initializeDatabase(dbInstance);
+    try {
+      // Open database - react-native-quick-sqlite uses Documents directory by default
+      // which should be writable on both iOS and Android
+      dbInstance = open({
+        name: 'pagenest.db',
+        location: 'default' // 'default' maps to Documents directory
+      });
+
+      console.log('Database opened successfully at default location');
+      initializeDatabase(dbInstance);
+    } catch (error) {
+      console.error('Failed to open database:', error);
+
+      // Try alternative approach - use Library directory on iOS
+      if (Platform.OS === 'ios') {
+        console.log('Trying Library directory for iOS...');
+        dbInstance = open({
+          name: 'pagenest.db',
+          location: 'Library'
+        });
+        console.log('Database opened in Library directory');
+        initializeDatabase(dbInstance);
+      } else {
+        throw error;
+      }
+    }
   }
   return dbInstance;
 };
 
 const initializeDatabase = (db: QuickSQLiteConnection): void => {
-  // Enable foreign keys
-  db.execute('PRAGMA foreign_keys = ON;');
+  try {
+    // Test if database is writable
+    try {
+      db.execute('PRAGMA journal_mode = WAL;');
+      console.log('Database is writable (WAL mode enabled)');
+    } catch (e) {
+      console.error('Database might be readonly:', e);
+    }
 
-  // Create tables
-  createTables(db);
+    // Enable foreign keys
+    db.execute('PRAGMA foreign_keys = ON;');
+    console.log('Foreign keys enabled');
 
-  // Create indexes
-  createIndexes(db);
+    // Create tables
+    createTables(db);
+    console.log('Tables created');
 
-  // Create FTS5 virtual table
-  createFTSTable(db);
+    // Create indexes
+    createIndexes(db);
+    console.log('Indexes created');
+
+    // Create FTS5 virtual table
+    createFTSTable(db);
+    console.log('FTS table created');
+
+    console.log('✅ Database initialized successfully');
+  } catch (error) {
+    console.error('❌ Database initialization error:', error);
+    throw error;
+  }
 };
 
 const createTables = (db: QuickSQLiteConnection): void => {

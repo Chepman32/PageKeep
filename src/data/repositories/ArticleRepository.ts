@@ -203,6 +203,21 @@ export class ArticleRepository {
     return null;
   }
 
+  async findArticlesWithAssets(): Promise<Article[]> {
+    const result = this.db.execute(
+      'SELECT * FROM articles WHERE has_assets = 1 ORDER BY created_at DESC',
+    );
+
+    const articles: Article[] = [];
+    if (result.rows) {
+      for (let i = 0; i < result.rows.length; i++) {
+        articles.push(this.mapRowToArticle(result.rows.item(i)));
+      }
+    }
+
+    return articles;
+  }
+
   private mapRowToArticle(row: any): Article {
     return {
       id: row.id,
