@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { useSearchStore } from '../../store/searchStore';
 import { SearchResult } from '../../domain/Article';
+import { useTheme } from '../../contexts/ThemeContext';
+import { Theme } from '../../constants/themes';
+import { useTranslation } from 'react-i18next';
 
 type SearchScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -21,6 +24,9 @@ type SearchScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 const SearchScreen: React.FC = () => {
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
   const navigation = useNavigation<SearchScreenNavigationProp>();
   const { query, results, history, setQuery, search, loadHistory } =
     useSearchStore();
@@ -68,7 +74,7 @@ const SearchScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={theme.statusBarStyle} />
 
       {/* Header */}
       <View style={styles.header}>
@@ -80,7 +86,7 @@ const SearchScreen: React.FC = () => {
         </TouchableOpacity>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search articles..."
+          placeholder={t('search.placeholder')}
           value={query}
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
@@ -99,7 +105,7 @@ const SearchScreen: React.FC = () => {
         />
       ) : query.trim() === '' && history.length > 0 ? (
         <View style={styles.historyContainer}>
-          <Text style={styles.historyTitle}>Recent Searches</Text>
+          <Text style={styles.historyTitle}>{t('search.recentSearches')}</Text>
           <FlatList
             data={history}
             renderItem={renderHistoryItem}
@@ -108,100 +114,103 @@ const SearchScreen: React.FC = () => {
         </View>
       ) : query.trim() !== '' ? (
         <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>No results found</Text>
+          <Text style={styles.emptyText}>{t('search.noResults')}</Text>
         </View>
       ) : null}
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FAFAFA',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  backButtonText: {
-    fontSize: 28,
-    color: '#3A84F7',
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: '#111111',
-    marginLeft: 8,
-  },
-  list: {
-    padding: 16,
-  },
-  resultCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  resultDomain: {
-    fontSize: 12,
-    color: '#616161',
-    marginBottom: 4,
-  },
-  resultTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#111111',
-    marginBottom: 8,
-  },
-  resultHighlight: {
-    fontSize: 14,
-    color: '#616161',
-    lineHeight: 20,
-  },
-  historyContainer: {
-    padding: 16,
-  },
-  historyTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#111111',
-    marginBottom: 12,
-  },
-  historyItem: {
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  historyText: {
-    fontSize: 16,
-    color: '#111111',
-  },
-  emptyState: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  emptyText: {
-    fontSize: 16,
-    color: '#616161',
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      backgroundColor: theme.colors.card,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    backButton: {
+      width: 40,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    backButtonText: {
+      fontSize: 28,
+      color: theme.colors.accent,
+    },
+    searchInput: {
+      flex: 1,
+      fontSize: 16,
+      color: theme.colors.text,
+      marginLeft: 8,
+    },
+    list: {
+      padding: 16,
+    },
+    resultCard: {
+      backgroundColor: theme.colors.card,
+      borderRadius: 12,
+      padding: 16,
+      marginBottom: 12,
+      borderWidth: theme.isDark ? 1 : 0,
+      borderColor: theme.colors.border,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: theme.isDark ? 0.4 : 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    resultDomain: {
+      fontSize: 12,
+      color: theme.colors.secondary,
+      marginBottom: 4,
+    },
+    resultTitle: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    resultHighlight: {
+      fontSize: 14,
+      color: theme.colors.secondary,
+      lineHeight: 20,
+    },
+    historyContainer: {
+      padding: 16,
+    },
+    historyTitle: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: theme.colors.text,
+      marginBottom: 12,
+    },
+    historyItem: {
+      paddingVertical: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    historyText: {
+      fontSize: 16,
+      color: theme.colors.text,
+    },
+    emptyState: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    emptyText: {
+      fontSize: 16,
+      color: theme.colors.secondary,
+    },
+  });
 
 export default SearchScreen;

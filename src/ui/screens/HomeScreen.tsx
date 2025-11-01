@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,9 @@ import { Article } from '../../domain/Article';
 import { ArticleContextMenu } from '../components/ArticleContextMenu';
 import { RenameModal } from '../components/RenameModal';
 import { ArticleRepository } from '../../data/repositories/ArticleRepository';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../contexts/ThemeContext';
+import { Theme } from '../../constants/themes';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -25,6 +28,9 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 const HomeScreen: React.FC = () => {
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const { articles, loading, fetchArticles, updateArticle, deleteArticle } =
     useArticleStore();
@@ -110,7 +116,7 @@ const HomeScreen: React.FC = () => {
         });
         loadArticles();
       } catch (error) {
-        Alert.alert('Error', 'Failed to archive article');
+        Alert.alert(t('common.error'), t('home.alerts.archiveError'));
       }
     }
     closeContextMenu();
@@ -118,25 +124,21 @@ const HomeScreen: React.FC = () => {
 
   const handleDelete = () => {
     if (contextMenu.article) {
-      Alert.alert(
-        'Delete Article',
-        'Are you sure you want to delete this article? This action cannot be undone.',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          {
-            text: 'Delete',
-            style: 'destructive',
-            onPress: async () => {
-              try {
-                await deleteArticle(contextMenu.article!.id);
-                loadArticles();
-              } catch (error) {
-                Alert.alert('Error', 'Failed to delete article');
-              }
-            },
+      Alert.alert(t('home.alerts.deleteTitle'), t('home.alerts.deleteMessage'), [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('common.delete'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteArticle(contextMenu.article!.id);
+              loadArticles();
+            } catch (error) {
+              Alert.alert(t('common.error'), t('home.alerts.deleteError'));
+            }
           },
-        ],
-      );
+        },
+      ]);
     }
     closeContextMenu();
   };
@@ -148,7 +150,7 @@ const HomeScreen: React.FC = () => {
         updateArticle(renameModal.article.id, { title: newTitle });
         loadArticles();
       } catch (error) {
-        Alert.alert('Error', 'Failed to rename article');
+        Alert.alert(t('common.error'), t('home.alerts.renameError'));
       }
     }
     setRenameModal({ visible: false, article: null });
@@ -166,7 +168,9 @@ const HomeScreen: React.FC = () => {
         {item.title}
       </Text>
       <View style={styles.meta}>
-        <Text style={styles.metaText}>{item.readingTime} min read</Text>
+        <Text style={styles.metaText}>
+          {t('home.readTime', { count: item.readingTime })}
+        </Text>
         {item.favorite && <Text style={styles.metaText}>⭐</Text>}
       </View>
     </TouchableOpacity>
@@ -174,20 +178,18 @@ const HomeScreen: React.FC = () => {
 
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <Text style={styles.emptyTitle}>No articles yet</Text>
-      <Text style={styles.emptyText}>
-        Tap the + button to save your first article
-      </Text>
+      <Text style={styles.emptyTitle}>{t('home.emptyState')}</Text>
+      <Text style={styles.emptyText}>{t('home.emptyHint')}</Text>
     </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={theme.statusBarStyle} />
 
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>PageNest</Text>
+        <Text style={styles.headerTitle}>{t('home.title')}</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity
             style={styles.headerButton}
@@ -216,7 +218,7 @@ const HomeScreen: React.FC = () => {
               selectedTab === 'all' && styles.tabTextActive,
             ]}
           >
-            All
+            {t('home.tabs.all')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -229,7 +231,7 @@ const HomeScreen: React.FC = () => {
               selectedTab === 'favorites' && styles.tabTextActive,
             ]}
           >
-            Favorites
+            {t('home.tabs.favorites')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -242,7 +244,7 @@ const HomeScreen: React.FC = () => {
               selectedTab === 'archived' && styles.tabTextActive,
             ]}
           >
-            Archived
+            {t('home.tabs.archived')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -287,135 +289,140 @@ const HomeScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FAFAFA',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#111111',
-  },
-  headerActions: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  headerButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerButtonText: {
-    fontSize: 20,
-  },
-  tabs: {
-    flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  tab: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginRight: 8,
-    borderRadius: 20,
-  },
-  tabActive: {
-    backgroundColor: '#3A84F7',
-  },
-  tabText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#616161',
-  },
-  tabTextActive: {
-    color: '#FFFFFF',
-  },
-  list: {
-    padding: 16,
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  domain: {
-    fontSize: 12,
-    color: '#616161',
-    marginBottom: 4,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#111111',
-    marginBottom: 8,
-  },
-  meta: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  metaText: {
-    fontSize: 12,
-    color: '#616161',
-  },
-  emptyState: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#111111',
-    marginBottom: 8,
-  },
-  emptyText: {
-    fontSize: 14,
-    color: '#616161',
-    textAlign: 'center',
-  },
-  fab: {
-    position: 'absolute',
-    right: 20,
-    bottom: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#3A84F7',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  fabText: {
-    fontSize: 32,
-    color: '#FFFFFF',
-    fontWeight: '300',
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      paddingVertical: 16,
+      backgroundColor: theme.colors.card,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    headerTitle: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: theme.colors.text,
+    },
+    headerActions: {
+      flexDirection: 'row',
+      gap: 12,
+    },
+    headerButton: {
+      width: 40,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    headerButtonText: {
+      fontSize: 20,
+      color: theme.colors.accent,
+    },
+    tabs: {
+      flexDirection: 'row',
+      backgroundColor: theme.colors.card,
+      paddingHorizontal: 20,
+      paddingVertical: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    tab: {
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      marginRight: 8,
+      borderRadius: 20,
+      backgroundColor: theme.colors.background,
+    },
+    tabActive: {
+      backgroundColor: theme.colors.accent,
+    },
+    tabText: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: theme.colors.secondary,
+    },
+    tabTextActive: {
+      color: theme.colors.card,
+    },
+    list: {
+      padding: 16,
+    },
+    card: {
+      backgroundColor: theme.colors.card,
+      borderRadius: 12,
+      padding: 16,
+      marginBottom: 12,
+      borderWidth: theme.isDark ? 1 : 0,
+      borderColor: theme.colors.border,
+      shadowColor: theme.isDark ? '#000' : '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: theme.isDark ? 0.4 : 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    domain: {
+      fontSize: 12,
+      color: theme.colors.secondary,
+      marginBottom: 4,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    meta: {
+      flexDirection: 'row',
+      gap: 12,
+    },
+    metaText: {
+      fontSize: 12,
+      color: theme.colors.muted,
+    },
+    emptyState: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingTop: 100,
+    },
+    emptyTitle: {
+      fontSize: 20,
+      fontWeight: '600',
+      color: theme.colors.text,
+      marginBottom: 8,
+    },
+    emptyText: {
+      fontSize: 14,
+      color: theme.colors.secondary,
+      textAlign: 'center',
+    },
+    fab: {
+      position: 'absolute',
+      right: 20,
+      bottom: 20,
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      backgroundColor: theme.colors.accent,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      elevation: 8,
+    },
+    fabText: {
+      fontSize: 32,
+      color: theme.colors.card,
+      fontWeight: '300',
+    },
+  });
 
 export default HomeScreen;

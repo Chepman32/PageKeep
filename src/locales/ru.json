@@ -9,12 +9,25 @@
     "search": "Поиск",
     "loading": "Загрузка...",
     "error": "Ошибка",
-    "success": "Успешно"
+    "success": "Успешно",
+    "rename": "Переименовать",
+    "archive": "В архив",
+    "view": "Открыть",
+    "ok": "ОК"
   },
   "home": {
     "title": "PageNest",
     "emptyState": "Пока нет статей",
     "emptyHint": "Нажмите кнопку +, чтобы сохранить первую статью",
+    "readTime_one": "{{count}} мин чтения",
+    "readTime_other": "{{count}} мин чтения",
+    "alerts": {
+      "archiveError": "Не удалось переместить статью в архив",
+      "deleteTitle": "Удалить статью",
+      "deleteMessage": "Вы уверены, что хотите удалить эту статью? Это действие нельзя отменить.",
+      "deleteError": "Не удалось удалить статью",
+      "renameError": "Не удалось переименовать статью"
+    },
     "tabs": {
       "all": "Все",
       "favorites": "Избранное",
@@ -29,21 +42,78 @@
   },
   "add": {
     "title": "Добавить статью",
+    "urlLabel": "Введите URL",
     "urlPlaceholder": "https://example.com/article",
     "saveButton": "Сохранить статью",
-    "hint": "Совет: Вы также можете использовать Share Extension из Safari для сохранения статей напрямую."
+    "hint": "Совет: вы также можете использовать расширение Safari, чтобы сохранять статьи напрямую.",
+    "success": "Статья сохраняется!",
+    "errors": {
+      "emptyUrl": "Введите URL",
+      "invalidUrl": "Введите корректный URL, начинающийся с http:// или https://",
+      "saveFailed": "Не удалось сохранить статью. Попробуйте снова."
+    }
   },
   "search": {
     "placeholder": "Поиск статей...",
-    "recentSearches": "Недавние поиски",
+    "recentSearches": "Недавние запросы",
     "noResults": "Ничего не найдено"
   },
   "settings": {
     "title": "Настройки",
     "account": "Аккаунт",
+    "status": "Статус",
+    "pro": "Pro",
+    "free": "Бесплатно",
+    "appearance": "Оформление",
+    "theme": "Тема",
+    "themes": {
+      "light": "Светлая",
+      "dark": "Тёмная",
+      "solar": "Солнечная",
+      "mono": "Моно"
+    },
+    "feedback": "Отклик",
+    "sound": "Звук",
+    "haptics": "Вибрация",
+    "language": "Язык",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
     "readerDefaults": "Настройки чтения",
-    "downloadSettings": "Настройки загрузки",
+    "downloadSettings": "Загрузки",
+    "download": {
+      "wifiOnly": "Только по Wi‑Fi",
+      "images": "Загружать изображения",
+      "styles": "Загружать стили",
+      "fonts": "Загружать шрифты"
+    },
     "storage": "Хранилище",
-    "about": "О приложении"
+    "storageUsed": "Использовано",
+    "about": "О приложении",
+    "version": "Версия",
+    "privacy": "Конфиденциальность",
+    "noDataCollection": "Данные не собираются"
+  },
+  "modals": {
+    "rename": {
+      "title": "Переименовать статью",
+      "placeholder": "Введите новое название",
+      "error": "Название не может быть пустым"
+    }
   }
 }

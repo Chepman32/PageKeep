@@ -1,0 +1,119 @@
+{
+  "common": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "done": "Gotowe",
+    "back": "Wstecz",
+    "search": "Szukaj",
+    "loading": "Ładowanie...",
+    "error": "Błąd",
+    "success": "Sukces",
+    "rename": "Zmień nazwę",
+    "archive": "Archiwizuj",
+    "view": "Otwórz",
+    "ok": "OK"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Brak artykułów",
+    "emptyHint": "Stuknij przycisk +, aby zapisać pierwszy artykuł",
+    "readTime_one": "{{count}} min czytania",
+    "readTime_other": "{{count}} min czytania",
+    "alerts": {
+      "archiveError": "Nie udało się zarchiwizować artykułu",
+      "deleteTitle": "Usuń artykuł",
+      "deleteMessage": "Czy na pewno chcesz usunąć ten artykuł? Tej operacji nie można cofnąć.",
+      "deleteError": "Nie udało się usunąć artykułu",
+      "renameError": "Nie udało się zmienić nazwy artykułu"
+    },
+    "tabs": {
+      "all": "Wszystkie",
+      "favorites": "Ulubione",
+      "archived": "Archiwum"
+    }
+  },
+  "reader": {
+    "fontSize": "Rozmiar czcionki",
+    "theme": "Motyw",
+    "lineHeight": "Interlinia",
+    "margins": "Marginesy"
+  },
+  "add": {
+    "title": "Dodaj artykuł",
+    "urlLabel": "Wprowadź adres URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Zapisz artykuł",
+    "hint": "Wskazówka: użyj rozszerzenia udostępniania Safari, aby zapisywać artykuły bezpośrednio.",
+    "success": "Artykuł jest zapisywany!",
+    "errors": {
+      "emptyUrl": "Podaj adres URL",
+      "invalidUrl": "Podaj poprawny adres URL zaczynający się od http:// lub https://",
+      "saveFailed": "Nie udało się zapisać artykułu. Spróbuj ponownie."
+    }
+  },
+  "search": {
+    "placeholder": "Szukaj artykułów...",
+    "recentSearches": "Ostatnie wyszukiwania",
+    "noResults": "Brak wyników"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "account": "Konto",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Darmowe",
+    "appearance": "Wygląd",
+    "theme": "Motyw",
+    "themes": {
+      "light": "Jasny",
+      "dark": "Ciemny",
+      "solar": "Słoneczny",
+      "mono": "Mono"
+    },
+    "feedback": "Sprzężenie",
+    "sound": "Dźwięk",
+    "haptics": "Wibracje",
+    "language": "Język",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
+    "readerDefaults": "Preferencje czytnika",
+    "downloadSettings": "Pobieranie",
+    "download": {
+      "wifiOnly": "Tylko Wi-Fi",
+      "images": "Pobieraj obrazy",
+      "styles": "Pobieraj style",
+      "fonts": "Pobieraj czcionki"
+    },
+    "storage": "Pamięć",
+    "storageUsed": "Wykorzystano",
+    "about": "Informacje",
+    "version": "Wersja",
+    "privacy": "Prywatność",
+    "noDataCollection": "Brak gromadzenia danych"
+  },
+  "modals": {
+    "rename": {
+      "title": "Zmień nazwę artykułu",
+      "placeholder": "Wpisz nowy tytuł",
+      "error": "Tytuł nie może być pusty"
+    }
+  }
+}

@@ -18,12 +18,20 @@ export interface DownloadSettings {
   downloadFonts: boolean;
 }
 
+export interface AppPreferences {
+  soundEnabled: boolean;
+  hapticsEnabled: boolean;
+  language: string;
+}
+
 interface SettingsStore {
   readerDefaults: ReaderSettings;
   downloadSettings: DownloadSettings;
+  preferences: AppPreferences;
 
   updateReaderDefaults: (settings: Partial<ReaderSettings>) => void;
   updateDownloadSettings: (settings: Partial<DownloadSettings>) => void;
+  updatePreferences: (settings: Partial<AppPreferences>) => void;
   loadSettings: () => void;
 }
 
@@ -43,6 +51,12 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     downloadImages: true,
     downloadStyles: true,
     downloadFonts: true,
+  },
+
+  preferences: {
+    soundEnabled: Storage.getSoundEnabled(),
+    hapticsEnabled: Storage.getHapticsEnabled(),
+    language: Storage.getLanguage(),
   },
 
   updateReaderDefaults: (settings: Partial<ReaderSettings>) => {
@@ -82,6 +96,26 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     });
   },
 
+  updatePreferences: (settings: Partial<AppPreferences>) => {
+    set(state => {
+      const newPreferences = { ...state.preferences, ...settings };
+
+      if (settings.soundEnabled !== undefined) {
+        Storage.setSoundEnabled(settings.soundEnabled);
+      }
+
+      if (settings.hapticsEnabled !== undefined) {
+        Storage.setHapticsEnabled(settings.hapticsEnabled);
+      }
+
+      if (settings.language) {
+        Storage.setLanguage(settings.language);
+      }
+
+      return { preferences: newPreferences };
+    });
+  },
+
   loadSettings: () => {
     set({
       readerDefaults: {
@@ -98,6 +132,11 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
         downloadImages: Storage.getDownloadImages(),
         downloadStyles: Storage.getDownloadStyles(),
         downloadFonts: Storage.getDownloadFonts(),
+      },
+      preferences: {
+        soundEnabled: Storage.getSoundEnabled(),
+        hapticsEnabled: Storage.getHapticsEnabled(),
+        language: Storage.getLanguage(),
       },
     });
   },

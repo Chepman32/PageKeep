@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { AppNavigator } from './src/ui/navigation/AppNavigator';
 import { FileSystem } from './src/utils/fileSystem';
 import { getDatabase } from './src/data/database';
+import { ThemeProvider } from './src/contexts/ThemeContext';
+import './src/locales';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -22,7 +24,11 @@ const App: React.FC = () => {
     }
   };
 
-  return <AppNavigator />;
+  return (
+    <ThemeProvider>
+      <AppNavigator />
+    </ThemeProvider>
+  );
 };
 
 export default App;

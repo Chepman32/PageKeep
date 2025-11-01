@@ -1,0 +1,119 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "done": "Listo",
+    "back": "Atrás",
+    "search": "Buscar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "rename": "Renombrar",
+    "archive": "Archivar",
+    "view": "Ver",
+    "ok": "Aceptar"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Todavía no hay artículos",
+    "emptyHint": "Toca el botón + para guardar tu primer artículo",
+    "readTime_one": "{{count}} min de lectura",
+    "readTime_other": "{{count}} min de lectura",
+    "alerts": {
+      "archiveError": "No se pudo archivar el artículo",
+      "deleteTitle": "Eliminar artículo",
+      "deleteMessage": "¿Seguro que quieres eliminar este artículo? Esta acción no se puede deshacer.",
+      "deleteError": "No se pudo eliminar el artículo",
+      "renameError": "No se pudo renombrar el artículo"
+    },
+    "tabs": {
+      "all": "Todos",
+      "favorites": "Favoritos",
+      "archived": "Archivados"
+    }
+  },
+  "reader": {
+    "fontSize": "Tamaño de fuente",
+    "theme": "Tema",
+    "lineHeight": "Interlineado",
+    "margins": "Márgenes"
+  },
+  "add": {
+    "title": "Añadir artículo",
+    "urlLabel": "Introducir URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Guardar artículo",
+    "hint": "Consejo: usa la extensión para compartir de Safari para guardar artículos directamente.",
+    "success": "¡El artículo se está guardando!",
+    "errors": {
+      "emptyUrl": "Introduce una URL",
+      "invalidUrl": "Introduce una URL válida que comience con http:// o https://",
+      "saveFailed": "No se pudo guardar el artículo. Inténtalo de nuevo."
+    }
+  },
+  "search": {
+    "placeholder": "Buscar artículos...",
+    "recentSearches": "Búsquedas recientes",
+    "noResults": "No se encontraron resultados"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "account": "Cuenta",
+    "status": "Estado",
+    "pro": "Pro",
+    "free": "Gratis",
+    "appearance": "Apariencia",
+    "theme": "Tema",
+    "themes": {
+      "light": "Claro",
+      "dark": "Oscuro",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Retroalimentación",
+    "sound": "Sonido",
+    "haptics": "Háptica",
+    "language": "Idioma",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
+    "readerDefaults": "Preferencias del lector",
+    "downloadSettings": "Descargas",
+    "download": {
+      "wifiOnly": "Solo Wi-Fi",
+      "images": "Descargar imágenes",
+      "styles": "Descargar estilos",
+      "fonts": "Descargar fuentes"
+    },
+    "storage": "Almacenamiento",
+    "storageUsed": "Usado",
+    "about": "Acerca de",
+    "version": "Versión",
+    "privacy": "Privacidad",
+    "noDataCollection": "Sin recopilación de datos"
+  },
+  "modals": {
+    "rename": {
+      "title": "Renombrar artículo",
+      "placeholder": "Introduce el nuevo título",
+      "error": "El título no puede estar vacío"
+    }
+  }
+}

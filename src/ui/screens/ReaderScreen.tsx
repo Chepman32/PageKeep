@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -14,11 +14,14 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 import { ArticleRepository } from '../../data/repositories/ArticleRepository';
 import { FileSystem } from '../../utils/fileSystem';
 import { useSettingsStore } from '../../store/settingsStore';
-import { generateReaderCSS, themes } from '../../constants/themes';
+import { generateReaderCSS, themes, Theme } from '../../constants/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 
 type ReaderScreenRouteProp = RouteProp<RootStackParamList, 'Reader'>;
 
 const ReaderScreen: React.FC = () => {
+  const { theme: appTheme } = useTheme();
+  const styles = useMemo(() => createStyles(appTheme), [appTheme]);
   const navigation = useNavigation();
   const route = useRoute<ReaderScreenRouteProp>();
   const { articleId } = route.params;
@@ -88,6 +91,38 @@ const ReaderScreen: React.FC = () => {
     loadArticle();
   }, [articleId]);
 
+  useEffect(() => {
+    if (!webViewRef.current) {
+      return;
+    }
+
+    const theme =
+      themes[readerDefaults.theme as keyof typeof themes] || themes.light;
+    const themeCSS = generateReaderCSS(
+      theme,
+      readerDefaults.fontSize,
+      readerDefaults.lineHeight,
+      readerDefaults.margins,
+    );
+
+    const jsCode = `
+      (function() {
+        const style = document.getElementById('pn-theme');
+        if (style) {
+          style.textContent = ${JSON.stringify(themeCSS)};
+        }
+      })();
+      true;
+    `;
+
+    webViewRef.current.injectJavaScript(jsCode);
+  }, [
+    readerDefaults.theme,
+    readerDefaults.fontSize,
+    readerDefaults.lineHeight,
+    readerDefaults.margins,
+  ]);
+
   const loadArticle = async () => {
     try {
       const article = await articleRepo.findById(articleId);
@@ -156,7 +191,7 @@ const ReaderScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={appTheme.statusBarStyle} />
 
       {/* Header */}
       <View style={styles.header}>
@@ -175,7 +210,7 @@ const ReaderScreen: React.FC = () => {
       {/* Loading or WebView */}
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#3A84F7" />
+          <ActivityIndicator size="large" color={appTheme.colors.accent} />
         </View>
       ) : (
         <WebView
@@ -203,48 +238,50 @@ const ReaderScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  backButtonText: {
-    fontSize: 28,
-    color: '#3A84F7',
-  },
-  headerTitle: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#111111',
-    marginHorizontal: 12,
-  },
-  headerSpacer: {
-    width: 40,
-  },
-  webview: {
-    flex: 1,
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      backgroundColor: theme.colors.card,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    backButton: {
+      width: 40,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    backButtonText: {
+      fontSize: 28,
+      color: theme.colors.accent,
+    },
+    headerTitle: {
+      flex: 1,
+      fontSize: 16,
+      fontWeight: '600',
+      color: theme.colors.text,
+      marginHorizontal: 12,
+    },
+    headerSpacer: {
+      width: 40,
+    },
+    webview: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+  });
 
 export default ReaderScreen;

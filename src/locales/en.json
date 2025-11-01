@@ -9,12 +9,25 @@
     "search": "Search",
     "loading": "Loading...",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "rename": "Rename",
+    "archive": "Archive",
+    "view": "View",
+    "ok": "OK"
   },
   "home": {
     "title": "PageNest",
     "emptyState": "No articles yet",
     "emptyHint": "Tap the + button to save your first article",
+    "readTime_one": "{{count}} min read",
+    "readTime_other": "{{count}} min read",
+    "alerts": {
+      "archiveError": "Failed to archive article",
+      "deleteTitle": "Delete Article",
+      "deleteMessage": "Are you sure you want to delete this article? This action cannot be undone.",
+      "deleteError": "Failed to delete article",
+      "renameError": "Failed to rename article"
+    },
     "tabs": {
       "all": "All",
       "favorites": "Favorites",
@@ -29,9 +42,16 @@
   },
   "add": {
     "title": "Add Article",
+    "urlLabel": "Enter URL",
     "urlPlaceholder": "https://example.com/article",
     "saveButton": "Save Article",
-    "hint": "Tip: You can also use the Share Extension from Safari to save articles directly."
+    "hint": "Tip: You can also use the Share Extension from Safari to save articles directly.",
+    "success": "Article is being saved!",
+    "errors": {
+      "emptyUrl": "Please enter a URL",
+      "invalidUrl": "Please enter a valid URL starting with http:// or https://",
+      "saveFailed": "Failed to save article. Please try again."
+    }
   },
   "search": {
     "placeholder": "Search articles...",
@@ -41,9 +61,59 @@
   "settings": {
     "title": "Settings",
     "account": "Account",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Free",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Feedback",
+    "sound": "Sound",
+    "haptics": "Haptics",
+    "language": "Language",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
     "readerDefaults": "Reader Defaults",
     "downloadSettings": "Download Settings",
+    "download": {
+      "wifiOnly": "Wi-Fi Only",
+      "images": "Download Images",
+      "styles": "Download Styles",
+      "fonts": "Download Fonts"
+    },
     "storage": "Storage",
-    "about": "About"
+    "storageUsed": "Used",
+    "about": "About",
+    "version": "Version",
+    "privacy": "Privacy",
+    "noDataCollection": "No data collection"
+  },
+  "modals": {
+    "rename": {
+      "title": "Rename Article",
+      "placeholder": "Enter new title",
+      "error": "Title cannot be empty"
+    }
   }
 }

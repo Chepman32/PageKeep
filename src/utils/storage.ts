@@ -1,9 +1,65 @@
-import { MMKV } from 'react-native-mmkv';
+import type { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 
-export const storage = new MMKV({
-  id: 'pagenest-storage',
-  encryptionKey: 'pagenest-encryption-key-2024',
-});
+type StorageAdapter = Pick<
+  MMKV,
+  'set' | 'getString' | 'getNumber' | 'getBoolean' | 'remove' | 'clearAll'
+>;
+
+class MemoryStorage implements StorageAdapter {
+  private store = new Map<string, string | number | boolean>();
+
+  set(key: string, value: string | number | boolean): void {
+    this.store.set(key, value);
+  }
+
+  getString(key: string): string | undefined {
+    const value = this.store.get(key);
+    return typeof value === 'string' ? value : undefined;
+  }
+
+  getNumber(key: string): number | undefined {
+    const value = this.store.get(key);
+    return typeof value === 'number' ? value : undefined;
+  }
+
+  getBoolean(key: string): boolean | undefined {
+    const value = this.store.get(key);
+    return typeof value === 'boolean' ? value : undefined;
+  }
+
+  remove(key: string): boolean {
+    this.store.delete(key);
+    return true;
+  }
+
+  clearAll(): void {
+    this.store.clear();
+  }
+}
+
+const createStorage = (): StorageAdapter => {
+  try {
+    const instance = createMMKV({
+      id: 'pagenest-storage',
+      encryptionKey: 'pagenest-encryption-key-2024',
+    });
+
+    if (!instance) {
+      throw new Error('createMMKV returned undefined');
+    }
+
+    return instance;
+  } catch (error) {
+    console.warn(
+      '[storage] Falling back to in-memory storage because MMKV is unavailable.',
+      error,
+    );
+    return new MemoryStorage();
+  }
+};
+
+export const storage: StorageAdapter = createStorage();
 
 export const StorageKeys = {
   ONBOARDING_COMPLETED: 'onboarding_completed',
@@ -22,6 +78,8 @@ export const StorageKeys = {
   DOWNLOAD_FONTS: 'download_fonts',
   IAP_PRO_STATUS: 'iap_pro_status',
   LANGUAGE: 'language',
+  SOUND_ENABLED: 'sound_enabled',
+  HAPTICS_ENABLED: 'haptics_enabled',
 } as const;
 
 export const Storage = {
@@ -49,7 +107,7 @@ export const Storage = {
   },
 
   delete(key: string): void {
-    storage.delete(key);
+    storage.remove(key);
   },
 
   // JSON methods
@@ -200,9 +258,40 @@ export const Storage = {
     this.set(StorageKeys.IAP_PRO_STATUS, isPro);
   },
 
+  // Feedback preferences
+  getSoundEnabled(): boolean {
+    const value = this.getBoolean(StorageKeys.SOUND_ENABLED);
+    return value ?? true;
+  },
+
+  setSoundEnabled(enabled: boolean): void {
+    this.set(StorageKeys.SOUND_ENABLED, enabled);
+  },
+
+  getHapticsEnabled(): boolean {
+    const value = this.getBoolean(StorageKeys.HAPTICS_ENABLED);
+    return value ?? true;
+  },
+
+  setHapticsEnabled(enabled: boolean): void {
+    this.set(StorageKeys.HAPTICS_ENABLED, enabled);
+  },
+
   // Language
   getLanguage(): string {
-    return this.getString(StorageKeys.LANGUAGE) || 'en';
+    const value = this.getString(StorageKeys.LANGUAGE) || 'en';
+    switch (value) {
+      case 'es':
+        return 'sp';
+      case 'pt':
+        return 'por';
+      case 'ja':
+        return 'jp';
+      case 'uk':
+        return 'ua';
+      default:
+        return value;
+    }
   },
 
   setLanguage(lang: string): void {

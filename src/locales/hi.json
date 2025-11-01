@@ -1,0 +1,119 @@
+{
+  "common": {
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "delete": "हटाएँ",
+    "edit": "संपादित करें",
+    "done": "समाप्त",
+    "back": "वापस",
+    "search": "खोजें",
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "success": "सफल",
+    "rename": "नाम बदलें",
+    "archive": "आर्काइव",
+    "view": "देखें",
+    "ok": "ठीक"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "अभी कोई लेख नहीं",
+    "emptyHint": "+ बटन दबाकर अपना पहला लेख सहेजें",
+    "readTime_one": "{{count}} मिनट का पढ़ना",
+    "readTime_other": "{{count}} मिनट का पढ़ना",
+    "alerts": {
+      "archiveError": "लेख को आर्काइव नहीं किया जा सका",
+      "deleteTitle": "लेख हटाएँ",
+      "deleteMessage": "क्या आप वाकई इस लेख को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+      "deleteError": "लेख हटाया नहीं जा सका",
+      "renameError": "लेख का नाम बदला नहीं जा सका"
+    },
+    "tabs": {
+      "all": "सभी",
+      "favorites": "पसंदीदा",
+      "archived": "आर्काइव"
+    }
+  },
+  "reader": {
+    "fontSize": "फ़ॉन्ट आकार",
+    "theme": "थीम",
+    "lineHeight": "पंक्ति ऊँचाई",
+    "margins": "हाशिये"
+  },
+  "add": {
+    "title": "लेख जोड़ें",
+    "urlLabel": "URL दर्ज करें",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "लेख सहेजें",
+    "hint": "संकेत: Safari शेयर एक्सटेंशन का उपयोग करके सीधे लेख सहेजें।",
+    "success": "लेख सहेजा जा रहा है!",
+    "errors": {
+      "emptyUrl": "कृपया URL दर्ज करें",
+      "invalidUrl": "कृपया http:// या https:// से शुरू होने वाला मान्य URL दर्ज करें",
+      "saveFailed": "लेख सहेजा नहीं जा सका। पुनः प्रयास करें।"
+    }
+  },
+  "search": {
+    "placeholder": "लेख खोजें...",
+    "recentSearches": "हाल की खोजें",
+    "noResults": "कोई परिणाम नहीं मिला"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "account": "खाता",
+    "status": "स्थिति",
+    "pro": "Pro",
+    "free": "निःशुल्क",
+    "appearance": "रूप",
+    "theme": "थीम",
+    "themes": {
+      "light": "हल्का",
+      "dark": "गहरा",
+      "solar": "सोलर",
+      "mono": "मोनो"
+    },
+    "feedback": "प्रतिक्रिया",
+    "sound": "ध्वनि",
+    "haptics": "हैप्टिक",
+    "language": "भाषा",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
+    "readerDefaults": "रीडर सेटिंग्स",
+    "downloadSettings": "डाउनलोड",
+    "download": {
+      "wifiOnly": "केवल वाई-फाई",
+      "images": "छवियाँ डाउनलोड करें",
+      "styles": "शैली डाउनलोड करें",
+      "fonts": "फॉन्ट डाउनलोड करें"
+    },
+    "storage": "भंडारण",
+    "storageUsed": "उपयोग हुआ",
+    "about": "परिचय",
+    "version": "संस्करण",
+    "privacy": "गोपनीयता",
+    "noDataCollection": "कोई डेटा संग्रह नहीं"
+  },
+  "modals": {
+    "rename": {
+      "title": "लेख का नाम बदलें",
+      "placeholder": "नया शीर्षक दर्ज करें",
+      "error": "शीर्षक खाली नहीं हो सकता"
+    }
+  }
+}

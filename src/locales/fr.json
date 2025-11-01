@@ -1,0 +1,119 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "done": "Terminé",
+    "back": "Retour",
+    "search": "Rechercher",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "rename": "Renommer",
+    "archive": "Archiver",
+    "view": "Voir",
+    "ok": "OK"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Pas encore d'article",
+    "emptyHint": "Touchez le bouton + pour enregistrer votre premier article",
+    "readTime_one": "{{count}} min de lecture",
+    "readTime_other": "{{count}} min de lecture",
+    "alerts": {
+      "archiveError": "Impossible d'archiver l'article",
+      "deleteTitle": "Supprimer l'article",
+      "deleteMessage": "Voulez-vous vraiment supprimer cet article ? Cette action est irréversible.",
+      "deleteError": "Impossible de supprimer l'article",
+      "renameError": "Impossible de renommer l'article"
+    },
+    "tabs": {
+      "all": "Tous",
+      "favorites": "Favoris",
+      "archived": "Archivés"
+    }
+  },
+  "reader": {
+    "fontSize": "Taille de police",
+    "theme": "Thème",
+    "lineHeight": "Interligne",
+    "margins": "Marges"
+  },
+  "add": {
+    "title": "Ajouter un article",
+    "urlLabel": "Entrer l'URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Enregistrer l'article",
+    "hint": "Astuce : utilisez l'extension de partage Safari pour enregistrer des articles directement.",
+    "success": "L'article est en cours d'enregistrement !",
+    "errors": {
+      "emptyUrl": "Veuillez saisir une URL",
+      "invalidUrl": "Veuillez saisir une URL valide commençant par http:// ou https://",
+      "saveFailed": "Impossible d'enregistrer l'article. Réessayez."
+    }
+  },
+  "search": {
+    "placeholder": "Rechercher des articles...",
+    "recentSearches": "Recherches récentes",
+    "noResults": "Aucun résultat"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "account": "Compte",
+    "status": "Statut",
+    "pro": "Pro",
+    "free": "Gratuit",
+    "appearance": "Apparence",
+    "theme": "Thème",
+    "themes": {
+      "light": "Clair",
+      "dark": "Sombre",
+      "solar": "Solaire",
+      "mono": "Mono"
+    },
+    "feedback": "Retour tactile",
+    "sound": "Son",
+    "haptics": "Vibrations",
+    "language": "Langue",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
+    "readerDefaults": "Préférences de lecture",
+    "downloadSettings": "Téléchargements",
+    "download": {
+      "wifiOnly": "Wi-Fi uniquement",
+      "images": "Télécharger les images",
+      "styles": "Télécharger les styles",
+      "fonts": "Télécharger les polices"
+    },
+    "storage": "Stockage",
+    "storageUsed": "Utilisé",
+    "about": "À propos",
+    "version": "Version",
+    "privacy": "Confidentialité",
+    "noDataCollection": "Aucune collecte de données"
+  },
+  "modals": {
+    "rename": {
+      "title": "Renommer l'article",
+      "placeholder": "Entrer un nouveau titre",
+      "error": "Le titre ne peut pas être vide"
+    }
+  }
+}

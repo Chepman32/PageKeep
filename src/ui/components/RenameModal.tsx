@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,9 @@ import {
   Modal,
   Alert,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../contexts/ThemeContext';
+import { Theme } from '../../constants/themes';
 
 interface RenameModalProps {
   visible: boolean;
@@ -22,6 +25,9 @@ export const RenameModal: React.FC<RenameModalProps> = ({
   onClose,
   onSave,
 }) => {
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
   const [title, setTitle] = useState(currentTitle);
 
   useEffect(() => {
@@ -30,7 +36,7 @@ export const RenameModal: React.FC<RenameModalProps> = ({
 
   const handleSave = () => {
     if (!title.trim()) {
-      Alert.alert('Error', 'Title cannot be empty');
+      Alert.alert(t('common.error'), t('modals.rename.error'));
       return;
     }
 
@@ -47,24 +53,24 @@ export const RenameModal: React.FC<RenameModalProps> = ({
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>
-          <Text style={styles.title}>Rename Article</Text>
+          <Text style={styles.title}>{t('modals.rename.title')}</Text>
 
           <TextInput
             style={styles.input}
             value={title}
             onChangeText={setTitle}
-            placeholder="Enter new title"
+            placeholder={t('modals.rename.placeholder')}
             multiline
             autoFocus
           />
 
           <View style={styles.buttons}>
             <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-              <Text style={styles.cancelText}>Cancel</Text>
+              <Text style={styles.cancelText}>{t('common.cancel')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.saveText}>Save</Text>
+              <Text style={styles.saveText}>{t('common.save')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -73,65 +79,70 @@ export const RenameModal: React.FC<RenameModalProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  modal: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 20,
-    width: '100%',
-    maxWidth: 400,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#111111',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
-    color: '#111111',
-    marginBottom: 20,
-    minHeight: 80,
-    textAlignVertical: 'top',
-  },
-  buttons: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  cancelButton: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    alignItems: 'center',
-  },
-  saveButton: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
-    backgroundColor: '#3A84F7',
-    alignItems: 'center',
-  },
-  cancelText: {
-    fontSize: 16,
-    color: '#616161',
-  },
-  saveText: {
-    fontSize: 16,
-    color: '#FFFFFF',
-    fontWeight: '600',
-  },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+    },
+    modal: {
+      backgroundColor: theme.colors.card,
+      borderRadius: 12,
+      padding: 20,
+      width: '100%',
+      maxWidth: 400,
+      borderWidth: theme.isDark ? 1 : 0,
+      borderColor: theme.colors.border,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: theme.colors.text,
+      marginBottom: 16,
+      textAlign: 'center',
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: 8,
+      padding: 12,
+      fontSize: 16,
+      color: theme.colors.text,
+      marginBottom: 20,
+      minHeight: 80,
+      textAlignVertical: 'top',
+      backgroundColor: theme.colors.background,
+    },
+    buttons: {
+      flexDirection: 'row',
+      gap: 12,
+    },
+    cancelButton: {
+      flex: 1,
+      paddingVertical: 12,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      alignItems: 'center',
+      backgroundColor: theme.colors.background,
+    },
+    saveButton: {
+      flex: 1,
+      paddingVertical: 12,
+      borderRadius: 8,
+      backgroundColor: theme.colors.accent,
+      alignItems: 'center',
+    },
+    cancelText: {
+      fontSize: 16,
+      color: theme.colors.secondary,
+    },
+    saveText: {
+      fontSize: 16,
+      color: theme.colors.card,
+      fontWeight: '600',
+    },
+  });

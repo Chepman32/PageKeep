@@ -1,0 +1,119 @@
+{
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "done": "Concluído",
+    "back": "Voltar",
+    "search": "Pesquisar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "rename": "Renomear",
+    "archive": "Arquivar",
+    "view": "Ver",
+    "ok": "OK"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Nenhum artigo ainda",
+    "emptyHint": "Toque no botão + para salvar seu primeiro artigo",
+    "readTime_one": "{{count}} min de leitura",
+    "readTime_other": "{{count}} min de leitura",
+    "alerts": {
+      "archiveError": "Não foi possível arquivar o artigo",
+      "deleteTitle": "Excluir artigo",
+      "deleteMessage": "Tem certeza de que deseja excluir este artigo? Essa ação não pode ser desfeita.",
+      "deleteError": "Não foi possível excluir o artigo",
+      "renameError": "Não foi possível renomear o artigo"
+    },
+    "tabs": {
+      "all": "Todos",
+      "favorites": "Favoritos",
+      "archived": "Arquivados"
+    }
+  },
+  "reader": {
+    "fontSize": "Tamanho da fonte",
+    "theme": "Tema",
+    "lineHeight": "Altura da linha",
+    "margins": "Margens"
+  },
+  "add": {
+    "title": "Adicionar artigo",
+    "urlLabel": "Inserir URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Salvar artigo",
+    "hint": "Dica: use a extensão de compartilhamento do Safari para salvar artigos diretamente.",
+    "success": "O artigo está sendo salvo!",
+    "errors": {
+      "emptyUrl": "Informe uma URL",
+      "invalidUrl": "Informe uma URL válida começando com http:// ou https://",
+      "saveFailed": "Não foi possível salvar o artigo. Tente novamente."
+    }
+  },
+  "search": {
+    "placeholder": "Pesquisar artigos...",
+    "recentSearches": "Pesquisas recentes",
+    "noResults": "Nenhum resultado encontrado"
+  },
+  "settings": {
+    "title": "Configurações",
+    "account": "Conta",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Grátis",
+    "appearance": "Aparência",
+    "theme": "Tema",
+    "themes": {
+      "light": "Claro",
+      "dark": "Escuro",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Feedback tátil",
+    "sound": "Som",
+    "haptics": "Vibração",
+    "language": "Idioma",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
+    "readerDefaults": "Preferências do leitor",
+    "downloadSettings": "Downloads",
+    "download": {
+      "wifiOnly": "Somente Wi-Fi",
+      "images": "Baixar imagens",
+      "styles": "Baixar estilos",
+      "fonts": "Baixar fontes"
+    },
+    "storage": "Armazenamento",
+    "storageUsed": "Usado",
+    "about": "Sobre",
+    "version": "Versão",
+    "privacy": "Privacidade",
+    "noDataCollection": "Sem coleta de dados"
+  },
+  "modals": {
+    "rename": {
+      "title": "Renomear artigo",
+      "placeholder": "Digite o novo título",
+      "error": "O título não pode ficar vazio"
+    }
+  }
+}

@@ -1,11 +1,12 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useMemo } from 'react';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import ReaderScreen from '../screens/ReaderScreen';
 import AddScreen from '../screens/AddScreen';
 import SearchScreen from '../screens/SearchScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -18,8 +19,27 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator: React.FC = () => {
+  const { theme } = useTheme();
+
+  const navigationTheme = useMemo(
+    () => ({
+      ...DefaultTheme,
+      dark: theme.isDark,
+      colors: {
+        ...DefaultTheme.colors,
+        primary: theme.colors.accent,
+        background: theme.colors.background,
+        card: theme.colors.card,
+        text: theme.colors.text,
+        border: theme.colors.border,
+        notification: theme.colors.accent,
+      },
+    }),
+    [theme],
+  );
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navigationTheme}>
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{

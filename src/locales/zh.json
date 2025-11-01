@@ -1,0 +1,119 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "done": "完成",
+    "back": "返回",
+    "search": "搜索",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "rename": "重命名",
+    "archive": "归档",
+    "view": "查看",
+    "ok": "确定"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "暂无文章",
+    "emptyHint": "点击 + 按钮保存第一篇文章",
+    "readTime_one": "阅读 {{count}} 分钟",
+    "readTime_other": "阅读 {{count}} 分钟",
+    "alerts": {
+      "archiveError": "无法归档文章",
+      "deleteTitle": "删除文章",
+      "deleteMessage": "确定要删除这篇文章吗？此操作无法撤销。",
+      "deleteError": "无法删除文章",
+      "renameError": "无法重命名文章"
+    },
+    "tabs": {
+      "all": "全部",
+      "favorites": "收藏",
+      "archived": "已归档"
+    }
+  },
+  "reader": {
+    "fontSize": "字体大小",
+    "theme": "主题",
+    "lineHeight": "行距",
+    "margins": "页边距"
+  },
+  "add": {
+    "title": "添加文章",
+    "urlLabel": "输入 URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "保存文章",
+    "hint": "提示：使用 Safari 分享扩展可直接保存文章。",
+    "success": "正在保存文章！",
+    "errors": {
+      "emptyUrl": "请输入 URL",
+      "invalidUrl": "请输入以 http:// 或 https:// 开头的有效 URL",
+      "saveFailed": "保存文章失败，请重试。"
+    }
+  },
+  "search": {
+    "placeholder": "搜索文章...",
+    "recentSearches": "最近搜索",
+    "noResults": "未找到结果"
+  },
+  "settings": {
+    "title": "设置",
+    "account": "账户",
+    "status": "状态",
+    "pro": "专业版",
+    "free": "免费",
+    "appearance": "外观",
+    "theme": "主题",
+    "themes": {
+      "light": "明亮",
+      "dark": "深色",
+      "solar": "阳光",
+      "mono": "灰度"
+    },
+    "feedback": "反馈",
+    "sound": "声音",
+    "haptics": "触感",
+    "language": "语言",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
+    "readerDefaults": "阅读设置",
+    "downloadSettings": "下载",
+    "download": {
+      "wifiOnly": "仅 Wi-Fi",
+      "images": "下载图片",
+      "styles": "下载样式",
+      "fonts": "下载字体"
+    },
+    "storage": "存储",
+    "storageUsed": "已用",
+    "about": "关于",
+    "version": "版本",
+    "privacy": "隐私",
+    "noDataCollection": "不收集数据"
+  },
+  "modals": {
+    "rename": {
+      "title": "重命名文章",
+      "placeholder": "输入新标题",
+      "error": "标题不能为空"
+    }
+  }
+}

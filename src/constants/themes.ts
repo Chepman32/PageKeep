@@ -1,6 +1,8 @@
 export interface Theme {
   id: string;
   name: string;
+  isDark: boolean;
+  statusBarStyle: 'light-content' | 'dark-content';
   colors: {
     background: string;
     text: string;
@@ -9,12 +11,15 @@ export interface Theme {
     highlight: string;
     border: string;
     card: string;
+    muted: string;
   };
 }
 
 export const lightTheme: Theme = {
   id: 'light',
   name: 'Light',
+  isDark: false,
+  statusBarStyle: 'dark-content',
   colors: {
     background: '#FAFAFA',
     text: '#111111',
@@ -23,12 +28,15 @@ export const lightTheme: Theme = {
     highlight: '#FFF59D',
     border: '#E0E0E0',
     card: '#FFFFFF',
+    muted: '#9E9E9E',
   },
 };
 
 export const darkTheme: Theme = {
   id: 'dark',
   name: 'Dark',
+  isDark: true,
+  statusBarStyle: 'light-content',
   colors: {
     background: '#0E0F12',
     text: '#ECECEC',
@@ -37,12 +45,49 @@ export const darkTheme: Theme = {
     highlight: '#FFD54F',
     border: '#2C2C2E',
     card: '#1C1C1E',
+    muted: '#5F6368',
+  },
+};
+
+export const solarTheme: Theme = {
+  id: 'solar',
+  name: 'Solar',
+  isDark: false,
+  statusBarStyle: 'dark-content',
+  colors: {
+    background: '#FEF6E4',
+    text: '#3A3A2E',
+    secondary: '#7A7156',
+    accent: '#FF8A3D',
+    highlight: '#FFE0A3',
+    border: '#E5D6B0',
+    card: '#FFF3D9',
+    muted: '#B7A78A',
+  },
+};
+
+export const monoTheme: Theme = {
+  id: 'mono',
+  name: 'Mono',
+  isDark: false,
+  statusBarStyle: 'dark-content',
+  colors: {
+    background: '#F2F2F2',
+    text: '#1F1F1F',
+    secondary: '#5C5C5C',
+    accent: '#8A8A8A',
+    highlight: '#D9D9D9',
+    border: '#C4C4C4',
+    card: '#FFFFFF',
+    muted: '#9B9B9B',
   },
 };
 
 export const themes = {
   light: lightTheme,
   dark: darkTheme,
+  solar: solarTheme,
+  mono: monoTheme,
 };
 
 export const generateReaderCSS = (

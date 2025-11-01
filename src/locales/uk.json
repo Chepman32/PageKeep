@@ -1,0 +1,119 @@
+{
+  "common": {
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "delete": "Видалити",
+    "edit": "Редагувати",
+    "done": "Готово",
+    "back": "Назад",
+    "search": "Пошук",
+    "loading": "Завантаження...",
+    "error": "Помилка",
+    "success": "Успішно",
+    "rename": "Перейменувати",
+    "archive": "В архів",
+    "view": "Відкрити",
+    "ok": "OK"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Ще немає статей",
+    "emptyHint": "Натисніть кнопку +, щоб зберегти першу статтю",
+    "readTime_one": "{{count}} хв читання",
+    "readTime_other": "{{count}} хв читання",
+    "alerts": {
+      "archiveError": "Не вдалося перемістити статтю в архів",
+      "deleteTitle": "Видалити статтю",
+      "deleteMessage": "Ви впевнені, що хочете видалити цю статтю? Дію неможливо скасувати.",
+      "deleteError": "Не вдалося видалити статтю",
+      "renameError": "Не вдалося перейменувати статтю"
+    },
+    "tabs": {
+      "all": "Усі",
+      "favorites": "Улюблені",
+      "archived": "Архів"
+    }
+  },
+  "reader": {
+    "fontSize": "Розмір шрифту",
+    "theme": "Тема",
+    "lineHeight": "Міжрядковий інтервал",
+    "margins": "Поля"
+  },
+  "add": {
+    "title": "Додати статтю",
+    "urlLabel": "Введіть URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Зберегти статтю",
+    "hint": "Порада: скористайтеся розширенням Safari, щоб зберігати статті напряму.",
+    "success": "Стаття зберігається!",
+    "errors": {
+      "emptyUrl": "Введіть URL",
+      "invalidUrl": "Введіть коректний URL, що починається з http:// або https://",
+      "saveFailed": "Не вдалося зберегти статтю. Спробуйте ще раз."
+    }
+  },
+  "search": {
+    "placeholder": "Пошук статей...",
+    "recentSearches": "Останні пошуки",
+    "noResults": "Нічого не знайдено"
+  },
+  "settings": {
+    "title": "Налаштування",
+    "account": "Обліковий запис",
+    "status": "Статус",
+    "pro": "Pro",
+    "free": "Безкоштовно",
+    "appearance": "Вигляд",
+    "theme": "Тема",
+    "themes": {
+      "light": "Світла",
+      "dark": "Темна",
+      "solar": "Сонячна",
+      "mono": "Моно"
+    },
+    "feedback": "Відгук",
+    "sound": "Звук",
+    "haptics": "Вібрація",
+    "language": "Мова",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
+    "readerDefaults": "Налаштування читання",
+    "downloadSettings": "Завантаження",
+    "download": {
+      "wifiOnly": "Лише Wi-Fi",
+      "images": "Завантажувати зображення",
+      "styles": "Завантажувати стилі",
+      "fonts": "Завантажувати шрифти"
+    },
+    "storage": "Сховище",
+    "storageUsed": "Використано",
+    "about": "Про додаток",
+    "version": "Версія",
+    "privacy": "Приватність",
+    "noDataCollection": "Дані не збираються"
+  },
+  "modals": {
+    "rename": {
+      "title": "Перейменувати статтю",
+      "placeholder": "Введіть нову назву",
+      "error": "Назва не може бути порожньою"
+    }
+  }
+}

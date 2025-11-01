@@ -1,0 +1,119 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "done": "完了",
+    "back": "戻る",
+    "search": "検索",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "rename": "名前を変更",
+    "archive": "アーカイブ",
+    "view": "表示",
+    "ok": "OK"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "記事がまだありません",
+    "emptyHint": "＋ボタンをタップして最初の記事を保存しましょう",
+    "readTime_one": "読了時間 {{count}} 分",
+    "readTime_other": "読了時間 {{count}} 分",
+    "alerts": {
+      "archiveError": "記事をアーカイブできませんでした",
+      "deleteTitle": "記事を削除",
+      "deleteMessage": "この記事を削除しますか？ この操作は元に戻せません。",
+      "deleteError": "記事を削除できませんでした",
+      "renameError": "記事名を変更できませんでした"
+    },
+    "tabs": {
+      "all": "すべて",
+      "favorites": "お気に入り",
+      "archived": "アーカイブ"
+    }
+  },
+  "reader": {
+    "fontSize": "文字サイズ",
+    "theme": "テーマ",
+    "lineHeight": "行間",
+    "margins": "余白"
+  },
+  "add": {
+    "title": "記事を追加",
+    "urlLabel": "URL を入力",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "記事を保存",
+    "hint": "ヒント: Safari の共有拡張機能を使うと直接保存できます。",
+    "success": "記事を保存しています！",
+    "errors": {
+      "emptyUrl": "URL を入力してください",
+      "invalidUrl": "http:// または https:// で始まる正しい URL を入力してください",
+      "saveFailed": "記事を保存できませんでした。もう一度お試しください。"
+    }
+  },
+  "search": {
+    "placeholder": "記事を検索...",
+    "recentSearches": "最近の検索",
+    "noResults": "結果がありません"
+  },
+  "settings": {
+    "title": "設定",
+    "account": "アカウント",
+    "status": "ステータス",
+    "pro": "Pro",
+    "free": "無料",
+    "appearance": "外観",
+    "theme": "テーマ",
+    "themes": {
+      "light": "ライト",
+      "dark": "ダーク",
+      "solar": "ソーラー",
+      "mono": "モノ"
+    },
+    "feedback": "フィードバック",
+    "sound": "サウンド",
+    "haptics": "触覚",
+    "language": "言語",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська"
+    },
+    "readerDefaults": "リーダー設定",
+    "downloadSettings": "ダウンロード",
+    "download": {
+      "wifiOnly": "Wi-Fi のみ",
+      "images": "画像をダウンロード",
+      "styles": "スタイルをダウンロード",
+      "fonts": "フォントをダウンロード"
+    },
+    "storage": "ストレージ",
+    "storageUsed": "使用済み",
+    "about": "情報",
+    "version": "バージョン",
+    "privacy": "プライバシー",
+    "noDataCollection": "データ収集なし"
+  },
+  "modals": {
+    "rename": {
+      "title": "記事名を変更",
+      "placeholder": "新しいタイトルを入力",
+      "error": "タイトルを入力してください"
+    }
+  }
+}
