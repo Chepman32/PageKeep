@@ -31,6 +31,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     return true
   }
+
+  func application(
+    _ app: UIApplication,
+    open url: URL,
+    options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+  ) -> Bool {
+    guard url.scheme?.lowercased() == "pagekeep" else {
+      return false
+    }
+
+    if url.host?.lowercased() == "share" {
+      NotificationCenter.default.post(name: ShareQueue.notificationName(), object: nil)
+      return true
+    }
+
+    return false
+  }
 }
 
 class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {

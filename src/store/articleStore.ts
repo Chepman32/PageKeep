@@ -6,7 +6,8 @@ interface ArticleStore {
   articles: Article[];
   loading: boolean;
   error: string | null;
-  
+  currentFilters?: ArticleFilters;
+
   fetchArticles: (filters?: ArticleFilters) => Promise<void>;
   addArticle: (article: Article) => void;
   updateArticle: (id: string, updates: Partial<Article>) => void;
@@ -22,16 +23,18 @@ export const useArticleStore = create<ArticleStore>((set, get) => ({
   articles: [],
   loading: false,
   error: null,
+  currentFilters: undefined,
 
   fetchArticles: async (filters?: ArticleFilters) => {
     set({ loading: true, error: null });
     try {
       const articles = await articleRepo.findAll(filters);
-      set({ articles, loading: false });
+      set({ articles, loading: false, currentFilters: filters });
     } catch (error) {
       set({ 
         error: error instanceof Error ? error.message : 'Failed to fetch articles',
-        loading: false 
+        loading: false,
+        currentFilters: filters,
       });
     }
   },

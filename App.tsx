@@ -5,6 +5,7 @@ import { getDatabase } from './src/data/database';
 import { ThemeProvider } from './src/contexts/ThemeContext';
 import './src/locales';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { IncomingShareService } from './src/services/IncomingShareService';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -21,6 +22,9 @@ const App: React.FC = () => {
 
       // Initialize database
       getDatabase();
+
+      // Process any pending items shared into the app
+      IncomingShareService.initialize();
 
       console.log('App initialized successfully');
     } catch (error) {
