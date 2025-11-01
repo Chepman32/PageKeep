@@ -13,6 +13,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useArticleStore } from '../../store/articleStore';
 import { Article } from '../../domain/Article';
 import { ArticleContextMenu } from '../components/ArticleContextMenu';
@@ -169,11 +170,18 @@ const HomeScreen: React.FC = () => {
       </Text>
       <View style={styles.meta}>
         <Text style={styles.metaText}>
-          {t('home.readTime', { count: item.readingTime })}
-        </Text>
-        {item.favorite && <Text style={styles.metaText}>⭐</Text>}
-      </View>
-    </TouchableOpacity>
+       {t('home.readTime', { count: item.readingTime })}
+      </Text>
+      {item.favorite && (
+        <Icon
+          name="star"
+          size={16}
+          color={theme.colors.accent}
+          style={styles.favoriteIcon}
+        />
+      )}
+    </View>
+  </TouchableOpacity>
   );
 
   const renderEmptyState = () => (
@@ -195,13 +203,23 @@ const HomeScreen: React.FC = () => {
             style={styles.headerButton}
             onPress={() => navigation.navigate('Search')}
           >
-            <Text style={styles.headerButtonText}>🔍</Text>
+            <Icon
+              name="magnify"
+              size={22}
+              color={theme.colors.accent}
+              style={styles.headerIcon}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerButton}
             onPress={() => navigation.navigate('Settings')}
           >
-            <Text style={styles.headerButtonText}>⚙️</Text>
+            <Icon
+              name="cog-outline"
+              size={22}
+              color={theme.colors.accent}
+              style={styles.headerIcon}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -320,8 +338,7 @@ const createStyles = (theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    headerButtonText: {
-      fontSize: 20,
+    headerIcon: {
       color: theme.colors.accent,
     },
     tabs: {
@@ -379,11 +396,15 @@ const createStyles = (theme: Theme) =>
     },
     meta: {
       flexDirection: 'row',
+      alignItems: 'center',
       gap: 12,
     },
     metaText: {
       fontSize: 12,
       color: theme.colors.muted,
+    },
+    favoriteIcon: {
+      marginTop: 1,
     },
     emptyState: {
       flex: 1,

@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { ArticleRepository } from '../../data/repositories/ArticleRepository';
@@ -199,7 +200,12 @@ const ReaderScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.backButtonText}>←</Text>
+          <Icon
+            name="chevron-left"
+            size={28}
+            color={appTheme.colors.accent}
+            style={styles.backIcon}
+          />
         </TouchableOpacity>
         <Text style={styles.headerTitle} numberOfLines={1}>
           {title}
@@ -264,8 +270,7 @@ const createStyles = (theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    backButtonText: {
-      fontSize: 28,
+    backIcon: {
       color: theme.colors.accent,
     },
     headerTitle: {

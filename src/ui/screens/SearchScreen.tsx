@@ -17,6 +17,7 @@ import { SearchResult } from '../../domain/Article';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme } from '../../constants/themes';
 import { useTranslation } from 'react-i18next';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type SearchScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -68,7 +69,15 @@ const SearchScreen: React.FC = () => {
         search();
       }}
     >
-      <Text style={styles.historyText}>🕐 {item}</Text>
+      <View style={styles.historyRow}>
+        <Icon
+          name="clock-outline"
+          size={20}
+          color={theme.colors.secondary}
+          style={styles.historyIcon}
+        />
+        <Text style={styles.historyText}>{item}</Text>
+      </View>
     </TouchableOpacity>
   );
 
@@ -82,7 +91,12 @@ const SearchScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.backButtonText}>←</Text>
+          <Icon
+            name="chevron-left"
+            size={28}
+            color={theme.colors.accent}
+            style={styles.backIcon}
+          />
         </TouchableOpacity>
         <TextInput
           style={styles.searchInput}
@@ -142,8 +156,7 @@ const createStyles = (theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    backButtonText: {
-      fontSize: 28,
+    backIcon: {
       color: theme.colors.accent,
     },
     searchInput: {
@@ -197,6 +210,14 @@ const createStyles = (theme: Theme) =>
       paddingVertical: 12,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.border,
+    },
+    historyRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    historyIcon: {
+      marginRight: 8,
+      color: theme.colors.secondary,
     },
     historyText: {
       fontSize: 16,

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSettingsStore } from '../../store/settingsStore';
 import { useIAPStore } from '../../store/iapStore';
 import { FileSystem } from '../../utils/fileSystem';
@@ -134,7 +135,12 @@ const SettingsScreen: React.FC = () => {
           onPress={() => navigation.goBack()}
           accessibilityRole="button"
         >
-          <Text style={styles.backButtonText}>←</Text>
+          <Icon
+            name="chevron-left"
+            size={28}
+            color={theme.colors.accent}
+            style={styles.backIcon}
+          />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('settings.title')}</Text>
         <View style={styles.headerSpacer} />
@@ -351,8 +357,7 @@ const createStyles = (theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    backButtonText: {
-      fontSize: 28,
+    backIcon: {
       color: theme.colors.accent,
     },
     headerTitle: {

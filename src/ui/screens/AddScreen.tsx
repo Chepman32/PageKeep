@@ -11,6 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SavePageService } from '../../services/SavePageService';
 import { useArticleStore } from '../../store/articleStore';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -90,7 +91,12 @@ const AddScreen: React.FC = () => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.backButtonText}>✕</Text>
+          <Icon
+            name="close"
+            size={24}
+            color={theme.colors.secondary}
+            style={styles.backIcon}
+          />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('add.title')}</Text>
         <View style={styles.headerSpacer} />
@@ -149,8 +155,7 @@ const createStyles = (theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    backButtonText: {
-      fontSize: 24,
+    backIcon: {
       color: theme.colors.secondary,
     },
     headerTitle: {

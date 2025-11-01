@@ -7,6 +7,7 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme } from '../../constants/themes';
 import { useTranslation } from 'react-i18next';
@@ -50,20 +51,44 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
           ]}
         >
           <TouchableOpacity style={styles.menuItem} onPress={onRename}>
-            <Text style={styles.menuText}>✏️ {t('common.rename')}</Text>
+            <View style={styles.menuItemContent}>
+              <Icon
+                name="pencil-outline"
+                size={18}
+                color={theme.colors.text}
+                style={styles.menuIcon}
+              />
+              <Text style={styles.menuText}>{t('common.rename')}</Text>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.menuItem} onPress={onArchive}>
-            <Text style={styles.menuText}>📦 {t('common.archive')}</Text>
+            <View style={styles.menuItemContent}>
+              <Icon
+                name="archive-outline"
+                size={18}
+                color={theme.colors.text}
+                style={styles.menuIcon}
+              />
+              <Text style={styles.menuText}>{t('common.archive')}</Text>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.menuItem, styles.deleteItem]}
             onPress={onDelete}
           >
-            <Text style={[styles.menuText, styles.deleteText]}>
-              🗑️ {t('common.delete')}
-            </Text>
+            <View style={styles.menuItemContent}>
+              <Icon
+                name="trash-can-outline"
+                size={18}
+                color="#FF3B30"
+                style={styles.menuIcon}
+              />
+              <Text style={[styles.menuText, styles.deleteText]}>
+                {t('common.delete')}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
       </Pressable>
@@ -94,6 +119,13 @@ const createStyles = (theme: Theme) =>
     menuItem: {
       paddingHorizontal: 16,
       paddingVertical: 12,
+    },
+    menuItemContent: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    menuIcon: {
+      marginRight: 12,
     },
     deleteItem: {
       borderTopWidth: 1,
