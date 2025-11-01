@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   StatusBar,
   Switch,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -104,21 +105,49 @@ const SettingsScreen: React.FC = () => {
     }
   };
 
+  const withAlpha = (hex: string, alpha: number): string => {
+    const normalized = hex.replace('#', '');
+    if (normalized.length !== 6) {
+      return hex;
+    }
+    const alphaHex = Math.round(alpha * 255)
+      .toString(16)
+      .padStart(2, '0');
+    return `#${normalized}${alphaHex}`;
+  };
+
   const renderSwitch = (
     value: boolean,
     onValueChange: (next: boolean) => void,
-  ) => (
-    <Switch
-      value={value}
-      onValueChange={onValueChange}
-      trackColor={{
-        false: theme.colors.border,
-        true: theme.colors.accent,
-      }}
-      thumbColor={value ? theme.colors.accent : theme.colors.card}
-      ios_backgroundColor={theme.colors.border}
-    />
-  );
+  ) => {
+    const activeTrack = Platform.OS === 'ios'
+      ? withAlpha(theme.colors.accent, 0.55)
+      : theme.colors.accent;
+    const inactiveTrack = Platform.OS === 'ios'
+      ? withAlpha(theme.colors.border, theme.isDark ? 0.45 : 0.35)
+      : theme.colors.border;
+
+    return (
+      <Switch
+        value={value}
+        onValueChange={onValueChange}
+        trackColor={{
+          false: inactiveTrack,
+          true: activeTrack,
+        }}
+        thumbColor={
+          Platform.OS === 'android'
+            ? value
+              ? '#FFFFFF'
+              : theme.isDark
+              ? '#E1E1E1'
+              : '#FFFFFF'
+            : undefined
+        }
+        ios_backgroundColor={inactiveTrack}
+      />
+    );
+  };
 
   const readerThemeLabel =
     t(`settings.themes.${readerDefaults.theme}`, {
