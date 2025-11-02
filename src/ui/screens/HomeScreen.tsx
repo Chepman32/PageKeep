@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,9 @@ import {
   Alert,
   TextInput,
   Keyboard,
+  LayoutAnimation,
+  Platform,
+  UIManager,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -68,8 +71,15 @@ const HomeScreen: React.FC = () => {
     visible: false,
     article: null,
   });
+  const previousArticleIdsRef = useRef<string | null>(null);
 
   const articleRepo = new ArticleRepository();
+
+  useEffect(() => {
+    if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }, []);
 
   // Determine which articles to display
   const displayedArticles = useMemo(() => {
@@ -78,6 +88,18 @@ const HomeScreen: React.FC = () => {
     }
     return articles;
   }, [query, searchResults, articles]);
+
+  useLayoutEffect(() => {
+    const articleIds = displayedArticles.map(article => article.id).join('|');
+    if (previousArticleIdsRef.current === null) {
+      previousArticleIdsRef.current = articleIds;
+      return;
+    }
+    if (previousArticleIdsRef.current !== articleIds) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }
+    previousArticleIdsRef.current = articleIds;
+  }, [displayedArticles]);
 
   const isSearchActive = query.trim().length > 0;
 
