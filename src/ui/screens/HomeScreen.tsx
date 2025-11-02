@@ -22,6 +22,7 @@ import { ArticleRepository } from '../../data/repositories/ArticleRepository';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme } from '../../constants/themes';
+import ArticleCoverImage from '../components/ArticleCoverImage';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -164,24 +165,33 @@ const HomeScreen: React.FC = () => {
       onLongPress={event => handleLongPress(item, event)}
       delayLongPress={500}
     >
-      <Text style={styles.domain}>{item.domain}</Text>
-      <Text style={styles.title} numberOfLines={2}>
-        {item.title}
-      </Text>
-      <View style={styles.meta}>
-        <Text style={styles.metaText}>
-       {t('home.readTime', { count: item.readingTime })}
-      </Text>
-      {item.favorite && (
-        <Icon
-          name="star"
-          size={16}
-          color={theme.colors.accent}
-          style={styles.favoriteIcon}
+      <View style={styles.cardContent}>
+        <ArticleCoverImage
+          articleId={item.id}
+          domain={item.domain}
+          style={styles.coverImage}
         />
-      )}
-    </View>
-  </TouchableOpacity>
+        <View style={styles.textColumn}>
+          <Text style={styles.domain}>{item.domain}</Text>
+          <Text style={styles.title} numberOfLines={2}>
+            {item.title}
+          </Text>
+          <View style={styles.meta}>
+            <Text style={styles.metaText}>
+              {t('home.readTime', { count: item.readingTime })}
+            </Text>
+            {item.favorite && (
+              <Icon
+                name="star"
+                size={16}
+                color={theme.colors.accent}
+                style={styles.favoriteIcon}
+              />
+            )}
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 
   const renderEmptyState = () => (
@@ -383,6 +393,14 @@ const createStyles = (theme: Theme) =>
       shadowRadius: 4,
       elevation: 3,
     },
+    cardContent: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 16,
+    },
+    textColumn: {
+      flex: 1,
+    },
     domain: {
       fontSize: 12,
       color: theme.colors.secondary,
@@ -405,6 +423,9 @@ const createStyles = (theme: Theme) =>
     },
     favoriteIcon: {
       marginTop: 1,
+    },
+    coverImage: {
+      marginLeft: 8,
     },
     emptyState: {
       flex: 1,

@@ -2,6 +2,7 @@ import { ReadabilityService } from './ReadabilityService';
 import { HtmlRewriter } from './HtmlRewriter';
 import { ArticleRepository } from '../data/repositories/ArticleRepository';
 import { SearchRepository } from '../data/repositories/SearchRepository';
+import { DeviceEventEmitter } from 'react-native';
 import { FileSystem } from '../utils/fileSystem';
 import RNFetchBlob from 'react-native-blob-util';
 
@@ -9,6 +10,8 @@ export interface SaveOptions {
   tags?: string[];
   collections?: string[];
 }
+
+export const ARTICLE_META_UPDATED_EVENT = 'ArticleMetaUpdated';
 
 export class SavePageService {
   private readabilityService = new ReadabilityService();
@@ -72,15 +75,23 @@ export class SavePageService {
         },
       });
 
-      // 8. Save basic metadata with processing flag
-      await FileSystem.writeArticleMeta(articleId, {
+      // 8. Determine provisional cover image (meta tags or first inline image)
+      const coverCandidate = this.extractCoverImageCandidate(html, readable.content, url);
+      const resolvedCover = await this.resolveCoverImage(articleId, coverCandidate);
+
+      // 9. Save basic metadata with processing flag
+      const initialMeta = {
         title: readable.title,
         url,
         savedAt: Date.now(),
         processingComplete: false, // Will be set to true after background processing
-      });
+        coverImage: resolvedCover,
+      };
+      await FileSystem.writeArticleMeta(articleId, initialMeta);
 
-      // 9. Update FTS5 index
+      this.emitMetaUpdate(articleId, initialMeta);
+
+      // 10. Update FTS5 index
       await this.searchRepo.updateArticleIndex(articleId, {
         title: readable.title,
         plainText: readable.textContent,
@@ -88,7 +99,7 @@ export class SavePageService {
         annotations: [],
       });
 
-      // 10. Process images and update HTML in background (non-blocking)
+      // 11. Process images and update HTML in background (non-blocking)
       this.processArticleContentInBackground(
         articleId,
         url,
@@ -129,7 +140,7 @@ export class SavePageService {
       }
 
       // 2. Download images and get mapping of old URL to new URL
-      const imageMap = await this.downloadImages(articleId, imageUrls);
+      const { imageMap, coverImage } = await this.downloadImages(articleId, imageUrls);
 
       // 3. Rewrite HTML with local image paths (only if we downloaded images)
       if (imageMap.size > 0) {
@@ -164,10 +175,14 @@ export class SavePageService {
 
       // 5. Update metadata to indicate processing is complete
       const meta = await FileSystem.readArticleMeta(articleId);
-      await FileSystem.writeArticleMeta(articleId, {
+      const updatedMeta = {
         ...meta,
         processingComplete: true,
-      });
+        coverImage: coverImage || meta?.coverImage || null,
+      };
+      await FileSystem.writeArticleMeta(articleId, updatedMeta);
+
+      this.emitMetaUpdate(articleId, updatedMeta);
 
       console.log('✅ Background processing completed for:', articleId);
     } catch (error) {
@@ -176,10 +191,12 @@ export class SavePageService {
       // User can still read the article with the basic HTML
       try {
         const meta = await FileSystem.readArticleMeta(articleId);
-        await FileSystem.writeArticleMeta(articleId, {
+        const updatedMeta = {
           ...meta,
           processingComplete: true,
-        });
+        };
+        await FileSystem.writeArticleMeta(articleId, updatedMeta);
+        this.emitMetaUpdate(articleId, updatedMeta);
       } catch (metaError) {
         console.error('Failed to update metadata after error:', metaError);
       }
@@ -224,11 +241,14 @@ export class SavePageService {
       await FileSystem.createArticleDirectory(articleId);
 
       // 6. Extract all image URLs from HTML
+      const coverCandidate = this.extractCoverImageCandidate(html, readable.content, url);
+
       const imageUrls = this.extractImageUrls(readable.content, url);
       console.log(`Found ${imageUrls.length} images to download`);
 
       // 7. Download images and get mapping of old URL to new URL
-      const imageMap = await this.downloadImages(articleId, imageUrls);
+      const { imageMap, coverImage } = await this.downloadImages(articleId, imageUrls);
+      const finalCover = coverImage || (await this.resolveCoverImage(articleId, coverCandidate));
 
       // 8. Rewrite HTML with local image paths
       console.log(`Rewriting HTML with ${imageMap.size} image mappings`);
@@ -277,12 +297,16 @@ export class SavePageService {
       });
 
       // 11. Save metadata (processing is already complete for synchronous save)
-      await FileSystem.writeArticleMeta(articleId, {
+      const metaPayload = {
         title: readable.title,
         url,
         savedAt: Date.now(),
         processingComplete: true,
-      });
+        coverImage: finalCover || null,
+      };
+      await FileSystem.writeArticleMeta(articleId, metaPayload);
+
+      this.emitMetaUpdate(articleId, metaPayload);
 
       // 12. Update FTS5 index
       await this.searchRepo.updateArticleIndex(articleId, {
@@ -429,7 +453,7 @@ export class SavePageService {
   private async downloadImages(
     articleId: string,
     imageUrls: string[],
-  ): Promise<Map<string, string>> {
+  ): Promise<{ imageMap: Map<string, string>; coverImage: string | null }> {
     const imageMap = new Map<string, string>();
     const assetsDir = FileSystem.getArticleAssetsDirectory(articleId);
 
@@ -437,6 +461,7 @@ export class SavePageService {
     // No need to create it again
 
     let imageIndex = 0;
+    let coverImage: string | null = null;
 
     for (const imageUrl of imageUrls) {
       try {
@@ -472,6 +497,10 @@ export class SavePageService {
         const dataUrl = `data:${mimeType};base64,${base64Data}`;
         imageMap.set(imageUrl, dataUrl);
 
+        if (!coverImage) {
+          coverImage = dataUrl;
+        }
+
         console.log(`Saved image: ${filename}`);
         imageIndex++;
       } catch (error) {
@@ -480,7 +509,7 @@ export class SavePageService {
     }
 
     console.log(`Downloaded ${imageIndex} images successfully`);
-    return imageMap;
+    return { imageMap, coverImage };
   }
 
   private getExtensionFromContentType(contentType: string): string | null {
@@ -541,6 +570,92 @@ export class SavePageService {
     } catch (error) {
       console.error('Error fetching HTML:', error);
       throw error;
+    }
+  }
+
+  private emitMetaUpdate(articleId: string, meta: Record<string, any>): void {
+    try {
+      DeviceEventEmitter.emit(ARTICLE_META_UPDATED_EVENT, {
+        articleId,
+        meta,
+      });
+    } catch (error) {
+      console.warn('Failed to emit article meta update', error);
+    }
+  }
+
+  private extractCoverImageCandidate(
+    originalHtml: string,
+    readableContent: string,
+    baseUrl: string,
+  ): string | null {
+    const ogImageMatch = originalHtml.match(
+      /<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i,
+    );
+    if (ogImageMatch) {
+      const absolute = this.makeAbsoluteUrl(ogImageMatch[1], baseUrl);
+      if (absolute) {
+        return absolute;
+      }
+    }
+
+    const twitterImageMatch = originalHtml.match(
+      /<meta[^>]*name=["']twitter:image["'][^>]*content=["']([^"']+)["']/i,
+    );
+    if (twitterImageMatch) {
+      const absolute = this.makeAbsoluteUrl(twitterImageMatch[1], baseUrl);
+      if (absolute) {
+        return absolute;
+      }
+    }
+
+    const readableImgMatch = readableContent.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (readableImgMatch) {
+      const absolute = this.makeAbsoluteUrl(readableImgMatch[1], baseUrl);
+      if (absolute) {
+        return absolute;
+      }
+    }
+
+    return null;
+  }
+
+  private async resolveCoverImage(
+    articleId: string,
+    coverUrl: string | null,
+  ): Promise<string | null> {
+    if (!coverUrl) {
+      return null;
+    }
+
+    if (coverUrl.startsWith('data:')) {
+      return coverUrl;
+    }
+
+    try {
+      const response = await RNFetchBlob.config({ fileCache: false }).fetch('GET', coverUrl);
+
+      if (response.respInfo.status !== 200) {
+        return coverUrl;
+      }
+
+      const contentType = response.respInfo.headers['Content-Type'] ||
+        response.respInfo.headers['content-type'] || '';
+      const extension = this.getExtensionFromContentType(contentType) ||
+        this.getExtensionFromUrl(coverUrl) || 'jpg';
+
+      const assetsDir = FileSystem.getArticleAssetsDirectory(articleId);
+      const filename = `cover.${extension}`;
+      const localPath = `${assetsDir}/${filename}`;
+
+      const base64Data = await response.base64();
+      await RNFetchBlob.fs.writeFile(localPath, base64Data, 'base64');
+
+      const mimeType = contentType.split(';')[0] || `image/${extension}`;
+      return `data:${mimeType};base64,${base64Data}`;
+    } catch (error) {
+      console.warn('Failed to resolve cover image', error);
+      return coverUrl;
     }
   }
 }
