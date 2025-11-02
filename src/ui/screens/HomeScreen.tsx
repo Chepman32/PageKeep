@@ -259,7 +259,7 @@ const HomeScreen: React.FC = () => {
               <Icon
                 name="star"
                 size={16}
-                color={theme.colors.accent}
+                color={theme.colors.secondary}
                 style={styles.favoriteIcon}
               />
             )}
@@ -334,7 +334,7 @@ const HomeScreen: React.FC = () => {
             <Icon
               name={isSearchExpanded ? 'close' : 'magnify'}
               size={22}
-              color={theme.colors.accent}
+              color={theme.colors.secondary}
               style={styles.headerIcon}
             />
           </TouchableOpacity>
@@ -346,7 +346,7 @@ const HomeScreen: React.FC = () => {
               <Icon
                 name="cog-outline"
                 size={22}
-                color={theme.colors.accent}
+                color={theme.colors.secondary}
                 style={styles.headerIcon}
               />
             </TouchableOpacity>
@@ -471,7 +471,7 @@ const createStyles = (theme: Theme) =>
       alignItems: 'center',
     },
     headerIcon: {
-      color: theme.colors.accent,
+      color: theme.colors.secondary,
     },
     searchInputContainer: {
       flex: 1,
