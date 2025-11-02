@@ -123,9 +123,6 @@ const HomeScreen: React.FC = () => {
 
   const handleSearchChange = (text: string) => {
     setQuery(text);
-    if (!text.trim()) {
-      setIsSearchExpanded(false);
-    }
   };
 
   const handleSearchFocus = () => {

@@ -18,11 +18,11 @@ export class SearchRepository {
     let ftsResult;
 
     try {
-      // Try FTS5 search first
+      // Try FTS5 search first - only search titles
       const ftsQuery = `
         SELECT
           fts.article_id,
-          snippet(fts_articles, 1, '<mark>', '</mark>', '...', 30) as highlight,
+          snippet(fts_articles, 0, '<mark>', '</mark>', '...', 30) as highlight,
           rank as score
         FROM fts_articles fts
         WHERE fts_articles MATCH ?
@@ -30,39 +30,27 @@ export class SearchRepository {
         LIMIT 100
       `;
 
-      const searchQuery = this.buildFTS5Query(query);
+      // Build query to only search title column (column 0)
+      const searchQuery = `title:${this.buildFTS5Query(query)}`;
       console.log('SearchRepository: FTS5 query:', searchQuery);
       ftsResult = this.db.execute(ftsQuery, [searchQuery]);
       console.log('SearchRepository: FTS5 result rows:', ftsResult.rows?.length || 0);
     } catch (error) {
       console.warn('FTS5 search failed, using fallback:', error);
-      // Fallback to LIKE search
+      // Fallback to LIKE search - only search titles
       const fallbackQuery = `
-        SELECT 
+        SELECT
           fts.article_id,
-          CASE 
-            WHEN fts.title LIKE ? THEN fts.title
-            ELSE SUBSTR(fts.plain_text, 1, 100) || '...'
-          END as highlight,
-          CASE 
-            WHEN fts.title LIKE ? THEN 10
-            WHEN fts.plain_text LIKE ? THEN 5
-            ELSE 1
-          END as score
+          fts.title as highlight,
+          10 as score
         FROM fts_articles fts
-        WHERE fts.title LIKE ? OR fts.plain_text LIKE ?
+        WHERE fts.title LIKE ?
         ORDER BY score DESC
         LIMIT 100
       `;
 
       const likeQuery = `%${query}%`;
-      ftsResult = this.db.execute(fallbackQuery, [
-        likeQuery,
-        likeQuery,
-        likeQuery,
-        likeQuery,
-        likeQuery,
-      ]);
+      ftsResult = this.db.execute(fallbackQuery, [likeQuery]);
     }
 
     if (!ftsResult.rows || ftsResult.rows.length === 0) {
