@@ -6,6 +6,8 @@ static NSString *ShareQueueNotificationIdentifier(void) {
   return [ShareQueue notificationIdentifier];
 }
 
+static NSArray *ShareQueueCachedItems;
+
 @interface ShareQueueModule : RCTEventEmitter <RCTBridgeModule>
 @end
 
@@ -18,7 +20,7 @@ RCT_EXPORT_MODULE();
 - (instancetype)init {
   if ((self = [super init])) {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleShareNotification)
+                                             selector:@selector(handleShareNotification:)
                                                  name:[ShareQueue notificationIdentifier]
                                                object:nil];
   }
@@ -36,7 +38,9 @@ RCT_EXPORT_MODULE();
 - (void)startObserving {
   hasListeners = YES;
 
-  NSArray *items = [ShareQueue consumeAll];
+  NSArray *items = ShareQueueCachedItems ?: [ShareQueue consumeAll];
+  ShareQueueCachedItems = nil;
+
   if (items.count > 0) {
     [self sendEventWithName:ShareQueueNotificationIdentifier() body:items];
   }
@@ -50,7 +54,8 @@ RCT_REMAP_METHOD(getPendingShares,
                  getPendingSharesWithResolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-  NSArray *items = [ShareQueue consumeAll];
+  NSArray *items = ShareQueueCachedItems ?: [ShareQueue consumeAll];
+  ShareQueueCachedItems = nil;
   if (items == nil) {
     resolve(@[]);
   } else {
@@ -64,14 +69,30 @@ RCT_EXPORT_METHOD(clearQueue)
 }
 
 - (void)handleShareNotification {
-  if (!hasListeners) {
+  [self handleShareNotification:nil];
+}
+
+- (void)handleShareNotification:(NSNotification *)notification {
+  NSArray *items = [ShareQueue consumeAll];
+
+  if ((items == nil || items.count == 0) && notification.userInfo[@"items"] != nil) {
+    items = notification.userInfo[@"items"];
+  }
+
+  if (items.count == 0) {
     return;
   }
 
-  NSArray *items = [ShareQueue consumeAll];
-  if (items.count > 0) {
-    [self sendEventWithName:ShareQueueNotificationIdentifier() body:items];
+  if (!hasListeners) {
+    if (ShareQueueCachedItems != nil) {
+      ShareQueueCachedItems = [ShareQueueCachedItems arrayByAddingObjectsFromArray:items];
+    } else {
+      ShareQueueCachedItems = items;
+    }
+    return;
   }
+
+  [self sendEventWithName:ShareQueueNotificationIdentifier() body:items];
 }
 
 @end

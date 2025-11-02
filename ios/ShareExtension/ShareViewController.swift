@@ -123,16 +123,23 @@ final class ShareViewController: UIViewController {
   }
 
   private func handleSuccessfulExtraction(urlString: String, item: NSExtensionItem) {
-    ShareQueue.enqueue(
+    let title = item.attributedTitle?.string ?? item.attributedContentText?.string
+    let sourceApp = sourceAppBundleIdentifier()
+
+    let payload = ShareQueue.makePayload(
       url: urlString,
-      title: item.attributedTitle?.string ?? item.attributedContentText?.string,
-      sourceApp: sourceAppBundleIdentifier()
+      title: title,
+      sourceApp: sourceApp
     )
+
+    ShareQueue.enqueue(payload: payload)
 
     statusLabel.text = "Saved! Opening PageKeep…"
     spinner.stopAnimating()
 
-    openHostAppIfPossible()
+    openHostAppIfPossible(
+      payload: payload
+    )
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
       self?.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
@@ -151,8 +158,31 @@ final class ShareViewController: UIViewController {
     }
   }
 
-  private func openHostAppIfPossible() {
-    guard let url = URL(string: "pagekeep://share") else { return }
+  private func openHostAppIfPossible(payload: [String: Any]) {
+    var components = URLComponents()
+    components.scheme = "pagekeep"
+    components.host = "share"
+    var queryItems: [URLQueryItem] = []
+
+    if let urlString = payload["url"] as? String {
+      queryItems.append(URLQueryItem(name: "url", value: urlString))
+    }
+
+    if let title = payload["title"] as? String {
+      queryItems.append(URLQueryItem(name: "title", value: title))
+    }
+
+    if let sourceApp = payload["sourceApp"] as? String {
+      queryItems.append(URLQueryItem(name: "sourceApp", value: sourceApp))
+    }
+
+    if let identifier = payload["id"] as? String {
+      queryItems.append(URLQueryItem(name: "id", value: identifier))
+    }
+
+    components.queryItems = queryItems
+
+    guard let url = components.url else { return }
     extensionContext?.open(url, completionHandler: nil)
   }
 

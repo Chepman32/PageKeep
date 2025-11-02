@@ -42,7 +42,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     if url.host?.lowercased() == "share" {
-      NotificationCenter.default.post(name: ShareQueue.notificationName(), object: nil)
+      var payloads: [[String: Any]] = []
+
+      if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+         let urlValue = components.queryItems?.first(where: { $0.name == "url" })?.value,
+         let decodedUrl = urlValue.removingPercentEncoding {
+        let title = components.queryItems?.first(where: { $0.name == "title" })?.value?
+          .removingPercentEncoding
+        let sourceApp = components.queryItems?.first(where: { $0.name == "sourceApp" })?.value?
+          .removingPercentEncoding
+        let identifier = components.queryItems?.first(where: { $0.name == "id" })?.value?
+          .removingPercentEncoding
+
+        var payload = ShareQueue.makePayload(
+          url: decodedUrl,
+          title: title,
+          sourceApp: sourceApp
+        )
+
+        if let identifier = identifier, !identifier.isEmpty {
+          payload["id"] = identifier
+        }
+
+        payloads.append(payload)
+        ShareQueue.enqueue(payload: payload)
+      }
+
+      if payloads.isEmpty {
+        NotificationCenter.default.post(name: ShareQueue.notificationName(), object: nil)
+      } else {
+        NotificationCenter.default.post(
+          name: ShareQueue.notificationName(),
+          object: nil,
+          userInfo: ["items": payloads]
+        )
+      }
+
       return true
     }
 

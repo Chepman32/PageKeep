@@ -7,24 +7,25 @@ public final class ShareQueue: NSObject {
   private static let notificationKey = "ShareQueueNewItemsNotification"
 
   public static func enqueue(url: String, title: String?, sourceApp: String?) {
-    guard let defaults = UserDefaults(suiteName: appGroupIdentifier) else {
-      return
-    }
+    let payload = makePayload(url: url, title: title, sourceApp: sourceApp)
+    enqueue(payload: payload)
+  }
+
+  public static func enqueue(payload: [String: Any]) {
+    let defaults = UserDefaults(suiteName: appGroupIdentifier) ?? UserDefaults.standard
 
     var items = defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
+    if let identifier = payload["id"] as? String {
+      let alreadyExists = items.contains { existing in
+        if let existingId = existing["id"] as? String {
+          return existingId == identifier
+        }
+        return false
+      }
 
-    var payload: [String: Any] = [
-      "id": UUID().uuidString,
-      "url": url,
-      "receivedAt": Date().timeIntervalSince1970 * 1000
-    ]
-
-    if let title = title, !title.isEmpty {
-      payload["title"] = title
-    }
-
-    if let sourceApp = sourceApp, !sourceApp.isEmpty {
-      payload["sourceApp"] = sourceApp
+      if alreadyExists {
+        return
+      }
     }
 
     items.append(payload)
@@ -32,10 +33,32 @@ public final class ShareQueue: NSObject {
     defaults.synchronize()
   }
 
-  public static func consumeAll() -> [[String: Any]] {
-    guard let defaults = UserDefaults(suiteName: appGroupIdentifier) else {
-      return []
+  public static func makePayload(
+    url: String,
+    title: String?,
+    sourceApp: String?
+  ) -> [String: Any] {
+    var payload: [String: Any] = [
+      "id": UUID().uuidString,
+      "url": url,
+      "receivedAt": Date().timeIntervalSince1970 * 1000
+    ]
+
+    if let trimmedTitle = title?.trimmingCharacters(in: .whitespacesAndNewlines),
+       !trimmedTitle.isEmpty {
+      payload["title"] = trimmedTitle
     }
+
+    if let trimmedSource = sourceApp?.trimmingCharacters(in: .whitespacesAndNewlines),
+       !trimmedSource.isEmpty {
+      payload["sourceApp"] = trimmedSource
+    }
+
+    return payload
+  }
+
+  public static func consumeAll() -> [[String: Any]] {
+    let defaults = UserDefaults(suiteName: appGroupIdentifier) ?? UserDefaults.standard
 
     let items = defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
     defaults.removeObject(forKey: queueKey)
@@ -44,17 +67,13 @@ public final class ShareQueue: NSObject {
   }
 
   public static func peekAll() -> [[String: Any]] {
-    guard let defaults = UserDefaults(suiteName: appGroupIdentifier) else {
-      return []
-    }
+    let defaults = UserDefaults(suiteName: appGroupIdentifier) ?? UserDefaults.standard
 
     return defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
   }
 
   public static func clear() {
-    guard let defaults = UserDefaults(suiteName: appGroupIdentifier) else {
-      return
-    }
+    let defaults = UserDefaults(suiteName: appGroupIdentifier) ?? UserDefaults.standard
 
     defaults.removeObject(forKey: queueKey)
     defaults.synchronize()
