@@ -14,10 +14,12 @@ const splashAsset = require('../../assets/pagekeeper-icon-02-sky_blue_navy.png')
 
 type AnimatedSplashScreenProps = {
   onAnimationEnd?: () => void;
+  isReady?: boolean;
 };
 
 export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
   onAnimationEnd,
+  isReady = false,
 }) => {
   const { theme } = useTheme();
   const dropAnimation = useRef(new Animated.Value(-windowHeight)).current;
@@ -32,6 +34,15 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
   );
 
   useEffect(() => {
+    if (!isReady) {
+      dropAnimation.setValue(0);
+      flipAnimation.setValue(0);
+      scaleAnimation.setValue(1);
+      opacityAnimation.setValue(1);
+      return;
+    }
+
+    dropAnimation.setValue(-windowHeight);
     const animation = Animated.sequence([
       Animated.spring(dropAnimation, {
         toValue: 0,
@@ -70,7 +81,15 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
     return () => {
       animation.stop();
     };
-  }, [dropAnimation, flipAnimation, scaleAnimation, opacityAnimation, onAnimationEnd, targetScale]);
+  }, [
+    dropAnimation,
+    flipAnimation,
+    scaleAnimation,
+    opacityAnimation,
+    onAnimationEnd,
+    targetScale,
+    isReady,
+  ]);
 
   const rotateY = flipAnimation.interpolate({
     inputRange: [0, 1],

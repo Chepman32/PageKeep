@@ -7,9 +7,11 @@ import './src/locales';
 import { IncomingShareService } from './src/services/IncomingShareService';
 import { View, StyleSheet } from 'react-native';
 import { AnimatedSplashScreen } from './src/ui/components/AnimatedSplashScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
+  const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
     initializeApp();
@@ -17,8 +19,12 @@ const App: React.FC = () => {
 
   const initializeApp = async () => {
     try {
-      // Initialize file system
-      await FileSystem.initialize();
+      await Promise.all([
+        // Initialize file system
+        FileSystem.initialize(),
+        // Ensure icon fonts are available before rendering UI
+        MaterialCommunityIcons.loadFont(),
+      ]);
 
       // Initialize database
       getDatabase();
@@ -29,6 +35,8 @@ const App: React.FC = () => {
       console.log('App initialized successfully');
     } catch (error) {
       console.error('Error initializing app:', error);
+    } finally {
+      setIsAppReady(true);
     }
   };
 
@@ -39,8 +47,13 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <View style={styles.container}>
-        <AppNavigator />
-        {showSplash && <AnimatedSplashScreen onAnimationEnd={handleSplashEnd} />}
+        {isAppReady && <AppNavigator />}
+        {showSplash && (
+          <AnimatedSplashScreen
+            isReady={isAppReady}
+            onAnimationEnd={handleSplashEnd}
+          />
+        )}
       </View>
     </ThemeProvider>
   );
