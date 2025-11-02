@@ -88,7 +88,7 @@ const HomeScreen: React.FC = () => {
   // Update search filters when tab changes
   useEffect(() => {
     const filters = {
-      archived: selectedTab === 'archived' ? true : selectedTab === 'all' ? undefined : false,
+      archived: selectedTab === 'archived' ? true : false,
       favorite: selectedTab === 'favorites' ? true : undefined,
     };
     console.log('HomeScreen: Setting search filters:', filters);
@@ -113,8 +113,6 @@ const HomeScreen: React.FC = () => {
       archived:
         selectedTab === 'archived'
           ? true
-          : selectedTab === 'all'
-          ? undefined
           : false,
       favorite: selectedTab === 'favorites' ? true : undefined,
     };
@@ -426,6 +424,7 @@ const HomeScreen: React.FC = () => {
         onDelete={handleDelete}
         position={contextMenu.position}
         isFavorite={contextMenu.article?.favorite || false}
+        isArchived={contextMenu.article?.archived || false}
       />
 
       {/* Rename Modal */}

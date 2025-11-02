@@ -12,6 +12,7 @@
     "success": "成功",
     "rename": "重命名",
     "archive": "归档",
+    "unarchive": "取消归档",
     "view": "查看",
     "ok": "确定",
     "addToFavorites": "添加到收藏",

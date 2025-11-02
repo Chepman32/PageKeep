@@ -21,6 +21,7 @@ interface ArticleContextMenuProps {
   onDelete: () => void;
   position: { x: number; y: number };
   isFavorite: boolean;
+  isArchived: boolean;
 }
 
 export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
@@ -32,6 +33,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
   onDelete,
   position,
   isFavorite,
+  isArchived,
 }) => {
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -75,12 +77,14 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
           <TouchableOpacity style={styles.menuItem} onPress={onArchive}>
             <View style={styles.menuItemContent}>
               <Icon
-                name="archive-outline"
+                name={isArchived ? 'archive-arrow-up-outline' : 'archive-outline'}
                 size={18}
                 color={theme.colors.text}
                 style={styles.menuIcon}
               />
-              <Text style={styles.menuText}>{t('common.archive')}</Text>
+              <Text style={styles.menuText}>
+                {isArchived ? t('common.unarchive') : t('common.archive')}
+              </Text>
             </View>
           </TouchableOpacity>
 
