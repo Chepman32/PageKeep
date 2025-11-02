@@ -67,8 +67,6 @@ const HomeScreen: React.FC = () => {
       archived:
         selectedTab === 'archived'
           ? true
-          : selectedTab === 'all'
-          ? undefined
           : false,
       favorite: selectedTab === 'favorites' ? true : undefined,
     };
