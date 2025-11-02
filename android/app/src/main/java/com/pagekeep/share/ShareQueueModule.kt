@@ -48,6 +48,11 @@ class ShareQueueModule(private val context: ReactApplicationContext) :
         ShareQueueStorage.clear(context)
     }
 
+    @ReactMethod
+    fun markProcessingComplete() {
+        // iOS uses this hook to end background tasks. Android does not need it yet.
+    }
+
     override fun addListener(eventName: String?) {
         if (eventName == EVENT_NAME) {
             listenerCount += 1

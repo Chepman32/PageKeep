@@ -9,6 +9,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var reactNativeDelegate: ReactNativeDelegate?
   var reactNativeFactory: RCTReactNativeFactory?
+  private var shareBackgroundTask: UIBackgroundTaskIdentifier = .invalid
+  private var shareBackgroundTaskTimer: DispatchWorkItem?
 
   func application(
     _ application: UIApplication,
@@ -29,6 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       launchOptions: launchOptions
     )
 
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(handleShareProcessingComplete),
+      name: Notification.Name("ShareQueueProcessingComplete"),
+      object: nil
+    )
+
     return true
   }
 
@@ -43,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     if url.host?.lowercased() == "share" {
       var payloads: [[String: Any]] = []
+
+      startShareBackgroundTask()
 
       if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
          let urlValue = components.queryItems?.first(where: { $0.name == "url" })?.value,
@@ -78,10 +89,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
       }
 
+      scheduleBackgroundTaskCleanup()
+
       return true
     }
 
     return false
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+    endShareBackgroundTask()
+  }
+
+  @objc
+  private func handleShareProcessingComplete() {
+    endShareBackgroundTask()
+  }
+
+  private func startShareBackgroundTask() {
+    endShareBackgroundTask()
+    let application = UIApplication.shared
+    shareBackgroundTask = application.beginBackgroundTask(withName: "ProcessSharedItems") { [weak self] in
+      self?.endShareBackgroundTask()
+    }
+  }
+
+  private func scheduleBackgroundTaskCleanup() {
+    shareBackgroundTaskTimer?.cancel()
+    let workItem = DispatchWorkItem { [weak self] in
+      self?.endShareBackgroundTask()
+    }
+    shareBackgroundTaskTimer = workItem
+    DispatchQueue.main.asyncAfter(deadline: .now() + 30, execute: workItem)
+  }
+
+  private func endShareBackgroundTask() {
+    shareBackgroundTaskTimer?.cancel()
+    shareBackgroundTaskTimer = nil
+
+    guard shareBackgroundTask != .invalid else { return }
+    UIApplication.shared.endBackgroundTask(shareBackgroundTask)
+    shareBackgroundTask = .invalid
   }
 }
 

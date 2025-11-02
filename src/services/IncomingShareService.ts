@@ -1,4 +1,11 @@
-import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
+import {
+  AppState,
+  NativeModules,
+  NativeEventEmitter,
+  Platform,
+  Linking,
+  AppStateStatus,
+} from 'react-native';
 import { SavePageService } from './SavePageService';
 import { useArticleStore } from '../store/articleStore';
 
@@ -20,6 +27,7 @@ export interface SharedItem {
 
 interface ShareQueueNativeModule {
   getPendingShares: () => Promise<RawSharedItem[]>;
+  markProcessingComplete?: () => void;
 }
 
 const SHARE_EVENT_NAME = 'ShareQueueNewItemsNotification';
@@ -36,6 +44,9 @@ export class IncomingShareService {
   private static processing = false;
   private static readonly processedIds = new Set<string>();
   private static initialized = false;
+  private static appStateSubscription?: { remove: () => void };
+  private static linkingSubscription?: { remove: () => void };
+  private static loadingInitialItems = false;
 
   static initialize(): void {
     if (this.initialized) {
@@ -61,6 +72,27 @@ export class IncomingShareService {
     this.loadInitialItems().catch(error => {
       console.error('[IncomingShareService] Failed to load initial shares', error);
     });
+
+    Linking.getInitialURL()
+      .then(url => this.handleIncomingLink(url))
+      .catch(error =>
+        console.error('[IncomingShareService] Failed to read initial URL', error),
+      );
+
+    this.linkingSubscription = Linking.addEventListener('url', event => {
+      this.handleIncomingLink(event.url);
+    });
+
+    this.appStateSubscription = AppState.addEventListener(
+      'change',
+      (state: AppStateStatus) => {
+        if (state === 'active') {
+          this.loadInitialItems().catch(error =>
+            console.error('[IncomingShareService] Failed to reload shares on foreground', error),
+          );
+        }
+      },
+    );
   }
 
   static teardown(): void {
@@ -70,6 +102,10 @@ export class IncomingShareService {
     this.initialized = false;
     this.queue.length = 0;
     this.processing = false;
+    this.appStateSubscription?.remove?.();
+    this.linkingSubscription?.remove?.();
+    this.appStateSubscription = undefined;
+    this.linkingSubscription = undefined;
   }
 
   private static async loadInitialItems(): Promise<void> {
@@ -77,11 +113,18 @@ export class IncomingShareService {
       return;
     }
 
+    if (this.loadingInitialItems) {
+      return;
+    }
+    this.loadingInitialItems = true;
+
     try {
       const items = await shareModule.getPendingShares();
       this.enqueueItems(items);
     } catch (error) {
       console.error('[IncomingShareService] Error fetching pending shares', error);
+    } finally {
+      this.loadingInitialItems = false;
     }
   }
 
@@ -92,14 +135,32 @@ export class IncomingShareService {
 
     const normalized = rawItems
       .map(item => this.normalizeItem(item))
-      .filter((item): item is SharedItem => item !== null)
-      .filter(item => !this.processedIds.has(item.id));
+      .filter((item): item is SharedItem => item !== null);
 
-    if (normalized.length === 0) {
+    this.enqueueNormalizedItems(normalized);
+  }
+
+  private static enqueueNormalizedItems(items: SharedItem[]): void {
+    const deduped = items.filter(item => {
+      if (this.processedIds.has(item.id)) {
+        return false;
+      }
+
+      if (this.queue.find(queued => queued.id === item.id)) {
+        return false;
+      }
+
+      return true;
+    });
+
+    if (deduped.length === 0) {
+      if (items.length > 0) {
+        shareModule?.markProcessingComplete?.();
+      }
       return;
     }
 
-    this.queue.push(...normalized);
+    this.queue.push(...deduped);
     this.processQueue().catch(error => {
       console.error('[IncomingShareService] Error while processing queue', error);
     });
@@ -191,6 +252,46 @@ export class IncomingShareService {
     }
 
     this.processing = false;
+
+    shareModule.markProcessingComplete?.();
+  }
+
+  private static handleIncomingLink(rawUrl: string | null | undefined): void {
+    if (!rawUrl) {
+      return;
+    }
+
+    try {
+      const url = new URL(rawUrl);
+      if (url.protocol !== 'pagekeep:' || url.hostname.toLowerCase() !== 'share') {
+        return;
+      }
+
+      const sharedUrl = url.searchParams.get('url');
+      if (!sharedUrl) {
+        return;
+      }
+
+      const rawItem: RawSharedItem = {
+        id: url.searchParams.get('id') ?? undefined,
+        url: sharedUrl,
+        title: url.searchParams.get('title') ?? undefined,
+        sourceApp: url.searchParams.get('sourceApp') ?? undefined,
+        receivedAt: Date.now(),
+      };
+
+      const normalized = this.normalizeItem(rawItem);
+      if (normalized) {
+        this.enqueueNormalizedItems([normalized]);
+      }
+
+      // Also attempt to consume any queued items from native storage
+      this.loadInitialItems().catch(error =>
+        console.error('[IncomingShareService] Failed to consume queue after link', error),
+      );
+    } catch (error) {
+      console.error('[IncomingShareService] Failed to parse incoming URL', error);
+    }
   }
 
   private static isSupportedUrl(url: string): boolean {

@@ -66,6 +66,13 @@ RCT_REMAP_METHOD(getPendingShares,
 RCT_EXPORT_METHOD(clearQueue)
 {
   [ShareQueue clear];
+  ShareQueueCachedItems = nil;
+}
+
+RCT_EXPORT_METHOD(markProcessingComplete)
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"ShareQueueProcessingComplete"
+                                                      object:nil];
 }
 
 - (void)handleShareNotification {
