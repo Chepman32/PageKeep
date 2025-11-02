@@ -13,7 +13,9 @@
     "rename": "名前を変更",
     "archive": "アーカイブ",
     "view": "表示",
-    "ok": "OK"
+    "ok": "OK",
+    "addToFavorites": "お気に入りに追加",
+    "removeFromFavorites": "お気に入りから削除"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "読了時間 {{count}} 分",
     "alerts": {
       "archiveError": "記事をアーカイブできませんでした",
+      "favoriteError": "お気に入りの状態を更新できませんでした",
       "deleteTitle": "記事を削除",
       "deleteMessage": "この記事を削除しますか？ この操作は元に戻せません。",
       "deleteError": "記事を削除できませんでした",

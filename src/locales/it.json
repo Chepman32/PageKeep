@@ -13,7 +13,9 @@
     "rename": "Rinomina",
     "archive": "Archivia",
     "view": "Apri",
-    "ok": "OK"
+    "ok": "OK",
+    "addToFavorites": "Aggiungi ai Preferiti",
+    "removeFromFavorites": "Rimuovi dai Preferiti"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} min di lettura",
     "alerts": {
       "archiveError": "Impossibile archiviare l'articolo",
+      "favoriteError": "Impossibile aggiornare lo stato dei preferiti",
       "deleteTitle": "Elimina articolo",
       "deleteMessage": "Sei sicuro di voler eliminare questo articolo? L'azione è irreversibile.",
       "deleteError": "Impossibile eliminare l'articolo",

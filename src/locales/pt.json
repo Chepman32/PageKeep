@@ -13,7 +13,9 @@
     "rename": "Renomear",
     "archive": "Arquivar",
     "view": "Ver",
-    "ok": "OK"
+    "ok": "OK",
+    "addToFavorites": "Adicionar aos Favoritos",
+    "removeFromFavorites": "Remover dos Favoritos"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} min de leitura",
     "alerts": {
       "archiveError": "Não foi possível arquivar o artigo",
+      "favoriteError": "Não foi possível atualizar o status de favorito",
       "deleteTitle": "Excluir artigo",
       "deleteMessage": "Tem certeza de que deseja excluir este artigo? Essa ação não pode ser desfeita.",
       "deleteError": "Não foi possível excluir o artigo",

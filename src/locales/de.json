@@ -13,7 +13,9 @@
     "rename": "Umbenennen",
     "archive": "Archivieren",
     "view": "Anzeigen",
-    "ok": "OK"
+    "ok": "OK",
+    "addToFavorites": "Zu Favoriten hinzufügen",
+    "removeFromFavorites": "Aus Favoriten entfernen"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} Min. Lesezeit",
     "alerts": {
       "archiveError": "Artikel konnte nicht archiviert werden",
+      "favoriteError": "Status der Favoritenliste konnte nicht aktualisiert werden",
       "deleteTitle": "Artikel löschen",
       "deleteMessage": "Möchtest du diesen Artikel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
       "deleteError": "Artikel konnte nicht gelöscht werden",

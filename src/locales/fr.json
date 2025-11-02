@@ -13,7 +13,9 @@
     "rename": "Renommer",
     "archive": "Archiver",
     "view": "Voir",
-    "ok": "OK"
+    "ok": "OK",
+    "addToFavorites": "Ajouter aux favoris",
+    "removeFromFavorites": "Supprimer des favoris"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} min de lecture",
     "alerts": {
       "archiveError": "Impossible d'archiver l'article",
+      "favoriteError": "Impossible de mettre à jour le statut de favori",
       "deleteTitle": "Supprimer l'article",
       "deleteMessage": "Voulez-vous vraiment supprimer cet article ? Cette action est irréversible.",
       "deleteError": "Impossible de supprimer l'article",

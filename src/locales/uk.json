@@ -13,7 +13,9 @@
     "rename": "Перейменувати",
     "archive": "В архів",
     "view": "Відкрити",
-    "ok": "OK"
+    "ok": "OK",
+    "addToFavorites": "Додати до улюблених",
+    "removeFromFavorites": "Видалити з улюблених"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} хв читання",
     "alerts": {
       "archiveError": "Не вдалося перемістити статтю в архів",
+      "favoriteError": "Не вдалося оновити статус улюблених",
       "deleteTitle": "Видалити статтю",
       "deleteMessage": "Ви впевнені, що хочете видалити цю статтю? Дію неможливо скасувати.",
       "deleteError": "Не вдалося видалити статтю",

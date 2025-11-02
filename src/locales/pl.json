@@ -13,7 +13,9 @@
     "rename": "Zmień nazwę",
     "archive": "Archiwizuj",
     "view": "Otwórz",
-    "ok": "OK"
+    "ok": "OK",
+    "addToFavorites": "Dodaj do Ulubionych",
+    "removeFromFavorites": "Usuń z Ulubionych"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} min czytania",
     "alerts": {
       "archiveError": "Nie udało się zarchiwizować artykułu",
+      "favoriteError": "Nie udało się zaktualizować stanu ulubionych",
       "deleteTitle": "Usuń artykuł",
       "deleteMessage": "Czy na pewno chcesz usunąć ten artykuł? Tej operacji nie można cofnąć.",
       "deleteError": "Nie udało się usunąć artykułu",

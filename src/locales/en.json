@@ -13,7 +13,9 @@
     "rename": "Rename",
     "archive": "Archive",
     "view": "View",
-    "ok": "OK"
+    "ok": "OK",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} min read",
     "alerts": {
       "archiveError": "Failed to archive article",
+      "favoriteError": "Failed to update favorite status",
       "deleteTitle": "Delete Article",
       "deleteMessage": "Are you sure you want to delete this article? This action cannot be undone.",
       "deleteError": "Failed to delete article",

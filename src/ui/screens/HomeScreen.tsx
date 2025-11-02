@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   StatusBar,
   Alert,
-  Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -73,19 +72,11 @@ const HomeScreen: React.FC = () => {
     fetchArticles(filters);
   };
 
-  const handleLongPress = (article: Article, event: any) => {
-    const { pageX, pageY } = event.nativeEvent;
-    const screenWidth = Dimensions.get('window').width;
-
-    // Adjust position to keep menu on screen
-    const menuWidth = 150;
-    const adjustedX =
-      pageX + menuWidth > screenWidth ? pageX - menuWidth : pageX;
-
+  const handleLongPress = (article: Article) => {
     setContextMenu({
       visible: true,
       article,
-      position: { x: adjustedX, y: pageY },
+      position: { x: 0, y: 0 },
     });
   };
 
@@ -103,6 +94,21 @@ const HomeScreen: React.FC = () => {
         visible: true,
         article: contextMenu.article,
       });
+    }
+    closeContextMenu();
+  };
+
+  const handleFavorite = async () => {
+    if (contextMenu.article) {
+      try {
+        await articleRepo.toggleFavorite(contextMenu.article.id);
+        updateArticle(contextMenu.article.id, {
+          favorite: !contextMenu.article.favorite,
+        });
+        loadArticles();
+      } catch (error) {
+        Alert.alert(t('common.error'), t('home.alerts.favoriteError'));
+      }
     }
     closeContextMenu();
   };
@@ -160,7 +166,7 @@ const HomeScreen: React.FC = () => {
     <TouchableOpacity
       style={styles.card}
       onPress={() => navigation.navigate('Reader', { articleId: item.id })}
-      onLongPress={event => handleLongPress(item, event)}
+      onLongPress={() => handleLongPress(item)}
       delayLongPress={500}
     >
       <View style={styles.cardContent}>
@@ -299,9 +305,11 @@ const HomeScreen: React.FC = () => {
         visible={contextMenu.visible}
         onClose={closeContextMenu}
         onRename={handleRename}
+        onFavorite={handleFavorite}
         onArchive={handleArchive}
         onDelete={handleDelete}
         position={contextMenu.position}
+        isFavorite={contextMenu.article?.favorite || false}
       />
 
       {/* Rename Modal */}

@@ -13,7 +13,9 @@
     "rename": "Renombrar",
     "archive": "Archivar",
     "view": "Ver",
-    "ok": "Aceptar"
+    "ok": "Aceptar",
+    "addToFavorites": "Añadir a Favoritos",
+    "removeFromFavorites": "Eliminar de Favoritos"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} min de lectura",
     "alerts": {
       "archiveError": "No se pudo archivar el artículo",
+      "favoriteError": "No se pudo actualizar el estado de favorito",
       "deleteTitle": "Eliminar artículo",
       "deleteMessage": "¿Seguro que quieres eliminar este artículo? Esta acción no se puede deshacer.",
       "deleteError": "No se pudo eliminar el artículo",

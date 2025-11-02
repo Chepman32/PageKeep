@@ -13,7 +13,9 @@
     "rename": "नाम बदलें",
     "archive": "आर्काइव",
     "view": "देखें",
-    "ok": "ठीक"
+    "ok": "ठीक",
+    "addToFavorites": "पसंदीदा में जोड़ें",
+    "removeFromFavorites": "पसंदीदा से हटाएँ"
   },
   "home": {
     "title": "PageNest",
@@ -23,6 +25,7 @@
     "readTime_other": "{{count}} मिनट का पढ़ना",
     "alerts": {
       "archiveError": "लेख को आर्काइव नहीं किया जा सका",
+      "favoriteError": "पसंदीदा स्थिति को अपडेट नहीं किया जा सका",
       "deleteTitle": "लेख हटाएँ",
       "deleteMessage": "क्या आप वाकई इस लेख को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
       "deleteError": "लेख हटाया नहीं जा सका",

@@ -16,18 +16,22 @@ interface ArticleContextMenuProps {
   visible: boolean;
   onClose: () => void;
   onRename: () => void;
+  onFavorite: () => void;
   onArchive: () => void;
   onDelete: () => void;
   position: { x: number; y: number };
+  isFavorite: boolean;
 }
 
 export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
   visible,
   onClose,
   onRename,
+  onFavorite,
   onArchive,
   onDelete,
   position,
+  isFavorite,
 }) => {
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -41,15 +45,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
       onRequestClose={onClose}
     >
       <Pressable style={styles.overlay} onPress={onClose}>
-        <View
-          style={[
-            styles.menu,
-            {
-              top: position.y,
-              left: position.x,
-            },
-          ]}
-        >
+        <View style={styles.menu}>
           <TouchableOpacity style={styles.menuItem} onPress={onRename}>
             <View style={styles.menuItemContent}>
               <Icon
@@ -59,6 +55,20 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
                 style={styles.menuIcon}
               />
               <Text style={styles.menuText}>{t('common.rename')}</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.menuItem} onPress={onFavorite}>
+            <View style={styles.menuItemContent}>
+              <Icon
+                name={isFavorite ? 'star' : 'star-outline'}
+                size={18}
+                color={isFavorite ? theme.colors.accent : theme.colors.text}
+                style={styles.menuIcon}
+              />
+              <Text style={styles.menuText}>
+                {isFavorite ? t('common.removeFromFavorites') : t('common.addToFavorites')}
+              </Text>
             </View>
           </TouchableOpacity>
 
@@ -101,13 +111,14 @@ const createStyles = (theme: Theme) =>
     overlay: {
       flex: 1,
       backgroundColor: 'rgba(0, 0, 0, 0.3)',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     menu: {
-      position: 'absolute',
       backgroundColor: theme.colors.card,
       borderRadius: 12,
       paddingVertical: 8,
-      minWidth: 150,
+      minWidth: 200,
       borderWidth: theme.isDark ? 1 : 0,
       borderColor: theme.colors.border,
       shadowColor: '#000',
