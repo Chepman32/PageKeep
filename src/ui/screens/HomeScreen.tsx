@@ -8,12 +8,15 @@ import {
   SafeAreaView,
   StatusBar,
   Alert,
+  TextInput,
+  Keyboard,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useArticleStore } from '../../store/articleStore';
+import { useSearchStore } from '../../store/searchStore';
 import { Article } from '../../domain/Article';
 import { ArticleContextMenu } from '../components/ArticleContextMenu';
 import { RenameModal } from '../components/RenameModal';
@@ -35,9 +38,20 @@ const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const { articles, loading, fetchArticles, updateArticle, deleteArticle } =
     useArticleStore();
+  const {
+    query,
+    results: searchResults,
+    loading: searchLoading,
+    setQuery,
+    search,
+    filters: searchFilters,
+    setFilters: setSearchFilters,
+  } = useSearchStore();
+
   const [selectedTab, setSelectedTab] = useState<
     'all' | 'favorites' | 'archived'
   >('all');
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [contextMenu, setContextMenu] = useState<{
     visible: boolean;
     article: Article | null;
@@ -57,19 +71,79 @@ const HomeScreen: React.FC = () => {
 
   const articleRepo = new ArticleRepository();
 
+  // Determine which articles to display
+  const displayedArticles = useMemo(() => {
+    if (query.trim()) {
+      return searchResults.map(result => result.article);
+    }
+    return articles;
+  }, [query, searchResults, articles]);
+
+  const isSearchActive = query.trim().length > 0;
+
   useEffect(() => {
     loadArticles();
   }, [selectedTab]);
+
+  // Update search filters when tab changes
+  useEffect(() => {
+    const filters = {
+      archived: selectedTab === 'archived' ? true : selectedTab === 'all' ? undefined : false,
+      favorite: selectedTab === 'favorites' ? true : undefined,
+    };
+    console.log('HomeScreen: Setting search filters:', filters);
+    setSearchFilters(filters);
+  }, [selectedTab, setSearchFilters]);
+
+  // Perform search when query changes
+  useEffect(() => {
+    if (query.trim()) {
+      console.log('HomeScreen: Triggering search with query:', query);
+      const delaySearch = setTimeout(() => {
+        search().then(() => {
+          console.log('HomeScreen: Search completed, results:', searchResults.length);
+        });
+      }, 300); // Debounce search
+      return () => clearTimeout(delaySearch);
+    }
+  }, [query, search, searchResults.length]);
 
   const loadArticles = () => {
     const filters = {
       archived:
         selectedTab === 'archived'
           ? true
+          : selectedTab === 'all'
+          ? undefined
           : false,
       favorite: selectedTab === 'favorites' ? true : undefined,
     };
     fetchArticles(filters);
+  };
+
+  const handleSearchChange = (text: string) => {
+    setQuery(text);
+    if (!text.trim()) {
+      setIsSearchExpanded(false);
+    }
+  };
+
+  const handleSearchFocus = () => {
+    setIsSearchExpanded(true);
+  };
+
+  const handleSearchClear = () => {
+    setQuery('');
+    setIsSearchExpanded(false);
+    Keyboard.dismiss();
+  };
+
+  const handleSearchToggle = () => {
+    if (isSearchExpanded) {
+      handleSearchClear();
+    } else {
+      setIsSearchExpanded(true);
+    }
   };
 
   const handleLongPress = (article: Article) => {
@@ -200,8 +274,20 @@ const HomeScreen: React.FC = () => {
 
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <Text style={styles.emptyTitle}>{t('home.emptyState')}</Text>
-      <Text style={styles.emptyText}>{t('home.emptyHint')}</Text>
+      {isSearchActive ? (
+        <>
+          <Icon name="text-search" size={64} color={theme.colors.muted} />
+          <Text style={styles.emptyTitle}>{t('search.noResults')}</Text>
+          <Text style={styles.emptyText}>
+            Try searching with different keywords
+          </Text>
+        </>
+      ) : (
+        <>
+          <Text style={styles.emptyTitle}>{t('home.emptyState')}</Text>
+          <Text style={styles.emptyText}>{t('home.emptyHint')}</Text>
+        </>
+      )}
     </View>
   );
 
@@ -211,30 +297,63 @@ const HomeScreen: React.FC = () => {
 
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>{t('home.title')}</Text>
+        {!isSearchExpanded && (
+          <Text style={styles.headerTitle}>{t('home.title')}</Text>
+        )}
+        {isSearchExpanded && (
+          <View style={styles.searchInputContainer}>
+            <Icon
+              name="magnify"
+              size={20}
+              color={theme.colors.secondary}
+              style={styles.searchIcon}
+            />
+            <TextInput
+              style={styles.searchInput}
+              value={query}
+              onChangeText={handleSearchChange}
+              onFocus={handleSearchFocus}
+              placeholder={t('search.placeholder')}
+              placeholderTextColor={theme.colors.muted}
+              autoFocus
+              returnKeyType="search"
+              onSubmitEditing={() => search()}
+            />
+            {query.length > 0 && (
+              <TouchableOpacity
+                onPress={handleSearchClear}
+                style={styles.clearButton}
+              >
+                <Icon name="close-circle" size={20} color={theme.colors.secondary} />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
         <View style={styles.headerActions}>
           <TouchableOpacity
             style={styles.headerButton}
-            onPress={() => navigation.navigate('Search')}
+            onPress={handleSearchToggle}
           >
             <Icon
-              name="magnify"
+              name={isSearchExpanded ? 'close' : 'magnify'}
               size={22}
               color={theme.colors.accent}
               style={styles.headerIcon}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.headerButton}
-            onPress={() => navigation.navigate('Settings')}
-          >
-            <Icon
-              name="cog-outline"
-              size={22}
-              color={theme.colors.accent}
-              style={styles.headerIcon}
-            />
-          </TouchableOpacity>
+          {!isSearchExpanded && (
+            <TouchableOpacity
+              style={styles.headerButton}
+              onPress={() => navigation.navigate('Settings')}
+            >
+              <Icon
+                name="cog-outline"
+                size={22}
+                color={theme.colors.accent}
+                style={styles.headerIcon}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
@@ -283,12 +402,12 @@ const HomeScreen: React.FC = () => {
 
       {/* Article List */}
       <FlatList
-        data={articles}
+        data={displayedArticles}
         renderItem={renderArticleCard}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
         ListEmptyComponent={renderEmptyState}
-        refreshing={loading}
+        refreshing={isSearchActive ? searchLoading : loading}
         onRefresh={loadArticles}
       />
 
@@ -356,6 +475,28 @@ const createStyles = (theme: Theme) =>
     },
     headerIcon: {
       color: theme.colors.accent,
+    },
+    searchInputContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: theme.colors.background,
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      marginRight: 8,
+      height: 40,
+    },
+    searchIcon: {
+      marginRight: 8,
+    },
+    searchInput: {
+      flex: 1,
+      fontSize: 16,
+      color: theme.colors.text,
+      padding: 0,
+    },
+    clearButton: {
+      padding: 4,
     },
     tabs: {
       flexDirection: 'row',

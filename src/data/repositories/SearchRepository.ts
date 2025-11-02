@@ -13,12 +13,14 @@ export class SearchRepository {
     query: string,
     filters?: ArticleFilters,
   ): Promise<SearchResult[]> {
+    console.log('SearchRepository: Searching with query:', query, 'filters:', filters);
+
     let ftsResult;
 
     try {
       // Try FTS5 search first
       const ftsQuery = `
-        SELECT 
+        SELECT
           fts.article_id,
           snippet(fts_articles, 1, '<mark>', '</mark>', '...', 30) as highlight,
           rank as score
@@ -29,7 +31,9 @@ export class SearchRepository {
       `;
 
       const searchQuery = this.buildFTS5Query(query);
+      console.log('SearchRepository: FTS5 query:', searchQuery);
       ftsResult = this.db.execute(ftsQuery, [searchQuery]);
+      console.log('SearchRepository: FTS5 result rows:', ftsResult.rows?.length || 0);
     } catch (error) {
       console.warn('FTS5 search failed, using fallback:', error);
       // Fallback to LIKE search
@@ -106,6 +110,7 @@ export class SearchRepository {
     }
 
     const articlesResult = this.db.execute(articlesQuery, params);
+    console.log('SearchRepository: Articles result rows:', articlesResult.rows?.length || 0);
 
     const results: SearchResult[] = [];
     if (articlesResult.rows) {
@@ -121,6 +126,7 @@ export class SearchRepository {
       }
     }
 
+    console.log('SearchRepository: Returning', results.length, 'search results');
     return results.sort((a, b) => b.score - a.score);
   }
 
