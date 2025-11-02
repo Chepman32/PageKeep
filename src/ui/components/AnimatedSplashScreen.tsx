@@ -36,7 +36,7 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
       Animated.spring(dropAnimation, {
         toValue: 0,
         useNativeDriver: true,
-        speed: 2.2,
+        speed: 70,
         bounciness: 14,
       }),
       Animated.parallel([
