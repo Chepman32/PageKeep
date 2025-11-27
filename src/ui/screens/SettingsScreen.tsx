@@ -9,6 +9,8 @@ import {
   StatusBar,
   Switch,
   Platform,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
@@ -73,6 +75,7 @@ const SettingsScreen: React.FC = () => {
   const loadProStatus = useIAPStore(state => state.loadProStatus);
 
   const [storageUsed, setStorageUsed] = useState('0 MB');
+  const [isClearing, setIsClearing] = useState(false);
 
   // Local state for slider values (for smooth dragging without excessive updates)
   const [localFontSize, setLocalFontSize] = useState(readerDefaults.fontSize);
@@ -131,6 +134,51 @@ const SettingsScreen: React.FC = () => {
     if (themeKey !== readerDefaults.theme) {
       updateReaderDefaults({ theme: themeKey });
     }
+  };
+
+  const updateStorageDisplay = async () => {
+    try {
+      const bytes = await FileSystem.getTotalStorageUsed();
+      setStorageUsed(FileSystem.formatBytes(bytes));
+    } catch {
+      setStorageUsed('0 MB');
+    }
+  };
+
+  const handleClearCache = () => {
+    Alert.alert(
+      t('settings.clearCache'),
+      t('settings.clearCacheConfirm'),
+      [
+        {
+          text: t('common.cancel'),
+          style: 'cancel',
+        },
+        {
+          text: t('common.clear'),
+          style: 'destructive',
+          onPress: async () => {
+            setIsClearing(true);
+            try {
+              const orphanedFiles = await FileSystem.findOrphanedFiles();
+              await FileSystem.cleanupOrphanedFiles(orphanedFiles);
+              await updateStorageDisplay();
+              Alert.alert(
+                t('common.success'),
+                t('settings.cacheCleared'),
+              );
+            } catch (error) {
+              Alert.alert(
+                t('common.error'),
+                t('settings.clearCacheFailed'),
+              );
+            } finally {
+              setIsClearing(false);
+            }
+          },
+        },
+      ],
+    );
   };
 
   const withAlpha = (hex: string, alpha: number): string => {
@@ -462,9 +510,25 @@ const SettingsScreen: React.FC = () => {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings.storage')}</Text>
-          <View style={[styles.row, styles.rowLast]}>
+          <View style={styles.row}>
             <Text style={styles.rowLabel}>{t('settings.storageUsed')}</Text>
             <Text style={styles.rowValue}>{storageUsed}</Text>
+          </View>
+          <View style={[styles.row, styles.rowLast]}>
+            <TouchableOpacity
+              style={[styles.clearCacheButton, isClearing && styles.clearCacheButtonDisabled]}
+              onPress={handleClearCache}
+              disabled={isClearing}
+              accessibilityRole="button"
+            >
+              {isClearing ? (
+                <ActivityIndicator size="small" color={theme.colors.accent} />
+              ) : (
+                <Text style={styles.clearCacheButtonText}>
+                  {t('settings.clearCache')}
+                </Text>
+              )}
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -661,6 +725,24 @@ const createStyles = (theme: Theme) =>
     slider: {
       width: '100%',
       height: 40,
+    },
+    clearCacheButton: {
+      flex: 1,
+      backgroundColor: theme.colors.accent,
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: 44,
+    },
+    clearCacheButtonDisabled: {
+      opacity: 0.5,
+    },
+    clearCacheButtonText: {
+      color: '#FFFFFF',
+      fontSize: 16,
+      fontWeight: '600',
     },
   });
 

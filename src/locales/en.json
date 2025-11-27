@@ -15,6 +15,7 @@
     "unarchive": "Unarchive",
     "view": "View",
     "ok": "OK",
+    "clear": "Clear",
     "addToFavorites": "Add to Favorites",
     "removeFromFavorites": "Remove from Favorites"
   },
@@ -108,6 +109,10 @@
     },
     "storage": "Storage",
     "storageUsed": "Used",
+    "clearCache": "Clear Cache",
+    "clearCacheConfirm": "This will remove orphaned files and free up space. Continue?",
+    "cacheCleared": "Cache cleared successfully",
+    "clearCacheFailed": "Failed to clear cache. Please try again.",
     "about": "About",
     "version": "Version",
     "privacy": "Privacy",
