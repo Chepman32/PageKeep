@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import { SavePageService } from './SavePageService';
 import { useArticleStore } from '../store/articleStore';
+import { Article, ArticleFilters } from '../domain/Article';
+import { ArticleRepository } from '../data/repositories/ArticleRepository';
 
 type RawSharedItem = {
   id?: string;
@@ -40,6 +42,7 @@ export class IncomingShareService {
   private static emitter: NativeEventEmitter | null = null;
   private static subscription?: ReturnType<NativeEventEmitter['addListener']>;
   private static readonly saveService = new SavePageService();
+  private static readonly articleRepo = new ArticleRepository();
   private static readonly queue: SharedItem[] = [];
   private static processing = false;
   private static readonly processedIds = new Set<string>();
@@ -228,7 +231,8 @@ export class IncomingShareService {
         console.log(
           `[IncomingShareService] Saving shared URL: ${item.url} (id: ${item.id})`,
         );
-        await this.saveService.saveFromUrlFast(item.url, {});
+        const articleId = await this.saveService.saveFromUrlFast(item.url, {});
+        await this.addToStoreIfVisible(articleId);
         this.processedIds.add(item.id);
         listNeedsRefresh = true;
       } catch (error) {
@@ -253,7 +257,7 @@ export class IncomingShareService {
 
     this.processing = false;
 
-    shareModule.markProcessingComplete?.();
+    shareModule?.markProcessingComplete?.();
   }
 
   private static handleIncomingLink(rawUrl: string | null | undefined): void {
@@ -296,5 +300,72 @@ export class IncomingShareService {
 
   private static isSupportedUrl(url: string): boolean {
     return /^https?:\/\//i.test(url);
+  }
+
+  private static async addToStoreIfVisible(articleId: string): Promise<void> {
+    try {
+      const article = await this.articleRepo.findById(articleId);
+      if (!article) {
+        return;
+      }
+
+      const { addArticle, articles, currentFilters } = useArticleStore.getState();
+
+      if (!this.matchesFilters(article, currentFilters)) {
+        return;
+      }
+
+      const alreadyPresent = articles.some(existing => existing.id === article.id);
+      if (!alreadyPresent) {
+        addArticle(article);
+      }
+    } catch (error) {
+      console.error(
+        '[IncomingShareService] Failed to add shared article to store',
+        error,
+      );
+    }
+  }
+
+  private static matchesFilters(
+    article: Article,
+    filters?: ArticleFilters,
+  ): boolean {
+    if (!filters) {
+      return true;
+    }
+
+    if (filters.archived !== undefined && article.archived !== filters.archived) {
+      return false;
+    }
+
+    if (filters.favorite !== undefined && article.favorite !== filters.favorite) {
+      return false;
+    }
+
+    if (
+      filters.minReadProgress !== undefined &&
+      article.readProgress < filters.minReadProgress
+    ) {
+      return false;
+    }
+
+    if (
+      filters.maxReadProgress !== undefined &&
+      article.readProgress > filters.maxReadProgress
+    ) {
+      return false;
+    }
+
+    // If filters rely on data we don't have locally, skip optimistic add
+    if (
+      (filters.tags && filters.tags.length > 0) ||
+      (filters.collections && filters.collections.length > 0) ||
+      filters.hasErrors
+    ) {
+      return false;
+    }
+
+    return true;
   }
 }
