@@ -9,7 +9,7 @@ PODS:
     - hermes-engine/Pre-built (= 0.82.1)
   - hermes-engine/Pre-built (0.82.1)
   - MMKVCore (2.2.4)
-  - NitroIap (14.4.33):
+  - NitroIap (14.4.46):
     - boost
     - DoubleConversion
     - fast_float
@@ -17,7 +17,7 @@ PODS:
     - glog
     - hermes-engine
     - NitroModules
-    - openiap (~> 1.2.31)
+    - openiap (~> 1.2.39)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -40,7 +40,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroMmkv (4.0.0):
+  - NitroMmkv (4.0.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -71,7 +71,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroModules (0.31.2):
+  - NitroModules (0.31.10):
     - boost
     - DoubleConversion
     - fast_float
@@ -100,7 +100,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - openiap (1.2.31)
+  - openiap (1.2.39)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -1875,7 +1875,7 @@ PODS:
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
     - SocketRocket
-  - react-native-blob-util (0.23.1):
+  - react-native-blob-util (0.23.2):
     - boost
     - DoubleConversion
     - fast_float
@@ -2046,7 +2046,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-skia (2.3.7):
+  - react-native-skia (2.4.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -2702,7 +2702,7 @@ PODS:
     - SocketRocket
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.29.0):
+  - RNGestureHandler (2.29.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -2966,6 +2966,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - RNSensors (7.3.6):
+    - React-Core
   - RNSha1 (1.2.3):
     - React
   - RNVectorIcons (10.3.0):
@@ -3088,6 +3090,7 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSensors (from `../node_modules/react-native-sensors`)
   - RNSha1 (from `../node_modules/react-native-sha1`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - SocketRocket (~> 0.7.1)
@@ -3275,6 +3278,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSensors:
+    :path: "../node_modules/react-native-sensors"
   RNSha1:
     :path: "../node_modules/react-native-sha1"
   RNVectorIcons:
@@ -3291,10 +3296,10 @@ SPEC CHECKSUMS:
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 273e30e7fb618279934b0b95ffab60ecedb7acf5
   MMKVCore: f2dd4c9befea04277a55e84e7812f930537993df
-  NitroIap: 7a6a2b088be78ec27ee2df5c54fa5970f0e69be6
-  NitroMmkv: 515799c03a56c23def39625baaee36bf1e65290e
-  NitroModules: 2862238ccf1a30c3e3c20fb10ae297ce26168718
-  openiap: a7fff3c5684b6f83c5f973d62fca3c390782ed0d
+  NitroIap: 5d5df09e1fd3edf133d4ee56c59f6a433019adad
+  NitroMmkv: afbc5b2fbf963be567c6c545aa1efcf6a9cec68e
+  NitroModules: 5bc319d441f4983894ea66b1d392c519536e6d23
+  openiap: d374c792df4c6047c8f846394b9c00815d64f327
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: f17e2ebc07876ca9ab8eb6e4b0a4e4647497ae3a
   RCTRequired: e2c574c1b45231f7efb0834936bd609d75072b63
@@ -3328,11 +3333,11 @@ SPEC CHECKSUMS:
   React-logger: 500f2fa5697d224e63c33d913c8a4765319e19bf
   React-Mapbuffer: 06d59c448da7e34eb05b3fb2189e12f6a30fec57
   React-microtasksnativemodule: d1ee999dc9052e23f6488b730fa2d383a4ea40e5
-  react-native-blob-util: 5694d488bf8c7cf55040fbbd5b7f6d3d39470f0a
+  react-native-blob-util: d59901fee49a23587af72dffe4451fb25ebe6d49
   react-native-get-random-values: e2acf4070fe4b7325705a05af047449637a27a21
   react-native-quick-sqlite: de1270624ef439261969690aec166f647d63c49f
   react-native-safe-area-context: c6e2edd1c1da07bdce287fa9d9e60c5f7b514616
-  react-native-skia: e80b5ac75fa746fc6e4ff5beba2029847c264235
+  react-native-skia: b38c0db1ec08fc0b859e7c83fbfb45f3241812a1
   react-native-slider: 87e189f6289e7ba87f0031f479249d91ba66a868
   react-native-webview: 654f794a7686b47491cf43aa67f7f428bea00eed
   React-NativeModulesApple: 46690a0fe94ec28fc6fc686ec797b911d251ded0
@@ -3368,10 +3373,11 @@ SPEC CHECKSUMS:
   ReactCodegen: 878add6c7d8ff8cea87697c44d29c03b79b6f2d9
   ReactCommon: 804dc80944fa90b86800b43c871742ec005ca424
   RNFS: 89de7d7f4c0f6bafa05343c578f61118c8282ed8
-  RNGestureHandler: 6859520a21304f0bedf0643d0cf0beade47c83f2
+  RNGestureHandler: e1cf8ef3f11045536eed6bd4f132b003ef5f9a5f
   RNReactNativeHapticFeedback: be4f1b4bf0398c30b59b76ed92ecb0a2ff3a69c6
   RNReanimated: 19ace50ff79080beabc266156b37d84ee2c89fa5
   RNScreens: d821082c6dd1cb397cc0c98b026eeafaa68be479
+  RNSensors: 111159597ac51505df10413c61b28bcd28e88983
   RNSha1: 499c19705125762cbd83834b9f2117cb01e9d385
   RNVectorIcons: 791f13226ec4a3fd13062eda9e892159f0981fae
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748

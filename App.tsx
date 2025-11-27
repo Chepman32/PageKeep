@@ -51,7 +51,8 @@ const App: React.FC = () => {
         {showSplash && (
           <AnimatedSplashScreen
             isReady={isAppReady}
-            onAnimationEnd={handleSplashEnd}
+            onFinish={handleSplashEnd}
+            showDebugPanel={__DEV__}
           />
         )}
       </View>
