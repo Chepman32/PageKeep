@@ -10,6 +10,7 @@ import {
   Switch,
   Platform,
 } from 'react-native';
+import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -63,12 +64,20 @@ const SettingsScreen: React.FC = () => {
   const updatePreferences = useSettingsStore(
     state => state.updatePreferences,
   );
+  const updateReaderDefaults = useSettingsStore(
+    state => state.updateReaderDefaults,
+  );
   const loadSettings = useSettingsStore(state => state.loadSettings);
 
   const isPro = useIAPStore(state => state.isPro);
   const loadProStatus = useIAPStore(state => state.loadProStatus);
 
   const [storageUsed, setStorageUsed] = useState('0 MB');
+
+  // Local state for slider values (for smooth dragging without excessive updates)
+  const [localFontSize, setLocalFontSize] = useState(readerDefaults.fontSize);
+  const [localLineHeight, setLocalLineHeight] = useState(readerDefaults.lineHeight);
+  const [localMargins, setLocalMargins] = useState(readerDefaults.margins);
 
   useEffect(() => {
     loadSettings();
@@ -87,6 +96,19 @@ const SettingsScreen: React.FC = () => {
     }
   }, [preferences.language, updatePreferences, i18n]);
 
+  // Sync local slider values with store
+  useEffect(() => {
+    setLocalFontSize(readerDefaults.fontSize);
+  }, [readerDefaults.fontSize]);
+
+  useEffect(() => {
+    setLocalLineHeight(readerDefaults.lineHeight);
+  }, [readerDefaults.lineHeight]);
+
+  useEffect(() => {
+    setLocalMargins(readerDefaults.margins);
+  }, [readerDefaults.margins]);
+
   const activeLanguage = useMemo(
     () => normalizeLanguage(preferences.language),
     [preferences.language],
@@ -102,6 +124,12 @@ const SettingsScreen: React.FC = () => {
     if (activeLanguage !== code) {
       updatePreferences({ language: code });
       i18n.changeLanguage(code);
+    }
+  };
+
+  const handleReaderThemeSelect = (themeKey: string) => {
+    if (themeKey !== readerDefaults.theme) {
+      updateReaderDefaults({ theme: themeKey });
     }
   };
 
@@ -148,11 +176,6 @@ const SettingsScreen: React.FC = () => {
       />
     );
   };
-
-  const readerThemeLabel =
-    t(`settings.themes.${readerDefaults.theme}`, {
-      defaultValue: t('settings.themes.light'),
-    }) || readerDefaults.theme;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -285,21 +308,117 @@ const SettingsScreen: React.FC = () => {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings.readerDefaults')}</Text>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>{t('reader.theme')}</Text>
-            <Text style={styles.rowValue}>{readerThemeLabel}</Text>
+
+          {/* Reader Theme Picker */}
+          <Text style={styles.sectionSubtitle}>{t('reader.theme')}</Text>
+          <View style={styles.themeGrid}>
+            {themeOptions.map(id => {
+              const option = themes[id];
+              const isActive = readerDefaults.theme === id;
+              return (
+                <TouchableOpacity
+                  key={id}
+                  style={[
+                    styles.themeOption,
+                    isActive && styles.themeOptionActive,
+                  ]}
+                  onPress={() => handleReaderThemeSelect(id)}
+                  accessibilityRole="button"
+                >
+                  <View style={styles.themePreviewRow}>
+                    <View
+                      style={[
+                        styles.themeSwatch,
+                        {
+                          backgroundColor: option.colors.background,
+                          borderColor: option.colors.border,
+                        },
+                      ]}
+                    />
+                    <View
+                      style={[
+                        styles.themeAccent,
+                        { backgroundColor: option.colors.accent },
+                      ]}
+                    />
+                  </View>
+                  <Text
+                    style={[
+                      styles.themeOptionText,
+                      isActive && styles.themeOptionTextActive,
+                    ]}
+                  >
+                    {t(`settings.themes.${id}`)}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>{t('reader.fontSize')}</Text>
-            <Text style={styles.rowValue}>{readerDefaults.fontSize}pt</Text>
+
+          {/* Font Size Slider */}
+          <View style={styles.sliderContainer}>
+            <View style={styles.sliderLabelRow}>
+              <Text style={styles.rowLabel}>{t('reader.fontSize')}</Text>
+              <Text style={styles.rowValue}>{Math.round(localFontSize)}pt</Text>
+            </View>
+            <Slider
+              value={localFontSize}
+              minimumValue={14}
+              maximumValue={24}
+              step={1}
+              onValueChange={setLocalFontSize}
+              onSlidingComplete={(value) => {
+                updateReaderDefaults({ fontSize: Math.round(value) });
+              }}
+              minimumTrackTintColor={theme.colors.accent}
+              maximumTrackTintColor={theme.colors.border}
+              thumbTintColor={Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'}
+              style={styles.slider}
+            />
           </View>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>{t('reader.lineHeight')}</Text>
-            <Text style={styles.rowValue}>{readerDefaults.lineHeight}</Text>
+
+          {/* Line Height Slider */}
+          <View style={styles.sliderContainer}>
+            <View style={styles.sliderLabelRow}>
+              <Text style={styles.rowLabel}>{t('reader.lineHeight')}</Text>
+              <Text style={styles.rowValue}>{localLineHeight.toFixed(1)}</Text>
+            </View>
+            <Slider
+              value={localLineHeight}
+              minimumValue={1.0}
+              maximumValue={2.5}
+              step={0.1}
+              onValueChange={setLocalLineHeight}
+              onSlidingComplete={(value) => {
+                updateReaderDefaults({ lineHeight: parseFloat(value.toFixed(1)) });
+              }}
+              minimumTrackTintColor={theme.colors.accent}
+              maximumTrackTintColor={theme.colors.border}
+              thumbTintColor={Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'}
+              style={styles.slider}
+            />
           </View>
-          <View style={[styles.row, styles.rowLast]}>
-            <Text style={styles.rowLabel}>{t('reader.margins')}</Text>
-            <Text style={styles.rowValue}>{readerDefaults.margins}px</Text>
+
+          {/* Margins Slider */}
+          <View style={[styles.sliderContainer, styles.sliderContainerLast]}>
+            <View style={styles.sliderLabelRow}>
+              <Text style={styles.rowLabel}>{t('reader.margins')}</Text>
+              <Text style={styles.rowValue}>{Math.round(localMargins)}px</Text>
+            </View>
+            <Slider
+              value={localMargins}
+              minimumValue={8}
+              maximumValue={48}
+              step={4}
+              onValueChange={setLocalMargins}
+              onSlidingComplete={(value) => {
+                updateReaderDefaults({ margins: Math.round(value) });
+              }}
+              minimumTrackTintColor={theme.colors.accent}
+              maximumTrackTintColor={theme.colors.border}
+              thumbTintColor={Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'}
+              style={styles.slider}
+            />
           </View>
         </View>
 
@@ -523,6 +642,25 @@ const createStyles = (theme: Theme) =>
     languageOptionTextActive: {
       color: theme.colors.card,
       fontWeight: '600',
+    },
+    sliderContainer: {
+      paddingVertical: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    sliderContainerLast: {
+      borderBottomWidth: 0,
+      paddingBottom: 0,
+    },
+    sliderLabelRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 12,
+    },
+    slider: {
+      width: '100%',
+      height: 40,
     },
   });
 
