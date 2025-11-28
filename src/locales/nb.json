@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Lagre",
+    "cancel": "Avbryt",
+    "delete": "Slett",
+    "edit": "Rediger",
+    "done": "Ferdig",
+    "back": "Tilbake",
+    "search": "Søk",
+    "loading": "Laster...",
+    "error": "Feil",
+    "success": "Vellykket",
+    "rename": "Gi nytt navn",
+    "archive": "Arkiver",
+    "unarchive": "Fjern fra arkiv",
+    "view": "Vis",
+    "ok": "OK",
+    "clear": "Tøm",
+    "addToFavorites": "Legg til i favoritter",
+    "removeFromFavorites": "Fjern fra favoritter"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Ingen artikler ennå",
+    "emptyHint": "Trykk på + knappen for å lagre din første artikkel",
+    "readTime_one": "{{count}} min lesing",
+    "readTime_other": "{{count}} min lesing",
+    "alerts": {
+      "archiveError": "Kunne ikke arkivere artikkel",
+      "favoriteError": "Kunne ikke oppdatere favorittstatus",
+      "deleteTitle": "Slett artikkel",
+      "deleteMessage": "Er du sikker på at du vil slette denne artikkelen? Denne handlingen kan ikke angres.",
+      "deleteError": "Kunne ikke slette artikkel",
+      "renameError": "Kunne ikke gi nytt navn til artikkel"
+    },
+    "tabs": {
+      "all": "Alle",
+      "favorites": "Favoritter",
+      "archived": "Arkivert"
+    }
+  },
+  "reader": {
+    "fontSize": "Skriftstørrelse",
+    "theme": "Tema",
+    "lineHeight": "Linjehøyde",
+    "margins": "Marginer"
+  },
+  "add": {
+    "title": "Legg til artikkel",
+    "urlLabel": "Skriv inn URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Lagre artikkel",
+    "hint": "Tips: Du kan også bruke Del-funksjonen fra Safari for å lagre artikler direkte.",
+    "success": "Artikkelen lagres!",
+    "errors": {
+      "emptyUrl": "Vennligst skriv inn en URL",
+      "invalidUrl": "Vennligst skriv inn en gyldig URL som starter med http:// eller https://",
+      "saveFailed": "Kunne ikke lagre artikkel. Vennligst prøv igjen."
+    }
+  },
+  "search": {
+    "placeholder": "Søk i artikler...",
+    "recentSearches": "Siste søk",
+    "noResults": "Ingen resultater funnet"
+  },
+  "settings": {
+    "title": "Innstillinger",
+    "account": "Konto",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Gratis",
+    "appearance": "Utseende",
+    "theme": "Tema",
+    "themes": {
+      "light": "Lys",
+      "dark": "Mørk",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Tilbakemelding",
+    "sound": "Lyd",
+    "haptics": "Vibrasjoner",
+    "language": "Språk",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Standard leserinnstillinger",
+    "downloadSettings": "Nedlastingsinnstillinger",
+    "download": {
+      "wifiOnly": "Kun Wi-Fi",
+      "images": "Last ned bilder",
+      "styles": "Last ned stiler",
+      "fonts": "Last ned skrifter"
+    },
+    "storage": "Lagring",
+    "storageUsed": "Brukt",
+    "clearCache": "Tøm hurtigbuffer",
+    "clearCacheConfirm": "Dette vil fjerne ubrukte filer og frigjøre plass. Fortsette?",
+    "cacheCleared": "Hurtigbuffer tømt",
+    "clearCacheFailed": "Kunne ikke tømme hurtigbuffer. Vennligst prøv igjen.",
+    "about": "Om",
+    "version": "Versjon",
+    "privacy": "Personvern",
+    "noDataCollection": "Ingen datainnsamling"
+  },
+  "modals": {
+    "rename": {
+      "title": "Gi nytt navn til artikkel",
+      "placeholder": "Skriv inn ny tittel",
+      "error": "Tittel kan ikke være tom"
+    }
+  }
+}

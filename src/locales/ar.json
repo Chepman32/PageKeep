@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "done": "تم",
+    "back": "رجوع",
+    "search": "بحث",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "rename": "إعادة تسمية",
+    "archive": "أرشفة",
+    "unarchive": "إلغاء الأرشفة",
+    "view": "عرض",
+    "ok": "موافق",
+    "clear": "مسح",
+    "addToFavorites": "إضافة للمفضلة",
+    "removeFromFavorites": "إزالة من المفضلة"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "لا توجد مقالات بعد",
+    "emptyHint": "انقر على زر + لحفظ أول مقالة",
+    "readTime_one": "دقيقة واحدة للقراءة",
+    "readTime_other": "{{count}} دقيقة للقراءة",
+    "alerts": {
+      "archiveError": "فشلت أرشفة المقالة",
+      "favoriteError": "فشل تحديث حالة المفضلة",
+      "deleteTitle": "حذف المقالة",
+      "deleteMessage": "هل أنت متأكد من حذف هذه المقالة؟ لا يمكن التراجع عن هذا الإجراء.",
+      "deleteError": "فشل حذف المقالة",
+      "renameError": "فشلت إعادة تسمية المقالة"
+    },
+    "tabs": {
+      "all": "الكل",
+      "favorites": "المفضلة",
+      "archived": "المؤرشفة"
+    }
+  },
+  "reader": {
+    "fontSize": "حجم الخط",
+    "theme": "المظهر",
+    "lineHeight": "تباعد الأسطر",
+    "margins": "الهوامش"
+  },
+  "add": {
+    "title": "إضافة مقالة",
+    "urlLabel": "أدخل الرابط",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "حفظ المقالة",
+    "hint": "نصيحة: يمكنك أيضًا استخدام خاصية المشاركة من Safari لحفظ المقالات مباشرة.",
+    "success": "جاري حفظ المقالة!",
+    "errors": {
+      "emptyUrl": "الرجاء إدخال رابط",
+      "invalidUrl": "الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://",
+      "saveFailed": "فشل حفظ المقالة. الرجاء المحاولة مرة أخرى."
+    }
+  },
+  "search": {
+    "placeholder": "البحث في المقالات...",
+    "recentSearches": "عمليات البحث الأخيرة",
+    "noResults": "لم يتم العثور على نتائج"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "account": "الحساب",
+    "status": "الحالة",
+    "pro": "Pro",
+    "free": "مجاني",
+    "appearance": "المظهر",
+    "theme": "الثيم",
+    "themes": {
+      "light": "فاتح",
+      "dark": "داكن",
+      "solar": "شمسي",
+      "mono": "أحادي"
+    },
+    "feedback": "الملاحظات",
+    "sound": "الصوت",
+    "haptics": "اللمس الحسي",
+    "language": "اللغة",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "إعدادات القارئ الافتراضية",
+    "downloadSettings": "إعدادات التنزيل",
+    "download": {
+      "wifiOnly": "Wi-Fi فقط",
+      "images": "تنزيل الصور",
+      "styles": "تنزيل الأنماط",
+      "fonts": "تنزيل الخطوط"
+    },
+    "storage": "التخزين",
+    "storageUsed": "المستخدم",
+    "clearCache": "مسح الذاكرة المؤقتة",
+    "clearCacheConfirm": "سيؤدي هذا إلى إزالة الملفات غير المستخدمة وتحرير المساحة. هل تريد المتابعة؟",
+    "cacheCleared": "تم مسح الذاكرة المؤقتة بنجاح",
+    "clearCacheFailed": "فشل مسح الذاكرة المؤقتة. الرجاء المحاولة مرة أخرى.",
+    "about": "حول",
+    "version": "الإصدار",
+    "privacy": "الخصوصية",
+    "noDataCollection": "لا يتم جمع البيانات"
+  },
+  "modals": {
+    "rename": {
+      "title": "إعادة تسمية المقالة",
+      "placeholder": "أدخل العنوان الجديد",
+      "error": "لا يمكن أن يكون العنوان فارغًا"
+    }
+  }
+}

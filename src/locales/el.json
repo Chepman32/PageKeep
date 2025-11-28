@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Αποθήκευση",
+    "cancel": "Ακύρωση",
+    "delete": "Διαγραφή",
+    "edit": "Επεξεργασία",
+    "done": "Ολοκληρώθηκε",
+    "back": "Πίσω",
+    "search": "Αναζήτηση",
+    "loading": "Φόρτωση...",
+    "error": "Σφάλμα",
+    "success": "Επιτυχία",
+    "rename": "Μετονομασία",
+    "archive": "Αρχειοθέτηση",
+    "unarchive": "Αναίρεση αρχειοθέτησης",
+    "view": "Προβολή",
+    "ok": "OK",
+    "clear": "Εκκαθάριση",
+    "addToFavorites": "Προσθήκη στα αγαπημένα",
+    "removeFromFavorites": "Αφαίρεση από τα αγαπημένα"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Δεν υπάρχουν άρθρα ακόμα",
+    "emptyHint": "Πατήστε το κουμπί + για να αποθηκεύσετε το πρώτο σας άρθρο",
+    "readTime_one": "{{count}} λεπτό ανάγνωσης",
+    "readTime_other": "{{count}} λεπτά ανάγνωσης",
+    "alerts": {
+      "archiveError": "Αποτυχία αρχειοθέτησης άρθρου",
+      "favoriteError": "Αποτυχία ενημέρωσης κατάστασης αγαπημένων",
+      "deleteTitle": "Διαγραφή άρθρου",
+      "deleteMessage": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το άρθρο; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+      "deleteError": "Αποτυχία διαγραφής άρθρου",
+      "renameError": "Αποτυχία μετονομασίας άρθρου"
+    },
+    "tabs": {
+      "all": "Όλα",
+      "favorites": "Αγαπημένα",
+      "archived": "Αρχειοθετημένα"
+    }
+  },
+  "reader": {
+    "fontSize": "Μέγεθος γραμματοσειράς",
+    "theme": "Θέμα",
+    "lineHeight": "Ύψος γραμμής",
+    "margins": "Περιθώρια"
+  },
+  "add": {
+    "title": "Προσθήκη άρθρου",
+    "urlLabel": "Εισάγετε URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Αποθήκευση άρθρου",
+    "hint": "Συμβουλή: Μπορείτε επίσης να χρησιμοποιήσετε τη λειτουργία Κοινή χρήση από το Safari για να αποθηκεύσετε άρθρα απευθείας.",
+    "success": "Το άρθρο αποθηκεύεται!",
+    "errors": {
+      "emptyUrl": "Παρακαλώ εισάγετε ένα URL",
+      "invalidUrl": "Παρακαλώ εισάγετε ένα έγκυρο URL που ξεκινά με http:// ή https://",
+      "saveFailed": "Αποτυχία αποθήκευσης άρθρου. Παρακαλώ δοκιμάστε ξανά."
+    }
+  },
+  "search": {
+    "placeholder": "Αναζήτηση άρθρων...",
+    "recentSearches": "Πρόσφατες αναζητήσεις",
+    "noResults": "Δεν βρέθηκαν αποτελέσματα"
+  },
+  "settings": {
+    "title": "Ρυθμίσεις",
+    "account": "Λογαριασμός",
+    "status": "Κατάσταση",
+    "pro": "Pro",
+    "free": "Δωρεάν",
+    "appearance": "Εμφάνιση",
+    "theme": "Θέμα",
+    "themes": {
+      "light": "Φωτεινό",
+      "dark": "Σκοτεινό",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Σχόλια",
+    "sound": "Ήχος",
+    "haptics": "Δόνηση",
+    "language": "Γλώσσα",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Προεπιλεγμένες ρυθμίσεις αναγνώστη",
+    "downloadSettings": "Ρυθμίσεις λήψης",
+    "download": {
+      "wifiOnly": "Μόνο Wi-Fi",
+      "images": "Λήψη εικόνων",
+      "styles": "Λήψη στυλ",
+      "fonts": "Λήψη γραμματοσειρών"
+    },
+    "storage": "Αποθηκευτικός χώρος",
+    "storageUsed": "Χρησιμοποιείται",
+    "clearCache": "Εκκαθάριση κρυφής μνήμης",
+    "clearCacheConfirm": "Αυτό θα αφαιρέσει τα αχρησιμοποίητα αρχεία και θα ελευθερώσει χώρο. Συνέχεια;",
+    "cacheCleared": "Η κρυφή μνήμη εκκαθαρίστηκε επιτυχώς",
+    "clearCacheFailed": "Αποτυχία εκκαθάρισης κρυφής μνήμης. Παρακαλώ δοκιμάστε ξανά.",
+    "about": "Σχετικά",
+    "version": "Έκδοση",
+    "privacy": "Απόρρητο",
+    "noDataCollection": "Χωρίς συλλογή δεδομένων"
+  },
+  "modals": {
+    "rename": {
+      "title": "Μετονομασία άρθρου",
+      "placeholder": "Εισάγετε νέο τίτλο",
+      "error": "Ο τίτλος δεν μπορεί να είναι κενός"
+    }
+  }
+}

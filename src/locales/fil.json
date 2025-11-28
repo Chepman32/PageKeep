@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "I-save",
+    "cancel": "Kanselahin",
+    "delete": "Tanggalin",
+    "edit": "I-edit",
+    "done": "Tapos na",
+    "back": "Bumalik",
+    "search": "Maghanap",
+    "loading": "Naglo-load...",
+    "error": "May Mali",
+    "success": "Tagumpay",
+    "rename": "Palitan ang Pangalan",
+    "archive": "I-archive",
+    "unarchive": "Alisin sa Archive",
+    "view": "Tingnan",
+    "ok": "OK",
+    "clear": "Linisin",
+    "addToFavorites": "Idagdag sa Mga Paborito",
+    "removeFromFavorites": "Alisin sa Mga Paborito"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Wala pang mga artikulo",
+    "emptyHint": "Pindutin ang + button para i-save ang iyong unang artikulo",
+    "readTime_one": "{{count}} minutong pagbasa",
+    "readTime_other": "{{count}} minutong pagbasa",
+    "alerts": {
+      "archiveError": "Hindi ma-archive ang artikulo",
+      "favoriteError": "Hindi ma-update ang status ng paborito",
+      "deleteTitle": "Tanggalin ang Artikulo",
+      "deleteMessage": "Sigurado ka bang gusto mong tanggalin ang artikulong ito? Hindi na ito maaaring ibalik.",
+      "deleteError": "Hindi matanggal ang artikulo",
+      "renameError": "Hindi mapalitan ang pangalan ng artikulo"
+    },
+    "tabs": {
+      "all": "Lahat",
+      "favorites": "Mga Paborito",
+      "archived": "Naka-archive"
+    }
+  },
+  "reader": {
+    "fontSize": "Laki ng Font",
+    "theme": "Tema",
+    "lineHeight": "Taas ng Linya",
+    "margins": "Mga Margin"
+  },
+  "add": {
+    "title": "Magdagdag ng Artikulo",
+    "urlLabel": "Ilagay ang URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "I-save ang Artikulo",
+    "hint": "Tip: Maaari mo ring gamitin ang Share Extension mula sa Safari para direktang mag-save ng mga artikulo.",
+    "success": "Sine-save ang artikulo!",
+    "errors": {
+      "emptyUrl": "Pakiusap maglagay ng URL",
+      "invalidUrl": "Pakiusap maglagay ng wastong URL na nagsisimula sa http:// o https://",
+      "saveFailed": "Hindi ma-save ang artikulo. Pakisubukan ulit."
+    }
+  },
+  "search": {
+    "placeholder": "Maghanap ng mga artikulo...",
+    "recentSearches": "Kamakailang Paghahanap",
+    "noResults": "Walang nahanap na resulta"
+  },
+  "settings": {
+    "title": "Mga Setting",
+    "account": "Account",
+    "status": "Katayuan",
+    "pro": "Pro",
+    "free": "Libre",
+    "appearance": "Hitsura",
+    "theme": "Tema",
+    "themes": {
+      "light": "Maliwanag",
+      "dark": "Madilim",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Feedback",
+    "sound": "Tunog",
+    "haptics": "Panginginig",
+    "language": "Wika",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Default na Mga Setting ng Reader",
+    "downloadSettings": "Mga Setting ng Pag-download",
+    "download": {
+      "wifiOnly": "Wi-Fi Lang",
+      "images": "I-download ang Mga Larawan",
+      "styles": "I-download ang Mga Estilo",
+      "fonts": "I-download ang Mga Font"
+    },
+    "storage": "Imbakan",
+    "storageUsed": "Ginamit",
+    "clearCache": "Linisin ang Cache",
+    "clearCacheConfirm": "Tatanggalin nito ang mga hindi ginagamit na file at maglilinis ng espasyo. Magpatuloy?",
+    "cacheCleared": "Matagumpay na nilinis ang cache",
+    "clearCacheFailed": "Hindi malinis ang cache. Pakisubukan ulit.",
+    "about": "Tungkol",
+    "version": "Bersyon",
+    "privacy": "Privacy",
+    "noDataCollection": "Walang pagkolekta ng data"
+  },
+  "modals": {
+    "rename": {
+      "title": "Palitan ang Pangalan ng Artikulo",
+      "placeholder": "Ilagay ang bagong pamagat",
+      "error": "Ang pamagat ay hindi maaaring blangko"
+    }
+  }
+}

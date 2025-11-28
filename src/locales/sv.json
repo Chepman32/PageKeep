@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "delete": "Radera",
+    "edit": "Redigera",
+    "done": "Klar",
+    "back": "Tillbaka",
+    "search": "Sök",
+    "loading": "Laddar...",
+    "error": "Fel",
+    "success": "Lyckades",
+    "rename": "Byt namn",
+    "archive": "Arkivera",
+    "unarchive": "Avarkivera",
+    "view": "Visa",
+    "ok": "OK",
+    "clear": "Rensa",
+    "addToFavorites": "Lägg till i favoriter",
+    "removeFromFavorites": "Ta bort från favoriter"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Inga artiklar än",
+    "emptyHint": "Tryck på + knappen för att spara din första artikel",
+    "readTime_one": "{{count}} min läsning",
+    "readTime_other": "{{count}} min läsning",
+    "alerts": {
+      "archiveError": "Kunde inte arkivera artikel",
+      "favoriteError": "Kunde inte uppdatera favoritstatus",
+      "deleteTitle": "Radera artikel",
+      "deleteMessage": "Är du säker på att du vill radera den här artikeln? Detta kan inte ångras.",
+      "deleteError": "Kunde inte radera artikel",
+      "renameError": "Kunde inte byta namn på artikel"
+    },
+    "tabs": {
+      "all": "Alla",
+      "favorites": "Favoriter",
+      "archived": "Arkiverade"
+    }
+  },
+  "reader": {
+    "fontSize": "Textstorlek",
+    "theme": "Tema",
+    "lineHeight": "Radavstånd",
+    "margins": "Marginaler"
+  },
+  "add": {
+    "title": "Lägg till artikel",
+    "urlLabel": "Ange URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Spara artikel",
+    "hint": "Tips: Du kan också använda Dela-funktionen från Safari för att spara artiklar direkt.",
+    "success": "Artikeln sparas!",
+    "errors": {
+      "emptyUrl": "Vänligen ange en URL",
+      "invalidUrl": "Vänligen ange en giltig URL som börjar med http:// eller https://",
+      "saveFailed": "Kunde inte spara artikel. Vänligen försök igen."
+    }
+  },
+  "search": {
+    "placeholder": "Sök artiklar...",
+    "recentSearches": "Senaste sökningar",
+    "noResults": "Inga resultat hittades"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "account": "Konto",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Gratis",
+    "appearance": "Utseende",
+    "theme": "Tema",
+    "themes": {
+      "light": "Ljust",
+      "dark": "Mörkt",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Feedback",
+    "sound": "Ljud",
+    "haptics": "Vibrationer",
+    "language": "Språk",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Standardinställningar för läsare",
+    "downloadSettings": "Nedladdningsinställningar",
+    "download": {
+      "wifiOnly": "Endast Wi-Fi",
+      "images": "Ladda ner bilder",
+      "styles": "Ladda ner stilar",
+      "fonts": "Ladda ner typsnitt"
+    },
+    "storage": "Lagring",
+    "storageUsed": "Använt",
+    "clearCache": "Rensa cache",
+    "clearCacheConfirm": "Detta tar bort oanvända filer och frigör utrymme. Fortsätt?",
+    "cacheCleared": "Cache rensad",
+    "clearCacheFailed": "Kunde inte rensa cache. Vänligen försök igen.",
+    "about": "Om",
+    "version": "Version",
+    "privacy": "Integritet",
+    "noDataCollection": "Ingen datainsamling"
+  },
+  "modals": {
+    "rename": {
+      "title": "Byt namn på artikel",
+      "placeholder": "Ange ny titel",
+      "error": "Titel kan inte vara tom"
+    }
+  }
+}

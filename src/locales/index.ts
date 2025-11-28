@@ -12,6 +12,24 @@ import pl from './pl.json';
 import zh from './zh.json';
 import hi from './hi.json';
 import uk from './uk.json';
+import ko from './ko.json';
+import ar from './ar.json';
+import nl from './nl.json';
+import tr from './tr.json';
+import th from './th.json';
+import vi from './vi.json';
+import id from './id.json';
+import he from './he.json';
+import sv from './sv.json';
+import nb from './nb.json';
+import da from './da.json';
+import fi from './fi.json';
+import cs from './cs.json';
+import hu from './hu.json';
+import ro from './ro.json';
+import el from './el.json';
+import ms from './ms.json';
+import fil from './fil.json';
 import { Storage } from '../utils/storage';
 
 const resources = {
@@ -31,6 +49,24 @@ const resources = {
   hi: { translation: hi },
   uk: { translation: uk },
   ua: { translation: uk },
+  ko: { translation: ko },
+  ar: { translation: ar },
+  nl: { translation: nl },
+  tr: { translation: tr },
+  th: { translation: th },
+  vi: { translation: vi },
+  id: { translation: id },
+  he: { translation: he },
+  sv: { translation: sv },
+  nb: { translation: nb },
+  da: { translation: da },
+  fi: { translation: fi },
+  cs: { translation: cs },
+  hu: { translation: hu },
+  ro: { translation: ro },
+  el: { translation: el },
+  ms: { translation: ms },
+  fil: { translation: fil },
 };
 
 const savedLanguage = Storage.getLanguage();

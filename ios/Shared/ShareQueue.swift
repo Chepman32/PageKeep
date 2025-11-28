@@ -2,7 +2,6 @@ import Foundation
 
 @objcMembers
 public final class ShareQueue: NSObject {
-  public static let appGroupIdentifier = "group.org.reactjs.native.example.PageKeep"
   private static let queueKey = "pendingShares"
   private static let notificationKey = "ShareQueueNewItemsNotification"
 
@@ -12,7 +11,7 @@ public final class ShareQueue: NSObject {
   }
 
   public static func enqueue(payload: [String: Any]) {
-    let defaults = UserDefaults(suiteName: appGroupIdentifier) ?? UserDefaults.standard
+    let defaults = UserDefaults.standard
 
     var items = defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
     if let identifier = payload["id"] as? String {
@@ -58,7 +57,7 @@ public final class ShareQueue: NSObject {
   }
 
   public static func consumeAll() -> [[String: Any]] {
-    let defaults = UserDefaults(suiteName: appGroupIdentifier) ?? UserDefaults.standard
+    let defaults = UserDefaults.standard
 
     let items = defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
     defaults.removeObject(forKey: queueKey)
@@ -67,13 +66,13 @@ public final class ShareQueue: NSObject {
   }
 
   public static func peekAll() -> [[String: Any]] {
-    let defaults = UserDefaults(suiteName: appGroupIdentifier) ?? UserDefaults.standard
+    let defaults = UserDefaults.standard
 
     return defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
   }
 
   public static func clear() {
-    let defaults = UserDefaults(suiteName: appGroupIdentifier) ?? UserDefaults.standard
+    let defaults = UserDefaults.standard
 
     defaults.removeObject(forKey: queueKey)
     defaults.synchronize()

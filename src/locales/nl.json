@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "done": "Klaar",
+    "back": "Terug",
+    "search": "Zoeken",
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Gelukt",
+    "rename": "Hernoemen",
+    "archive": "Archiveren",
+    "unarchive": "Dearchiveren",
+    "view": "Bekijken",
+    "ok": "OK",
+    "clear": "Wissen",
+    "addToFavorites": "Toevoegen aan favorieten",
+    "removeFromFavorites": "Verwijderen uit favorieten"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Nog geen artikelen",
+    "emptyHint": "Tik op de + knop om je eerste artikel op te slaan",
+    "readTime_one": "{{count}} min leestijd",
+    "readTime_other": "{{count}} min leestijd",
+    "alerts": {
+      "archiveError": "Kan artikel niet archiveren",
+      "favoriteError": "Kan favorietenstatus niet bijwerken",
+      "deleteTitle": "Artikel verwijderen",
+      "deleteMessage": "Weet je zeker dat je dit artikel wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+      "deleteError": "Kan artikel niet verwijderen",
+      "renameError": "Kan artikel niet hernoemen"
+    },
+    "tabs": {
+      "all": "Alle",
+      "favorites": "Favorieten",
+      "archived": "Gearchiveerd"
+    }
+  },
+  "reader": {
+    "fontSize": "Lettergrootte",
+    "theme": "Thema",
+    "lineHeight": "Regelhoogte",
+    "margins": "Marges"
+  },
+  "add": {
+    "title": "Artikel toevoegen",
+    "urlLabel": "Voer URL in",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Artikel opslaan",
+    "hint": "Tip: Je kunt ook de Deel-extensie vanuit Safari gebruiken om artikelen direct op te slaan.",
+    "success": "Artikel wordt opgeslagen!",
+    "errors": {
+      "emptyUrl": "Voer een URL in",
+      "invalidUrl": "Voer een geldige URL in die begint met http:// of https://",
+      "saveFailed": "Kan artikel niet opslaan. Probeer het opnieuw."
+    }
+  },
+  "search": {
+    "placeholder": "Artikelen zoeken...",
+    "recentSearches": "Recente zoekopdrachten",
+    "noResults": "Geen resultaten gevonden"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "account": "Account",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Gratis",
+    "appearance": "Uiterlijk",
+    "theme": "Thema",
+    "themes": {
+      "light": "Licht",
+      "dark": "Donker",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Feedback",
+    "sound": "Geluid",
+    "haptics": "Trillingen",
+    "language": "Taal",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Standaard lezersinstellingen",
+    "downloadSettings": "Downloadinstellingen",
+    "download": {
+      "wifiOnly": "Alleen Wi-Fi",
+      "images": "Afbeeldingen downloaden",
+      "styles": "Stijlen downloaden",
+      "fonts": "Lettertypen downloaden"
+    },
+    "storage": "Opslag",
+    "storageUsed": "Gebruikt",
+    "clearCache": "Cache wissen",
+    "clearCacheConfirm": "Dit verwijdert overbodige bestanden en maakt ruimte vrij. Doorgaan?",
+    "cacheCleared": "Cache succesvol gewist",
+    "clearCacheFailed": "Kan cache niet wissen. Probeer het opnieuw.",
+    "about": "Over",
+    "version": "Versie",
+    "privacy": "Privacy",
+    "noDataCollection": "Geen gegevensverzameling"
+  },
+  "modals": {
+    "rename": {
+      "title": "Artikel hernoemen",
+      "placeholder": "Voer nieuwe titel in",
+      "error": "Titel mag niet leeg zijn"
+    }
+  }
+}

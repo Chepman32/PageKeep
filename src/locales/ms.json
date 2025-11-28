@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Padam",
+    "edit": "Sunting",
+    "done": "Selesai",
+    "back": "Kembali",
+    "search": "Cari",
+    "loading": "Memuatkan...",
+    "error": "Ralat",
+    "success": "Berjaya",
+    "rename": "Namakan Semula",
+    "archive": "Arkibkan",
+    "unarchive": "Nyaharkib",
+    "view": "Lihat",
+    "ok": "OK",
+    "clear": "Kosongkan",
+    "addToFavorites": "Tambah ke Kegemaran",
+    "removeFromFavorites": "Buang dari Kegemaran"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Tiada artikel lagi",
+    "emptyHint": "Ketik butang + untuk menyimpan artikel pertama anda",
+    "readTime_one": "{{count}} min bacaan",
+    "readTime_other": "{{count}} min bacaan",
+    "alerts": {
+      "archiveError": "Gagal mengarkibkan artikel",
+      "favoriteError": "Gagal mengemaskini status kegemaran",
+      "deleteTitle": "Padam Artikel",
+      "deleteMessage": "Adakah anda pasti mahu memadam artikel ini? Tindakan ini tidak boleh dibatalkan.",
+      "deleteError": "Gagal memadam artikel",
+      "renameError": "Gagal menamakan semula artikel"
+    },
+    "tabs": {
+      "all": "Semua",
+      "favorites": "Kegemaran",
+      "archived": "Diarkibkan"
+    }
+  },
+  "reader": {
+    "fontSize": "Saiz Fon",
+    "theme": "Tema",
+    "lineHeight": "Tinggi Baris",
+    "margins": "Margin"
+  },
+  "add": {
+    "title": "Tambah Artikel",
+    "urlLabel": "Masukkan URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Simpan Artikel",
+    "hint": "Petua: Anda juga boleh gunakan ciri Kongsi dari Safari untuk menyimpan artikel secara terus.",
+    "success": "Artikel sedang disimpan!",
+    "errors": {
+      "emptyUrl": "Sila masukkan URL",
+      "invalidUrl": "Sila masukkan URL yang sah bermula dengan http:// atau https://",
+      "saveFailed": "Gagal menyimpan artikel. Sila cuba lagi."
+    }
+  },
+  "search": {
+    "placeholder": "Cari artikel...",
+    "recentSearches": "Carian Terkini",
+    "noResults": "Tiada keputusan dijumpai"
+  },
+  "settings": {
+    "title": "Tetapan",
+    "account": "Akaun",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Percuma",
+    "appearance": "Penampilan",
+    "theme": "Tema",
+    "themes": {
+      "light": "Cerah",
+      "dark": "Gelap",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Maklum Balas",
+    "sound": "Bunyi",
+    "haptics": "Getaran",
+    "language": "Bahasa",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Tetapan Pembaca Lalai",
+    "downloadSettings": "Tetapan Muat Turun",
+    "download": {
+      "wifiOnly": "Wi-Fi Sahaja",
+      "images": "Muat Turun Imej",
+      "styles": "Muat Turun Gaya",
+      "fonts": "Muat Turun Fon"
+    },
+    "storage": "Storan",
+    "storageUsed": "Digunakan",
+    "clearCache": "Kosongkan Cache",
+    "clearCacheConfirm": "Ini akan membuang fail yang tidak digunakan dan mengosongkan ruang. Teruskan?",
+    "cacheCleared": "Cache berjaya dikosongkan",
+    "clearCacheFailed": "Gagal mengosongkan cache. Sila cuba lagi.",
+    "about": "Perihal",
+    "version": "Versi",
+    "privacy": "Privasi",
+    "noDataCollection": "Tiada pengumpulan data"
+  },
+  "modals": {
+    "rename": {
+      "title": "Namakan Semula Artikel",
+      "placeholder": "Masukkan tajuk baharu",
+      "error": "Tajuk tidak boleh kosong"
+    }
+  }
+}

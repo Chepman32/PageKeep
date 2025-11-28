@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "delete": "Poista",
+    "edit": "Muokkaa",
+    "done": "Valmis",
+    "back": "Takaisin",
+    "search": "Hae",
+    "loading": "Ladataan...",
+    "error": "Virhe",
+    "success": "Onnistui",
+    "rename": "Nimeä uudelleen",
+    "archive": "Arkistoi",
+    "unarchive": "Poista arkistosta",
+    "view": "Näytä",
+    "ok": "OK",
+    "clear": "Tyhjennä",
+    "addToFavorites": "Lisää suosikkeihin",
+    "removeFromFavorites": "Poista suosikeista"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Ei vielä artikkeleita",
+    "emptyHint": "Napauta + -painiketta tallentaaksesi ensimmäisen artikkelisi",
+    "readTime_one": "{{count}} min lukuaika",
+    "readTime_other": "{{count}} min lukuaika",
+    "alerts": {
+      "archiveError": "Artikkelin arkistointi epäonnistui",
+      "favoriteError": "Suosikkitilan päivittäminen epäonnistui",
+      "deleteTitle": "Poista artikkeli",
+      "deleteMessage": "Haluatko varmasti poistaa tämän artikkelin? Tätä toimintoa ei voi perua.",
+      "deleteError": "Artikkelin poistaminen epäonnistui",
+      "renameError": "Artikkelin uudelleennimeäminen epäonnistui"
+    },
+    "tabs": {
+      "all": "Kaikki",
+      "favorites": "Suosikit",
+      "archived": "Arkistoidut"
+    }
+  },
+  "reader": {
+    "fontSize": "Fonttikoko",
+    "theme": "Teema",
+    "lineHeight": "Riviväli",
+    "margins": "Marginaalit"
+  },
+  "add": {
+    "title": "Lisää artikkeli",
+    "urlLabel": "Anna URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Tallenna artikkeli",
+    "hint": "Vinkki: Voit myös käyttää Safarin Jaa-toimintoa tallentaaksesi artikkeleita suoraan.",
+    "success": "Artikkelia tallennetaan!",
+    "errors": {
+      "emptyUrl": "Anna URL",
+      "invalidUrl": "Anna kelvollinen URL, joka alkaa http:// tai https://",
+      "saveFailed": "Artikkelin tallentaminen epäonnistui. Yritä uudelleen."
+    }
+  },
+  "search": {
+    "placeholder": "Hae artikkeleita...",
+    "recentSearches": "Viimeisimmät haut",
+    "noResults": "Ei tuloksia"
+  },
+  "settings": {
+    "title": "Asetukset",
+    "account": "Tili",
+    "status": "Tila",
+    "pro": "Pro",
+    "free": "Ilmainen",
+    "appearance": "Ulkoasu",
+    "theme": "Teema",
+    "themes": {
+      "light": "Vaalea",
+      "dark": "Tumma",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Palaute",
+    "sound": "Ääni",
+    "haptics": "Värinä",
+    "language": "Kieli",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Lukijan oletusasetukset",
+    "downloadSettings": "Latausasetukset",
+    "download": {
+      "wifiOnly": "Vain Wi-Fi",
+      "images": "Lataa kuvat",
+      "styles": "Lataa tyylit",
+      "fonts": "Lataa fontit"
+    },
+    "storage": "Tallennustila",
+    "storageUsed": "Käytössä",
+    "clearCache": "Tyhjennä välimuisti",
+    "clearCacheConfirm": "Tämä poistaa käyttämättömät tiedostot ja vapauttaa tilaa. Jatketaanko?",
+    "cacheCleared": "Välimuisti tyhjennetty",
+    "clearCacheFailed": "Välimuistin tyhjentäminen epäonnistui. Yritä uudelleen.",
+    "about": "Tietoja",
+    "version": "Versio",
+    "privacy": "Yksityisyys",
+    "noDataCollection": "Ei tietojen keruuta"
+  },
+  "modals": {
+    "rename": {
+      "title": "Nimeä artikkeli uudelleen",
+      "placeholder": "Anna uusi otsikko",
+      "error": "Otsikko ei voi olla tyhjä"
+    }
+  }
+}

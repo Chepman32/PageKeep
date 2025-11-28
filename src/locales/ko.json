@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "edit": "편집",
+    "done": "완료",
+    "back": "뒤로",
+    "search": "검색",
+    "loading": "로딩 중...",
+    "error": "오류",
+    "success": "성공",
+    "rename": "이름 변경",
+    "archive": "보관",
+    "unarchive": "보관 취소",
+    "view": "보기",
+    "ok": "확인",
+    "clear": "지우기",
+    "addToFavorites": "즐겨찾기 추가",
+    "removeFromFavorites": "즐겨찾기 제거"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "아직 저장된 글이 없어요",
+    "emptyHint": "+ 버튼을 눌러 첫 글을 저장해보세요",
+    "readTime_one": "{{count}}분 소요",
+    "readTime_other": "{{count}}분 소요",
+    "alerts": {
+      "archiveError": "글을 보관할 수 없습니다",
+      "favoriteError": "즐겨찾기 상태를 변경할 수 없습니다",
+      "deleteTitle": "글 삭제",
+      "deleteMessage": "이 글을 삭제하시겠어요? 삭제하면 복구할 수 없습니다.",
+      "deleteError": "글을 삭제할 수 없습니다",
+      "renameError": "글 이름을 변경할 수 없습니다"
+    },
+    "tabs": {
+      "all": "전체",
+      "favorites": "즐겨찾기",
+      "archived": "보관함"
+    }
+  },
+  "reader": {
+    "fontSize": "글자 크기",
+    "theme": "테마",
+    "lineHeight": "줄 간격",
+    "margins": "여백"
+  },
+  "add": {
+    "title": "글 추가",
+    "urlLabel": "URL 입력",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "글 저장",
+    "hint": "팁: Safari의 공유 기능을 사용하면 더 빠르게 글을 저장할 수 있어요.",
+    "success": "글을 저장하고 있어요!",
+    "errors": {
+      "emptyUrl": "URL을 입력해주세요",
+      "invalidUrl": "http:// 또는 https://로 시작하는 올바른 URL을 입력해주세요",
+      "saveFailed": "글을 저장할 수 없습니다. 다시 시도해주세요."
+    }
+  },
+  "search": {
+    "placeholder": "글 검색...",
+    "recentSearches": "최근 검색",
+    "noResults": "검색 결과가 없습니다"
+  },
+  "settings": {
+    "title": "설정",
+    "account": "계정",
+    "status": "상태",
+    "pro": "Pro",
+    "free": "무료",
+    "appearance": "화면",
+    "theme": "테마",
+    "themes": {
+      "light": "라이트",
+      "dark": "다크",
+      "solar": "솔라",
+      "mono": "모노"
+    },
+    "feedback": "피드백",
+    "sound": "사운드",
+    "haptics": "햅틱",
+    "language": "언어",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "읽기 기본 설정",
+    "downloadSettings": "다운로드 설정",
+    "download": {
+      "wifiOnly": "Wi-Fi에서만",
+      "images": "이미지 다운로드",
+      "styles": "스타일 다운로드",
+      "fonts": "폰트 다운로드"
+    },
+    "storage": "저장공간",
+    "storageUsed": "사용 중",
+    "clearCache": "캐시 삭제",
+    "clearCacheConfirm": "불필요한 파일을 삭제하고 공간을 확보합니다. 계속하시겠어요?",
+    "cacheCleared": "캐시를 삭제했습니다",
+    "clearCacheFailed": "캐시를 삭제할 수 없습니다. 다시 시도해주세요.",
+    "about": "정보",
+    "version": "버전",
+    "privacy": "개인정보",
+    "noDataCollection": "데이터 수집 안 함"
+  },
+  "modals": {
+    "rename": {
+      "title": "글 이름 변경",
+      "placeholder": "새로운 제목을 입력하세요",
+      "error": "제목을 입력해주세요"
+    }
+  }
+}

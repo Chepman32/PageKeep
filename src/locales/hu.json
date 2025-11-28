@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Mentés",
+    "cancel": "Mégse",
+    "delete": "Törlés",
+    "edit": "Szerkesztés",
+    "done": "Kész",
+    "back": "Vissza",
+    "search": "Keresés",
+    "loading": "Betöltés...",
+    "error": "Hiba",
+    "success": "Sikeres",
+    "rename": "Átnevezés",
+    "archive": "Archiválás",
+    "unarchive": "Archiválás megszüntetése",
+    "view": "Megtekintés",
+    "ok": "OK",
+    "clear": "Törlés",
+    "addToFavorites": "Hozzáadás a kedvencekhez",
+    "removeFromFavorites": "Eltávolítás a kedvencekből"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Még nincsenek cikkek",
+    "emptyHint": "Nyomja meg a + gombot az első cikk mentéséhez",
+    "readTime_one": "{{count}} perc olvasás",
+    "readTime_other": "{{count}} perc olvasás",
+    "alerts": {
+      "archiveError": "A cikk archiválása sikertelen",
+      "favoriteError": "A kedvenc állapot frissítése sikertelen",
+      "deleteTitle": "Cikk törlése",
+      "deleteMessage": "Biztosan törölni szeretné ezt a cikket? Ez a művelet nem vonható vissza.",
+      "deleteError": "A cikk törlése sikertelen",
+      "renameError": "A cikk átnevezése sikertelen"
+    },
+    "tabs": {
+      "all": "Összes",
+      "favorites": "Kedvencek",
+      "archived": "Archivált"
+    }
+  },
+  "reader": {
+    "fontSize": "Betűméret",
+    "theme": "Téma",
+    "lineHeight": "Sorköz",
+    "margins": "Margók"
+  },
+  "add": {
+    "title": "Cikk hozzáadása",
+    "urlLabel": "URL megadása",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Cikk mentése",
+    "hint": "Tipp: Használhatja a Safari Megosztás funkcióját is a cikkek közvetlen mentéséhez.",
+    "success": "A cikk mentése folyamatban!",
+    "errors": {
+      "emptyUrl": "Kérem adjon meg egy URL-t",
+      "invalidUrl": "Kérem adjon meg egy érvényes URL-t, amely http:// vagy https:// kezdetű",
+      "saveFailed": "A cikk mentése sikertelen. Kérem próbálja újra."
+    }
+  },
+  "search": {
+    "placeholder": "Cikkek keresése...",
+    "recentSearches": "Legutóbbi keresések",
+    "noResults": "Nincs találat"
+  },
+  "settings": {
+    "title": "Beállítások",
+    "account": "Fiók",
+    "status": "Állapot",
+    "pro": "Pro",
+    "free": "Ingyenes",
+    "appearance": "Megjelenés",
+    "theme": "Téma",
+    "themes": {
+      "light": "Világos",
+      "dark": "Sötét",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Visszajelzés",
+    "sound": "Hang",
+    "haptics": "Rezgés",
+    "language": "Nyelv",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Alapértelmezett olvasó beállítások",
+    "downloadSettings": "Letöltési beállítások",
+    "download": {
+      "wifiOnly": "Csak Wi-Fi",
+      "images": "Képek letöltése",
+      "styles": "Stílusok letöltése",
+      "fonts": "Betűtípusok letöltése"
+    },
+    "storage": "Tárhely",
+    "storageUsed": "Használt",
+    "clearCache": "Gyorsítótár törlése",
+    "clearCacheConfirm": "Ez eltávolítja a felesleges fájlokat és helyet szabadít fel. Folytatja?",
+    "cacheCleared": "Gyorsítótár sikeresen törölve",
+    "clearCacheFailed": "A gyorsítótár törlése sikertelen. Kérem próbálja újra.",
+    "about": "Névjegy",
+    "version": "Verzió",
+    "privacy": "Adatvédelem",
+    "noDataCollection": "Nincs adatgyűjtés"
+  },
+  "modals": {
+    "rename": {
+      "title": "Cikk átnevezése",
+      "placeholder": "Adja meg az új címet",
+      "error": "A cím nem lehet üres"
+    }
+  }
+}

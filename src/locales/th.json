@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "delete": "ลบ",
+    "edit": "แก้ไข",
+    "done": "เสร็จสิ้น",
+    "back": "ย้อนกลับ",
+    "search": "ค้นหา",
+    "loading": "กำลังโหลด...",
+    "error": "ข้อผิดพลาด",
+    "success": "สำเร็จ",
+    "rename": "เปลี่ยนชื่อ",
+    "archive": "เก็บถาวร",
+    "unarchive": "ยกเลิกเก็บถาวร",
+    "view": "ดู",
+    "ok": "ตกลง",
+    "clear": "ล้าง",
+    "addToFavorites": "เพิ่มในรายการโปรด",
+    "removeFromFavorites": "ลบออกจากรายการโปรด"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "ยังไม่มีบทความ",
+    "emptyHint": "แตะปุ่ม + เพื่อบันทึกบทความแรกของคุณ",
+    "readTime_one": "อ่าน {{count}} นาที",
+    "readTime_other": "อ่าน {{count}} นาที",
+    "alerts": {
+      "archiveError": "ไม่สามารถเก็บถาวรบทความได้",
+      "favoriteError": "ไม่สามารถอัปเดตสถานะรายการโปรดได้",
+      "deleteTitle": "ลบบทความ",
+      "deleteMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบบทความนี้? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+      "deleteError": "ไม่สามารถลบบทความได้",
+      "renameError": "ไม่สามารถเปลี่ยนชื่อบทความได้"
+    },
+    "tabs": {
+      "all": "ทั้งหมด",
+      "favorites": "รายการโปรด",
+      "archived": "ที่เก็บถาวร"
+    }
+  },
+  "reader": {
+    "fontSize": "ขนาดตัวอักษร",
+    "theme": "ธีม",
+    "lineHeight": "ระยะห่างบรรทัด",
+    "margins": "ระยะขอบ"
+  },
+  "add": {
+    "title": "เพิ่มบทความ",
+    "urlLabel": "ใส่ URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "บันทึกบทความ",
+    "hint": "เคล็ดลับ: คุณสามารถใช้ฟีเจอร์แชร์จาก Safari เพื่อบันทึกบทความได้โดยตรง",
+    "success": "กำลังบันทึกบทความ!",
+    "errors": {
+      "emptyUrl": "กรุณาใส่ URL",
+      "invalidUrl": "กรุณาใส่ URL ที่ถูกต้องซึ่งขึ้นต้นด้วย http:// หรือ https://",
+      "saveFailed": "ไม่สามารถบันทึกบทความได้ กรุณาลองอีกครั้ง"
+    }
+  },
+  "search": {
+    "placeholder": "ค้นหาบทความ...",
+    "recentSearches": "การค้นหาล่าสุด",
+    "noResults": "ไม่พบผลลัพธ์"
+  },
+  "settings": {
+    "title": "การตั้งค่า",
+    "account": "บัญชี",
+    "status": "สถานะ",
+    "pro": "Pro",
+    "free": "ฟรี",
+    "appearance": "การแสดงผล",
+    "theme": "ธีม",
+    "themes": {
+      "light": "สว่าง",
+      "dark": "มืด",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "ข้อเสนอแนะ",
+    "sound": "เสียง",
+    "haptics": "การสั่นสะเทือน",
+    "language": "ภาษา",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "การตั้งค่าตัวอ่านเริ่มต้น",
+    "downloadSettings": "การตั้งค่าการดาวน์โหลด",
+    "download": {
+      "wifiOnly": "Wi-Fi เท่านั้น",
+      "images": "ดาวน์โหลดรูปภาพ",
+      "styles": "ดาวน์โหลดสไตล์",
+      "fonts": "ดาวน์โหลดฟอนต์"
+    },
+    "storage": "พื้นที่จัดเก็บ",
+    "storageUsed": "ใช้ไปแล้ว",
+    "clearCache": "ล้างแคช",
+    "clearCacheConfirm": "การดำเนินการนี้จะลบไฟล์ที่ไม่ได้ใช้และเพิ่มพื้นที่ว่าง ดำเนินการต่อหรือไม่?",
+    "cacheCleared": "ล้างแคชสำเร็จแล้ว",
+    "clearCacheFailed": "ไม่สามารถล้างแคชได้ กรุณาลองอีกครั้ง",
+    "about": "เกี่ยวกับ",
+    "version": "เวอร์ชัน",
+    "privacy": "ความเป็นส่วนตัว",
+    "noDataCollection": "ไม่มีการเก็บข้อมูล"
+  },
+  "modals": {
+    "rename": {
+      "title": "เปลี่ยนชื่อบทความ",
+      "placeholder": "ใส่ชื่อใหม่",
+      "error": "ชื่อต้องไม่ว่างเปล่า"
+    }
+  }
+}

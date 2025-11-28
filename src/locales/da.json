@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Gem",
+    "cancel": "Annuller",
+    "delete": "Slet",
+    "edit": "Rediger",
+    "done": "Færdig",
+    "back": "Tilbage",
+    "search": "Søg",
+    "loading": "Indlæser...",
+    "error": "Fejl",
+    "success": "Succesfuld",
+    "rename": "Omdøb",
+    "archive": "Arkiver",
+    "unarchive": "Fjern fra arkiv",
+    "view": "Vis",
+    "ok": "OK",
+    "clear": "Ryd",
+    "addToFavorites": "Tilføj til favoritter",
+    "removeFromFavorites": "Fjern fra favoritter"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Ingen artikler endnu",
+    "emptyHint": "Tryk på + knappen for at gemme din første artikel",
+    "readTime_one": "{{count}} min læsning",
+    "readTime_other": "{{count}} min læsning",
+    "alerts": {
+      "archiveError": "Kunne ikke arkivere artikel",
+      "favoriteError": "Kunne ikke opdatere favoritstatus",
+      "deleteTitle": "Slet artikel",
+      "deleteMessage": "Er du sikker på, at du vil slette denne artikel? Denne handling kan ikke fortrydes.",
+      "deleteError": "Kunne ikke slette artikel",
+      "renameError": "Kunne ikke omdøbe artikel"
+    },
+    "tabs": {
+      "all": "Alle",
+      "favorites": "Favoritter",
+      "archived": "Arkiveret"
+    }
+  },
+  "reader": {
+    "fontSize": "Skriftstørrelse",
+    "theme": "Tema",
+    "lineHeight": "Linjehøjde",
+    "margins": "Margener"
+  },
+  "add": {
+    "title": "Tilføj artikel",
+    "urlLabel": "Indtast URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Gem artikel",
+    "hint": "Tip: Du kan også bruge Del-funktionen fra Safari til at gemme artikler direkte.",
+    "success": "Artiklen gemmes!",
+    "errors": {
+      "emptyUrl": "Indtast venligst en URL",
+      "invalidUrl": "Indtast venligst en gyldig URL, der starter med http:// eller https://",
+      "saveFailed": "Kunne ikke gemme artikel. Prøv venligst igen."
+    }
+  },
+  "search": {
+    "placeholder": "Søg i artikler...",
+    "recentSearches": "Seneste søgninger",
+    "noResults": "Ingen resultater fundet"
+  },
+  "settings": {
+    "title": "Indstillinger",
+    "account": "Konto",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Gratis",
+    "appearance": "Udseende",
+    "theme": "Tema",
+    "themes": {
+      "light": "Lys",
+      "dark": "Mørk",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Feedback",
+    "sound": "Lyd",
+    "haptics": "Vibrationer",
+    "language": "Sprog",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Standard læserindstillinger",
+    "downloadSettings": "Downloadindstillinger",
+    "download": {
+      "wifiOnly": "Kun Wi-Fi",
+      "images": "Download billeder",
+      "styles": "Download styles",
+      "fonts": "Download skrifttyper"
+    },
+    "storage": "Lager",
+    "storageUsed": "Brugt",
+    "clearCache": "Ryd cache",
+    "clearCacheConfirm": "Dette vil fjerne ubrugte filer og frigøre plads. Fortsæt?",
+    "cacheCleared": "Cache ryddet",
+    "clearCacheFailed": "Kunne ikke rydde cache. Prøv venligst igen.",
+    "about": "Om",
+    "version": "Version",
+    "privacy": "Privatliv",
+    "noDataCollection": "Ingen dataindsamling"
+  },
+  "modals": {
+    "rename": {
+      "title": "Omdøb artikel",
+      "placeholder": "Indtast ny titel",
+      "error": "Titel må ikke være tom"
+    }
+  }
+}

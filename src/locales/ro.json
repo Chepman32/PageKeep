@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Salvează",
+    "cancel": "Anulează",
+    "delete": "Șterge",
+    "edit": "Editează",
+    "done": "Gata",
+    "back": "Înapoi",
+    "search": "Caută",
+    "loading": "Se încarcă...",
+    "error": "Eroare",
+    "success": "Succes",
+    "rename": "Redenumește",
+    "archive": "Arhivează",
+    "unarchive": "Scoate din arhivă",
+    "view": "Vizualizează",
+    "ok": "OK",
+    "clear": "Șterge",
+    "addToFavorites": "Adaugă la favorite",
+    "removeFromFavorites": "Elimină din favorite"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Niciun articol încă",
+    "emptyHint": "Apasă butonul + pentru a salva primul tău articol",
+    "readTime_one": "{{count}} min citire",
+    "readTime_other": "{{count}} min citire",
+    "alerts": {
+      "archiveError": "Nu s-a putut arhiva articolul",
+      "favoriteError": "Nu s-a putut actualiza starea de favorit",
+      "deleteTitle": "Șterge articolul",
+      "deleteMessage": "Ești sigur că vrei să ștergi acest articol? Această acțiune nu poate fi anulată.",
+      "deleteError": "Nu s-a putut șterge articolul",
+      "renameError": "Nu s-a putut redenumi articolul"
+    },
+    "tabs": {
+      "all": "Toate",
+      "favorites": "Favorite",
+      "archived": "Arhivate"
+    }
+  },
+  "reader": {
+    "fontSize": "Dimensiune font",
+    "theme": "Temă",
+    "lineHeight": "Înălțime linie",
+    "margins": "Margini"
+  },
+  "add": {
+    "title": "Adaugă articol",
+    "urlLabel": "Introdu URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Salvează articolul",
+    "hint": "Sfat: Poți folosi și funcția Partajare din Safari pentru a salva articole direct.",
+    "success": "Articolul se salvează!",
+    "errors": {
+      "emptyUrl": "Te rog introdu un URL",
+      "invalidUrl": "Te rog introdu un URL valid care începe cu http:// sau https://",
+      "saveFailed": "Nu s-a putut salva articolul. Te rog încearcă din nou."
+    }
+  },
+  "search": {
+    "placeholder": "Caută articole...",
+    "recentSearches": "Căutări recente",
+    "noResults": "Niciun rezultat găsit"
+  },
+  "settings": {
+    "title": "Setări",
+    "account": "Cont",
+    "status": "Stare",
+    "pro": "Pro",
+    "free": "Gratuit",
+    "appearance": "Aspect",
+    "theme": "Temă",
+    "themes": {
+      "light": "Deschis",
+      "dark": "Întunecat",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Feedback",
+    "sound": "Sunet",
+    "haptics": "Vibrații",
+    "language": "Limbă",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Setări implicite cititor",
+    "downloadSettings": "Setări descărcare",
+    "download": {
+      "wifiOnly": "Doar Wi-Fi",
+      "images": "Descarcă imagini",
+      "styles": "Descarcă stiluri",
+      "fonts": "Descarcă fonturi"
+    },
+    "storage": "Stocare",
+    "storageUsed": "Utilizat",
+    "clearCache": "Șterge cache-ul",
+    "clearCacheConfirm": "Aceasta va elimina fișierele nefolosite și va elibera spațiu. Continui?",
+    "cacheCleared": "Cache șters cu succes",
+    "clearCacheFailed": "Nu s-a putut șterge cache-ul. Te rog încearcă din nou.",
+    "about": "Despre",
+    "version": "Versiune",
+    "privacy": "Confidențialitate",
+    "noDataCollection": "Fără colectare de date"
+  },
+  "modals": {
+    "rename": {
+      "title": "Redenumește articolul",
+      "placeholder": "Introdu titlul nou",
+      "error": "Titlul nu poate fi gol"
+    }
+  }
+}

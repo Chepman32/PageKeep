@@ -27,25 +27,43 @@ const themeOptions: ThemeId[] = ['light', 'dark', 'solar', 'mono'];
 const languageOptions = [
   'en',
   'ru',
-  'sp',
+  'es',
   'de',
   'fr',
-  'por',
-  'jp',
+  'pt',
+  'ja',
   'it',
   'pl',
   'zh',
   'hi',
-  'ua',
+  'uk',
+  'ko',
+  'ar',
+  'nl',
+  'tr',
+  'th',
+  'vi',
+  'id',
+  'he',
+  'sv',
+  'nb',
+  'da',
+  'fi',
+  'cs',
+  'hu',
+  'ro',
+  'el',
+  'ms',
+  'fil',
 ] as const;
 
 type LanguageCode = (typeof languageOptions)[number];
 
 const languageAliasMap: Record<string, LanguageCode> = {
-  es: 'sp',
-  pt: 'por',
-  ja: 'jp',
-  uk: 'ua',
+  sp: 'es',
+  por: 'pt',
+  jp: 'ja',
+  ua: 'uk',
 };
 
 const normalizeLanguage = (value: string): LanguageCode =>
@@ -640,7 +658,9 @@ const createStyles = (theme: Theme) =>
       gap: 12,
     },
     themeOption: {
-      flexBasis: '48%',
+      flex: 1,
+      minWidth: '45%',
+      maxWidth: '48%',
       backgroundColor: theme.colors.background,
       borderRadius: 12,
       padding: 16,

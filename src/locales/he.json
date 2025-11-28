@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "שמור",
+    "cancel": "ביטול",
+    "delete": "מחק",
+    "edit": "ערוך",
+    "done": "סיום",
+    "back": "חזור",
+    "search": "חיפוש",
+    "loading": "טוען...",
+    "error": "שגיאה",
+    "success": "הצלחה",
+    "rename": "שנה שם",
+    "archive": "העבר לארכיון",
+    "unarchive": "הוצא מארכיון",
+    "view": "הצג",
+    "ok": "אישור",
+    "clear": "נקה",
+    "addToFavorites": "הוסף למועדפים",
+    "removeFromFavorites": "הסר ממועדפים"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "אין כתבות עדיין",
+    "emptyHint": "לחץ על כפתור + כדי לשמור את הכתבה הראשונה שלך",
+    "readTime_one": "דקת קריאה אחת",
+    "readTime_other": "{{count}} דקות קריאה",
+    "alerts": {
+      "archiveError": "נכשל בהעברה לארכיון",
+      "favoriteError": "נכשל בעדכון סטטוס מועדפים",
+      "deleteTitle": "מחק כתבה",
+      "deleteMessage": "האם אתה בטוח שברצונך למחוק כתבה זו? לא ניתן לבטל פעולה זו.",
+      "deleteError": "נכשל במחיקת הכתבה",
+      "renameError": "נכשל בשינוי שם הכתבה"
+    },
+    "tabs": {
+      "all": "הכל",
+      "favorites": "מועדפים",
+      "archived": "בארכיון"
+    }
+  },
+  "reader": {
+    "fontSize": "גודל גופן",
+    "theme": "ערכת נושא",
+    "lineHeight": "גובה שורה",
+    "margins": "שוליים"
+  },
+  "add": {
+    "title": "הוסף כתבה",
+    "urlLabel": "הזן URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "שמור כתבה",
+    "hint": "טיפ: אתה יכול גם להשתמש בתכונת השיתוף מ-Safari כדי לשמור כתבות ישירות.",
+    "success": "הכתבה נשמרת!",
+    "errors": {
+      "emptyUrl": "אנא הזן URL",
+      "invalidUrl": "אנא הזן URL תקין המתחיל ב-http:// או https://",
+      "saveFailed": "נכשל בשמירת הכתבה. אנא נסה שוב."
+    }
+  },
+  "search": {
+    "placeholder": "חפש כתבות...",
+    "recentSearches": "חיפושים אחרונים",
+    "noResults": "לא נמצאו תוצאות"
+  },
+  "settings": {
+    "title": "הגדרות",
+    "account": "חשבון",
+    "status": "סטטוס",
+    "pro": "Pro",
+    "free": "חינם",
+    "appearance": "מראה",
+    "theme": "ערכת נושא",
+    "themes": {
+      "light": "בהיר",
+      "dark": "כהה",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "משוב",
+    "sound": "צליל",
+    "haptics": "רטט",
+    "language": "שפה",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "הגדרות קורא ברירת מחדל",
+    "downloadSettings": "הגדרות הורדה",
+    "download": {
+      "wifiOnly": "Wi-Fi בלבד",
+      "images": "הורד תמונות",
+      "styles": "הורד עיצובים",
+      "fonts": "הורד גופנים"
+    },
+    "storage": "אחסון",
+    "storageUsed": "בשימוש",
+    "clearCache": "נקה מטמון",
+    "clearCacheConfirm": "פעולה זו תסיר קבצים מיותרים ותפנה מקום. להמשיך?",
+    "cacheCleared": "המטמון נוקה בהצלחה",
+    "clearCacheFailed": "נכשל בניקוי המטמון. אנא נסה שוב.",
+    "about": "אודות",
+    "version": "גרסה",
+    "privacy": "פרטיות",
+    "noDataCollection": "ללא איסוף נתונים"
+  },
+  "modals": {
+    "rename": {
+      "title": "שנה שם כתבה",
+      "placeholder": "הזן כותרת חדשה",
+      "error": "הכותרת לא יכולה להיות ריקה"
+    }
+  }
+}

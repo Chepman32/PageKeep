@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Uložit",
+    "cancel": "Zrušit",
+    "delete": "Smazat",
+    "edit": "Upravit",
+    "done": "Hotovo",
+    "back": "Zpět",
+    "search": "Hledat",
+    "loading": "Načítání...",
+    "error": "Chyba",
+    "success": "Úspěch",
+    "rename": "Přejmenovat",
+    "archive": "Archivovat",
+    "unarchive": "Zrušit archivaci",
+    "view": "Zobrazit",
+    "ok": "OK",
+    "clear": "Vymazat",
+    "addToFavorites": "Přidat k oblíbeným",
+    "removeFromFavorites": "Odebrat z oblíbených"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Zatím žádné články",
+    "emptyHint": "Klepnutím na tlačítko + uložíte svůj první článek",
+    "readTime_one": "{{count}} min čtení",
+    "readTime_other": "{{count}} min čtení",
+    "alerts": {
+      "archiveError": "Archivace článku se nezdařila",
+      "favoriteError": "Aktualizace stavu oblíbených se nezdařila",
+      "deleteTitle": "Smazat článek",
+      "deleteMessage": "Opravdu chcete smazat tento článek? Tuto akci nelze vrátit zpět.",
+      "deleteError": "Smazání článku se nezdařilo",
+      "renameError": "Přejmenování článku se nezdařilo"
+    },
+    "tabs": {
+      "all": "Vše",
+      "favorites": "Oblíbené",
+      "archived": "Archivované"
+    }
+  },
+  "reader": {
+    "fontSize": "Velikost písma",
+    "theme": "Motiv",
+    "lineHeight": "Výška řádku",
+    "margins": "Okraje"
+  },
+  "add": {
+    "title": "Přidat článek",
+    "urlLabel": "Zadejte URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Uložit článek",
+    "hint": "Tip: Můžete také použít funkci Sdílet ze Safari k přímému ukládání článků.",
+    "success": "Článek se ukládá!",
+    "errors": {
+      "emptyUrl": "Zadejte prosím URL",
+      "invalidUrl": "Zadejte prosím platnou URL začínající http:// nebo https://",
+      "saveFailed": "Uložení článku se nezdařilo. Zkuste to prosím znovu."
+    }
+  },
+  "search": {
+    "placeholder": "Hledat články...",
+    "recentSearches": "Nedávná vyhledávání",
+    "noResults": "Nebyly nalezeny žádné výsledky"
+  },
+  "settings": {
+    "title": "Nastavení",
+    "account": "Účet",
+    "status": "Stav",
+    "pro": "Pro",
+    "free": "Zdarma",
+    "appearance": "Vzhled",
+    "theme": "Motiv",
+    "themes": {
+      "light": "Světlý",
+      "dark": "Tmavý",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Zpětná vazba",
+    "sound": "Zvuk",
+    "haptics": "Vibrace",
+    "language": "Jazyk",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Výchozí nastavení čtečky",
+    "downloadSettings": "Nastavení stahování",
+    "download": {
+      "wifiOnly": "Pouze Wi-Fi",
+      "images": "Stáhnout obrázky",
+      "styles": "Stáhnout styly",
+      "fonts": "Stáhnout písma"
+    },
+    "storage": "Úložiště",
+    "storageUsed": "Použito",
+    "clearCache": "Vymazat mezipaměť",
+    "clearCacheConfirm": "Tímto odstraníte nepotřebné soubory a uvolníte místo. Pokračovat?",
+    "cacheCleared": "Mezipaměť vymazána",
+    "clearCacheFailed": "Vymazání mezipaměti se nezdařilo. Zkuste to prosím znovu.",
+    "about": "O aplikaci",
+    "version": "Verze",
+    "privacy": "Soukromí",
+    "noDataCollection": "Žádné shromažďování dat"
+  },
+  "modals": {
+    "rename": {
+      "title": "Přejmenovat článek",
+      "placeholder": "Zadejte nový název",
+      "error": "Název nesmí být prázdný"
+    }
+  }
+}

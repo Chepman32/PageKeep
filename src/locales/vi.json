@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "done": "Xong",
+    "back": "Quay lại",
+    "search": "Tìm kiếm",
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "rename": "Đổi tên",
+    "archive": "Lưu trữ",
+    "unarchive": "Bỏ lưu trữ",
+    "view": "Xem",
+    "ok": "OK",
+    "clear": "Xóa",
+    "addToFavorites": "Thêm vào yêu thích",
+    "removeFromFavorites": "Xóa khỏi yêu thích"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Chưa có bài viết nào",
+    "emptyHint": "Nhấn nút + để lưu bài viết đầu tiên",
+    "readTime_one": "{{count}} phút đọc",
+    "readTime_other": "{{count}} phút đọc",
+    "alerts": {
+      "archiveError": "Không thể lưu trữ bài viết",
+      "favoriteError": "Không thể cập nhật trạng thái yêu thích",
+      "deleteTitle": "Xóa bài viết",
+      "deleteMessage": "Bạn có chắc chắn muốn xóa bài viết này? Hành động này không thể hoàn tác.",
+      "deleteError": "Không thể xóa bài viết",
+      "renameError": "Không thể đổi tên bài viết"
+    },
+    "tabs": {
+      "all": "Tất cả",
+      "favorites": "Yêu thích",
+      "archived": "Đã lưu trữ"
+    }
+  },
+  "reader": {
+    "fontSize": "Cỡ chữ",
+    "theme": "Giao diện",
+    "lineHeight": "Khoảng cách dòng",
+    "margins": "Lề"
+  },
+  "add": {
+    "title": "Thêm bài viết",
+    "urlLabel": "Nhập URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Lưu bài viết",
+    "hint": "Mẹo: Bạn cũng có thể dùng tính năng Chia sẻ từ Safari để lưu bài viết trực tiếp.",
+    "success": "Đang lưu bài viết!",
+    "errors": {
+      "emptyUrl": "Vui lòng nhập URL",
+      "invalidUrl": "Vui lòng nhập URL hợp lệ bắt đầu bằng http:// hoặc https://",
+      "saveFailed": "Không thể lưu bài viết. Vui lòng thử lại."
+    }
+  },
+  "search": {
+    "placeholder": "Tìm kiếm bài viết...",
+    "recentSearches": "Tìm kiếm gần đây",
+    "noResults": "Không tìm thấy kết quả"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "account": "Tài khoản",
+    "status": "Trạng thái",
+    "pro": "Pro",
+    "free": "Miễn phí",
+    "appearance": "Giao diện",
+    "theme": "Chủ đề",
+    "themes": {
+      "light": "Sáng",
+      "dark": "Tối",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Phản hồi",
+    "sound": "Âm thanh",
+    "haptics": "Rung",
+    "language": "Ngôn ngữ",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Cài đặt đọc mặc định",
+    "downloadSettings": "Cài đặt tải xuống",
+    "download": {
+      "wifiOnly": "Chỉ Wi-Fi",
+      "images": "Tải hình ảnh",
+      "styles": "Tải kiểu dáng",
+      "fonts": "Tải phông chữ"
+    },
+    "storage": "Lưu trữ",
+    "storageUsed": "Đã dùng",
+    "clearCache": "Xóa bộ nhớ đệm",
+    "clearCacheConfirm": "Thao tác này sẽ xóa các tệp không cần thiết và giải phóng không gian. Tiếp tục?",
+    "cacheCleared": "Đã xóa bộ nhớ đệm thành công",
+    "clearCacheFailed": "Không thể xóa bộ nhớ đệm. Vui lòng thử lại.",
+    "about": "Giới thiệu",
+    "version": "Phiên bản",
+    "privacy": "Riêng tư",
+    "noDataCollection": "Không thu thập dữ liệu"
+  },
+  "modals": {
+    "rename": {
+      "title": "Đổi tên bài viết",
+      "placeholder": "Nhập tiêu đề mới",
+      "error": "Tiêu đề không được để trống"
+    }
+  }
+}

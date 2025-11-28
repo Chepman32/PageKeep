@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Edit",
+    "done": "Selesai",
+    "back": "Kembali",
+    "search": "Cari",
+    "loading": "Memuat...",
+    "error": "Kesalahan",
+    "success": "Berhasil",
+    "rename": "Ubah Nama",
+    "archive": "Arsipkan",
+    "unarchive": "Batal Arsip",
+    "view": "Lihat",
+    "ok": "OK",
+    "clear": "Bersihkan",
+    "addToFavorites": "Tambah ke Favorit",
+    "removeFromFavorites": "Hapus dari Favorit"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Belum ada artikel",
+    "emptyHint": "Ketuk tombol + untuk menyimpan artikel pertama Anda",
+    "readTime_one": "{{count}} menit baca",
+    "readTime_other": "{{count}} menit baca",
+    "alerts": {
+      "archiveError": "Gagal mengarsipkan artikel",
+      "favoriteError": "Gagal memperbarui status favorit",
+      "deleteTitle": "Hapus Artikel",
+      "deleteMessage": "Apakah Anda yakin ingin menghapus artikel ini? Tindakan ini tidak dapat dibatalkan.",
+      "deleteError": "Gagal menghapus artikel",
+      "renameError": "Gagal mengubah nama artikel"
+    },
+    "tabs": {
+      "all": "Semua",
+      "favorites": "Favorit",
+      "archived": "Diarsipkan"
+    }
+  },
+  "reader": {
+    "fontSize": "Ukuran Font",
+    "theme": "Tema",
+    "lineHeight": "Tinggi Baris",
+    "margins": "Margin"
+  },
+  "add": {
+    "title": "Tambah Artikel",
+    "urlLabel": "Masukkan URL",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Simpan Artikel",
+    "hint": "Tips: Anda juga bisa menggunakan fitur Berbagi dari Safari untuk menyimpan artikel secara langsung.",
+    "success": "Artikel sedang disimpan!",
+    "errors": {
+      "emptyUrl": "Silakan masukkan URL",
+      "invalidUrl": "Silakan masukkan URL yang valid dimulai dengan http:// atau https://",
+      "saveFailed": "Gagal menyimpan artikel. Silakan coba lagi."
+    }
+  },
+  "search": {
+    "placeholder": "Cari artikel...",
+    "recentSearches": "Pencarian Terkini",
+    "noResults": "Tidak ada hasil"
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "account": "Akun",
+    "status": "Status",
+    "pro": "Pro",
+    "free": "Gratis",
+    "appearance": "Tampilan",
+    "theme": "Tema",
+    "themes": {
+      "light": "Terang",
+      "dark": "Gelap",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Masukan",
+    "sound": "Suara",
+    "haptics": "Getaran",
+    "language": "Bahasa",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Pengaturan Pembaca Default",
+    "downloadSettings": "Pengaturan Unduhan",
+    "download": {
+      "wifiOnly": "Hanya Wi-Fi",
+      "images": "Unduh Gambar",
+      "styles": "Unduh Gaya",
+      "fonts": "Unduh Font"
+    },
+    "storage": "Penyimpanan",
+    "storageUsed": "Digunakan",
+    "clearCache": "Bersihkan Cache",
+    "clearCacheConfirm": "Ini akan menghapus file yang tidak terpakai dan mengosongkan ruang. Lanjutkan?",
+    "cacheCleared": "Cache berhasil dibersihkan",
+    "clearCacheFailed": "Gagal membersihkan cache. Silakan coba lagi.",
+    "about": "Tentang",
+    "version": "Versi",
+    "privacy": "Privasi",
+    "noDataCollection": "Tidak ada pengumpulan data"
+  },
+  "modals": {
+    "rename": {
+      "title": "Ubah Nama Artikel",
+      "placeholder": "Masukkan judul baru",
+      "error": "Judul tidak boleh kosong"
+    }
+  }
+}

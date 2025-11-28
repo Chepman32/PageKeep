@@ -1,0 +1,146 @@
+{
+  "common": {
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "done": "Tamam",
+    "back": "Geri",
+    "search": "Ara",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "rename": "Yeniden Adlandır",
+    "archive": "Arşivle",
+    "unarchive": "Arşivden Çıkar",
+    "view": "Görüntüle",
+    "ok": "Tamam",
+    "clear": "Temizle",
+    "addToFavorites": "Favorilere Ekle",
+    "removeFromFavorites": "Favorilerden Kaldır"
+  },
+  "home": {
+    "title": "PageNest",
+    "emptyState": "Henüz makale yok",
+    "emptyHint": "İlk makaleni kaydetmek için + düğmesine dokun",
+    "readTime_one": "{{count}} dk okuma",
+    "readTime_other": "{{count}} dk okuma",
+    "alerts": {
+      "archiveError": "Makale arşivlenemedi",
+      "favoriteError": "Favori durumu güncellenemedi",
+      "deleteTitle": "Makaleyi Sil",
+      "deleteMessage": "Bu makaleyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+      "deleteError": "Makale silinemedi",
+      "renameError": "Makale yeniden adlandırılamadı"
+    },
+    "tabs": {
+      "all": "Tümü",
+      "favorites": "Favoriler",
+      "archived": "Arşivlenenler"
+    }
+  },
+  "reader": {
+    "fontSize": "Yazı Boyutu",
+    "theme": "Tema",
+    "lineHeight": "Satır Yüksekliği",
+    "margins": "Kenar Boşlukları"
+  },
+  "add": {
+    "title": "Makale Ekle",
+    "urlLabel": "URL Girin",
+    "urlPlaceholder": "https://example.com/article",
+    "saveButton": "Makaleyi Kaydet",
+    "hint": "İpucu: Safari'deki Paylaş özelliğini kullanarak makaleleri doğrudan kaydedebilirsiniz.",
+    "success": "Makale kaydediliyor!",
+    "errors": {
+      "emptyUrl": "Lütfen bir URL girin",
+      "invalidUrl": "Lütfen http:// veya https:// ile başlayan geçerli bir URL girin",
+      "saveFailed": "Makale kaydedilemedi. Lütfen tekrar deneyin."
+    }
+  },
+  "search": {
+    "placeholder": "Makalelerde ara...",
+    "recentSearches": "Son Aramalar",
+    "noResults": "Sonuç bulunamadı"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "account": "Hesap",
+    "status": "Durum",
+    "pro": "Pro",
+    "free": "Ücretsiz",
+    "appearance": "Görünüm",
+    "theme": "Tema",
+    "themes": {
+      "light": "Açık",
+      "dark": "Koyu",
+      "solar": "Solar",
+      "mono": "Mono"
+    },
+    "feedback": "Geri Bildirim",
+    "sound": "Ses",
+    "haptics": "Dokunsal Geri Bildirim",
+    "language": "Dil",
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "es": "Español",
+      "sp": "Español",
+      "de": "Deutsch",
+      "fr": "Français",
+      "pt": "Português",
+      "por": "Português",
+      "ja": "日本語",
+      "jp": "日本語",
+      "it": "Italiano",
+      "pl": "Polski",
+      "zh": "中文",
+      "hi": "हिन्दी",
+      "uk": "Українська",
+      "ua": "Українська",
+      "ko": "한국어",
+      "ar": "العربية",
+      "nl": "Nederlands",
+      "tr": "Türkçe",
+      "th": "ไทย",
+      "vi": "Tiếng Việt",
+      "id": "Bahasa Indonesia",
+      "he": "עברית",
+      "sv": "Svenska",
+      "nb": "Norsk Bokmål",
+      "da": "Dansk",
+      "fi": "Suomi",
+      "cs": "Čeština",
+      "hu": "Magyar",
+      "ro": "Română",
+      "el": "Ελληνικά",
+      "ms": "Bahasa Melayu",
+      "fil": "Filipino"
+    },
+    "readerDefaults": "Varsayılan Okuyucu Ayarları",
+    "downloadSettings": "İndirme Ayarları",
+    "download": {
+      "wifiOnly": "Sadece Wi-Fi",
+      "images": "Resimleri İndir",
+      "styles": "Stilleri İndir",
+      "fonts": "Yazı Tiplerini İndir"
+    },
+    "storage": "Depolama",
+    "storageUsed": "Kullanılan",
+    "clearCache": "Önbelleği Temizle",
+    "clearCacheConfirm": "Bu işlem kullanılmayan dosyaları kaldıracak ve yer açacaktır. Devam edilsin mi?",
+    "cacheCleared": "Önbellek başarıyla temizlendi",
+    "clearCacheFailed": "Önbellek temizlenemedi. Lütfen tekrar deneyin.",
+    "about": "Hakkında",
+    "version": "Sürüm",
+    "privacy": "Gizlilik",
+    "noDataCollection": "Veri toplama yok"
+  },
+  "modals": {
+    "rename": {
+      "title": "Makaleyi Yeniden Adlandır",
+      "placeholder": "Yeni başlığı girin",
+      "error": "Başlık boş olamaz"
+    }
+  }
+}
