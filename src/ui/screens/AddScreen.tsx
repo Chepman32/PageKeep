@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -28,6 +28,20 @@ const AddScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const savePageService = new SavePageService();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: t('add.title'),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ marginLeft: 16 }}
+        >
+          <Icon name="close" size={24} color={theme.colors.secondary} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, theme, t]);
 
   const handleSave = async () => {
     if (!url.trim()) {
@@ -83,25 +97,6 @@ const AddScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={theme.statusBarStyle} />
-
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Icon
-            name="close"
-            size={24}
-            color={theme.colors.secondary}
-            style={styles.backIcon}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t('add.title')}</Text>
-        <View style={styles.headerSpacer} />
-      </View>
-
       {/* Content */}
       <View style={styles.content}>
         <Text style={styles.label}>{t('add.urlLabel')}</Text>
@@ -139,34 +134,6 @@ const createStyles = (theme: Theme) =>
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 16,
-      paddingVertical: 12,
-      backgroundColor: theme.colors.card,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.border,
-    },
-    backButton: {
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    backIcon: {
-      color: theme.colors.secondary,
-    },
-    headerTitle: {
-      flex: 1,
-      fontSize: 18,
-      fontWeight: '600',
-      color: theme.colors.text,
-      textAlign: 'center',
-    },
-    headerSpacer: {
-      width: 40,
     },
     content: {
       padding: 20,

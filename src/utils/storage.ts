@@ -78,7 +78,6 @@ export const StorageKeys = {
   DOWNLOAD_FONTS: 'download_fonts',
   IAP_PRO_STATUS: 'iap_pro_status',
   LANGUAGE: 'language',
-  SOUND_ENABLED: 'sound_enabled',
   HAPTICS_ENABLED: 'haptics_enabled',
 } as const;
 
@@ -259,15 +258,6 @@ export const Storage = {
   },
 
   // Feedback preferences
-  getSoundEnabled(): boolean {
-    const value = this.getBoolean(StorageKeys.SOUND_ENABLED);
-    return value ?? true;
-  },
-
-  setSoundEnabled(enabled: boolean): void {
-    this.set(StorageKeys.SOUND_ENABLED, enabled);
-  },
-
   getHapticsEnabled(): boolean {
     const value = this.getBoolean(StorageKeys.HAPTICS_ENABLED);
     return value ?? true;

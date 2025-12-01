@@ -19,7 +19,6 @@ export interface DownloadSettings {
 }
 
 export interface AppPreferences {
-  soundEnabled: boolean;
   hapticsEnabled: boolean;
   language: string;
 }
@@ -54,7 +53,6 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   },
 
   preferences: {
-    soundEnabled: Storage.getSoundEnabled(),
     hapticsEnabled: Storage.getHapticsEnabled(),
     language: Storage.getLanguage(),
   },
@@ -100,10 +98,6 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     set(state => {
       const newPreferences = { ...state.preferences, ...settings };
 
-      if (settings.soundEnabled !== undefined) {
-        Storage.setSoundEnabled(settings.soundEnabled);
-      }
-
       if (settings.hapticsEnabled !== undefined) {
         Storage.setHapticsEnabled(settings.hapticsEnabled);
       }
@@ -134,7 +128,6 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
         downloadFonts: Storage.getDownloadFonts(),
       },
       preferences: {
-        soundEnabled: Storage.getSoundEnabled(),
         hapticsEnabled: Storage.getHapticsEnabled(),
         language: Storage.getLanguage(),
       },

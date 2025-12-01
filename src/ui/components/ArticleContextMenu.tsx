@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme } from '../../constants/themes';
 import { useTranslation } from 'react-i18next';
+import { Haptics } from '../../utils/haptics';
 
 interface ArticleContextMenuProps {
   visible: boolean;
@@ -39,6 +40,26 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
   const { theme } = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
+  const handleRename = () => {
+    Haptics.light();
+    onRename();
+  };
+
+  const handleFavorite = () => {
+    Haptics.light();
+    onFavorite();
+  };
+
+  const handleArchive = () => {
+    Haptics.light();
+    onArchive();
+  };
+
+  const handleDelete = () => {
+    Haptics.light();
+    onDelete();
+  };
+
   return (
     <Modal
       visible={visible}
@@ -48,7 +69,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
     >
       <Pressable style={styles.overlay} onPress={onClose}>
         <View style={styles.menu}>
-          <TouchableOpacity style={styles.menuItem} onPress={onRename}>
+          <TouchableOpacity style={styles.menuItem} onPress={handleRename}>
             <View style={styles.menuItemContent}>
               <Icon
                 name="pencil-outline"
@@ -60,7 +81,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem} onPress={onFavorite}>
+          <TouchableOpacity style={styles.menuItem} onPress={handleFavorite}>
             <View style={styles.menuItemContent}>
               <Icon
                 name={isFavorite ? 'star' : 'star-outline'}
@@ -74,7 +95,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem} onPress={onArchive}>
+          <TouchableOpacity style={styles.menuItem} onPress={handleArchive}>
             <View style={styles.menuItemContent}>
               <Icon
                 name={isArchived ? 'archive-arrow-up-outline' : 'archive-outline'}
@@ -90,7 +111,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
 
           <TouchableOpacity
             style={[styles.menuItem, styles.deleteItem]}
-            onPress={onDelete}
+            onPress={handleDelete}
           >
             <View style={styles.menuItemContent}>
               <Icon

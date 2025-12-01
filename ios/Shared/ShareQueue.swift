@@ -2,8 +2,13 @@ import Foundation
 
 @objcMembers
 public final class ShareQueue: NSObject {
+  private static let appGroupID = "group.com.antonchepur.PageKeep"
   private static let queueKey = "pendingShares"
   private static let notificationKey = "ShareQueueNewItemsNotification"
+
+  private static var storage: UserDefaults {
+    UserDefaults(suiteName: appGroupID) ?? .standard
+  }
 
   public static func enqueue(url: String, title: String?, sourceApp: String?) {
     let payload = makePayload(url: url, title: title, sourceApp: sourceApp)
@@ -11,9 +16,7 @@ public final class ShareQueue: NSObject {
   }
 
   public static func enqueue(payload: [String: Any]) {
-    let defaults = UserDefaults.standard
-
-    var items = defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
+    var items = storage.array(forKey: queueKey) as? [[String: Any]] ?? []
     if let identifier = payload["id"] as? String {
       let alreadyExists = items.contains { existing in
         if let existingId = existing["id"] as? String {
@@ -28,8 +31,8 @@ public final class ShareQueue: NSObject {
     }
 
     items.append(payload)
-    defaults.set(items, forKey: queueKey)
-    defaults.synchronize()
+    storage.set(items, forKey: queueKey)
+    storage.synchronize()
   }
 
   public static func makePayload(
@@ -57,25 +60,19 @@ public final class ShareQueue: NSObject {
   }
 
   public static func consumeAll() -> [[String: Any]] {
-    let defaults = UserDefaults.standard
-
-    let items = defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
-    defaults.removeObject(forKey: queueKey)
-    defaults.synchronize()
+    let items = storage.array(forKey: queueKey) as? [[String: Any]] ?? []
+    storage.removeObject(forKey: queueKey)
+    storage.synchronize()
     return items
   }
 
   public static func peekAll() -> [[String: Any]] {
-    let defaults = UserDefaults.standard
-
-    return defaults.array(forKey: queueKey) as? [[String: Any]] ?? []
+    return storage.array(forKey: queueKey) as? [[String: Any]] ?? []
   }
 
   public static func clear() {
-    let defaults = UserDefaults.standard
-
-    defaults.removeObject(forKey: queueKey)
-    defaults.synchronize()
+    storage.removeObject(forKey: queueKey)
+    storage.synchronize()
   }
 
   public static func notificationIdentifier() -> String {

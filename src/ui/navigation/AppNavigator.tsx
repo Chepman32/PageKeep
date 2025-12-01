@@ -38,19 +38,59 @@ export const AppNavigator: React.FC = () => {
     [theme],
   );
 
+  const screenOptions = useMemo(
+    () => ({
+      headerStyle: {
+        backgroundColor: theme.colors.card,
+        borderBottomWidth: 1,
+        borderBottomColor: theme.colors.border,
+      },
+      headerTitleStyle: {
+        fontSize: 18,
+        fontWeight: '600' as const,
+        color: theme.colors.text,
+      },
+      headerTintColor: theme.colors.accent,
+      headerBackTitleVisible: false,
+      headerTitleAlign: 'center' as const,
+    }),
+    [theme],
+  );
+
   return (
     <NavigationContainer theme={navigationTheme}>
       <Stack.Navigator
         initialRouteName="Home"
-        screenOptions={{
-          headerShown: false,
-        }}
+        screenOptions={screenOptions}
       >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Reader" component={ReaderScreen} />
-        <Stack.Screen name="Add" component={AddScreen} />
-        <Stack.Screen name="Search" component={SearchScreen} />
-        <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Reader"
+          component={ReaderScreen}
+          options={{ title: '' }}
+        />
+        <Stack.Screen
+          name="Add"
+          component={AddScreen}
+          options={{
+            title: '',
+            presentation: 'modal',
+          }}
+        />
+        <Stack.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{ title: '' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

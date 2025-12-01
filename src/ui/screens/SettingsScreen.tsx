@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ import { FileSystem } from '../../utils/fileSystem';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme, themes } from '../../constants/themes';
 import type { ThemeId } from '../../contexts/ThemeContext';
+import { Haptics } from '../../utils/haptics';
 
 const themeOptions: ThemeId[] = ['light', 'dark', 'solar', 'mono'];
 const languageOptions = [
@@ -99,6 +100,12 @@ const SettingsScreen: React.FC = () => {
   const [localFontSize, setLocalFontSize] = useState(readerDefaults.fontSize);
   const [localLineHeight, setLocalLineHeight] = useState(readerDefaults.lineHeight);
   const [localMargins, setLocalMargins] = useState(readerDefaults.margins);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: t('settings.title'),
+    });
+  }, [navigation, t]);
 
   useEffect(() => {
     loadSettings();
@@ -215,16 +222,21 @@ const SettingsScreen: React.FC = () => {
     onValueChange: (next: boolean) => void,
   ) => {
     const activeTrack = Platform.OS === 'ios'
-      ? withAlpha(theme.colors.accent, 0.55)
+      ? withAlpha(theme.colors.accent, 0.75)
       : theme.colors.accent;
     const inactiveTrack = Platform.OS === 'ios'
       ? withAlpha(theme.colors.border, theme.isDark ? 0.45 : 0.35)
       : theme.colors.border;
 
+    const handleValueChange = (next: boolean) => {
+      Haptics.light();
+      onValueChange(next);
+    };
+
     return (
       <Switch
         value={value}
-        onValueChange={onValueChange}
+        onValueChange={handleValueChange}
         trackColor={{
           false: inactiveTrack,
           true: activeTrack,
@@ -245,25 +257,6 @@ const SettingsScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={theme.statusBarStyle} />
-
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-          accessibilityRole="button"
-        >
-          <Icon
-            name="chevron-left"
-            size={28}
-            color={theme.colors.accent}
-            style={styles.backIcon}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t('settings.title')}</Text>
-        <View style={styles.headerSpacer} />
-      </View>
-
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.content}
@@ -329,12 +322,6 @@ const SettingsScreen: React.FC = () => {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings.feedback')}</Text>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>{t('settings.sound')}</Text>
-            {renderSwitch(preferences.soundEnabled, value =>
-              updatePreferences({ soundEnabled: value }),
-            )}
-          </View>
           <View style={[styles.row, styles.rowLast]}>
             <Text style={styles.rowLabel}>{t('settings.haptics')}</Text>
             {renderSwitch(preferences.hapticsEnabled, value =>
@@ -571,34 +558,6 @@ const createStyles = (theme: Theme) =>
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 16,
-      paddingVertical: 12,
-      backgroundColor: theme.colors.card,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.border,
-    },
-    backButton: {
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    backIcon: {
-      color: theme.colors.accent,
-    },
-    headerTitle: {
-      flex: 1,
-      fontSize: 18,
-      fontWeight: '600',
-      color: theme.colors.text,
-      textAlign: 'center',
-    },
-    headerSpacer: {
-      width: 40,
     },
     scroll: {
       flex: 1,

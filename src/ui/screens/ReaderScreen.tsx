@@ -133,6 +133,7 @@ const ReaderScreen: React.FC = () => {
       }
 
       setTitle(article.title);
+      navigation.setOptions({ title: article.title });
 
       // Wait for background processing to complete (only if needed)
       // This function will set loading to false when done
@@ -192,27 +193,6 @@ const ReaderScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={appTheme.statusBarStyle} />
-
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Icon
-            name="chevron-left"
-            size={28}
-            color={appTheme.colors.accent}
-            style={styles.backIcon}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          {title}
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
-
       {/* Loading or WebView */}
       {loading ? (
         <View style={styles.loadingContainer}>
@@ -254,34 +234,6 @@ const createStyles = (theme: Theme) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 16,
-      paddingVertical: 12,
-      backgroundColor: theme.colors.card,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.border,
-    },
-    backButton: {
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    backIcon: {
-      color: theme.colors.accent,
-    },
-    headerTitle: {
-      flex: 1,
-      fontSize: 16,
-      fontWeight: '600',
-      color: theme.colors.text,
-      marginHorizontal: 12,
-    },
-    headerSpacer: {
-      width: 40,
     },
     webview: {
       flex: 1,

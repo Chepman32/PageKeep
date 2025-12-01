@@ -28,6 +28,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme } from '../../constants/themes';
 import ArticleCoverImage from '../components/ArticleCoverImage';
+import { Haptics } from '../../utils/haptics';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -164,6 +165,7 @@ const HomeScreen: React.FC = () => {
   };
 
   const handleLongPress = (article: Article) => {
+    Haptics.medium();
     setContextMenu({
       visible: true,
       article,
