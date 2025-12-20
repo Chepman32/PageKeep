@@ -73,7 +73,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
             <View style={styles.menuItemContent}>
               <Icon
                 name="pencil-outline"
-                size={18}
+                size={22}
                 color={theme.colors.text}
                 style={styles.menuIcon}
               />
@@ -85,7 +85,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
             <View style={styles.menuItemContent}>
               <Icon
                 name={isFavorite ? 'star' : 'star-outline'}
-                size={18}
+                size={22}
                 color={isFavorite ? theme.colors.accent : theme.colors.text}
                 style={styles.menuIcon}
               />
@@ -99,7 +99,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
             <View style={styles.menuItemContent}>
               <Icon
                 name={isArchived ? 'archive-arrow-up-outline' : 'archive-outline'}
-                size={18}
+                size={22}
                 color={theme.colors.text}
                 style={styles.menuIcon}
               />
@@ -116,7 +116,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
             <View style={styles.menuItemContent}>
               <Icon
                 name="trash-can-outline"
-                size={18}
+                size={22}
                 color="#FF3B30"
                 style={styles.menuIcon}
               />
@@ -141,9 +141,9 @@ const createStyles = (theme: Theme) =>
     },
     menu: {
       backgroundColor: theme.colors.card,
-      borderRadius: 12,
-      paddingVertical: 8,
-      minWidth: 200,
+      borderRadius: 14,
+      paddingVertical: 10,
+      minWidth: "90%",
       borderWidth: theme.isDark ? 1 : 0,
       borderColor: theme.colors.border,
       shadowColor: '#000',
@@ -153,22 +153,22 @@ const createStyles = (theme: Theme) =>
       elevation: 8,
     },
     menuItem: {
-      paddingHorizontal: 16,
-      paddingVertical: 12,
+      paddingHorizontal: 20,
+      paddingVertical: 16,
     },
     menuItemContent: {
       flexDirection: 'row',
       alignItems: 'center',
     },
     menuIcon: {
-      marginRight: 12,
+      marginRight: 14,
     },
     deleteItem: {
       borderTopWidth: 1,
       borderTopColor: theme.colors.border,
     },
     menuText: {
-      fontSize: 16,
+      fontSize: 18,
       color: theme.colors.text,
     },
     deleteText: {
