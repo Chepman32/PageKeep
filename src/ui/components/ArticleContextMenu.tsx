@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
+  Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -40,6 +41,14 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
   const { theme } = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
+  const screenHeight = Dimensions.get('window').height;
+  const isInBottomHalf = position.y > screenHeight / 2;
+
+  const menuPositionStyle = {
+    top: isInBottomHalf ? undefined : position.y,
+    bottom: isInBottomHalf ? screenHeight - position.y : undefined,
+  };
+
   const handleRename = () => {
     Haptics.light();
     onRename();
@@ -68,7 +77,7 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
       onRequestClose={onClose}
     >
       <Pressable style={styles.overlay} onPress={onClose}>
-        <View style={styles.menu}>
+        <View style={[styles.menu, menuPositionStyle]}>
           <TouchableOpacity style={styles.menuItem} onPress={handleRename}>
             <View style={styles.menuItemContent}>
               <Icon
@@ -136,14 +145,14 @@ const createStyles = (theme: Theme) =>
     overlay: {
       flex: 1,
       backgroundColor: 'rgba(0, 0, 0, 0.3)',
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     menu: {
+      position: 'absolute',
+      left: '5%',
+      right: '5%',
       backgroundColor: theme.colors.card,
       borderRadius: 14,
       paddingVertical: 10,
-      minWidth: "90%",
       borderWidth: theme.isDark ? 1 : 0,
       borderColor: theme.colors.border,
       shadowColor: '#000',

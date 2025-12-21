@@ -13,6 +13,7 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
+  GestureResponderEvent,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -164,12 +165,13 @@ const HomeScreen: React.FC = () => {
     }
   };
 
-  const handleLongPress = (article: Article) => {
+  const handleLongPress = (article: Article, event: GestureResponderEvent) => {
     Haptics.medium();
+    const { pageY } = event.nativeEvent;
     setContextMenu({
       visible: true,
       article,
-      position: { x: 0, y: 0 },
+      position: { x: 0, y: pageY },
     });
   };
 
@@ -259,7 +261,7 @@ const HomeScreen: React.FC = () => {
     <TouchableOpacity
       style={styles.card}
       onPress={() => navigation.navigate('Reader', { articleId: item.id })}
-      onLongPress={() => handleLongPress(item)}
+      onLongPress={(event) => handleLongPress(item, event)}
       delayLongPress={500}
     >
       <View style={styles.cardContent}>
