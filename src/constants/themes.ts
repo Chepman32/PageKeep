@@ -98,22 +98,35 @@ export const generateReaderCSS = (
 ): string => {
   return `
     body.pn-reader {
-      background-color: ${theme.colors.background};
-      color: ${theme.colors.text};
-      font-size: ${fontSize}px;
-      line-height: ${lineHeight};
-      padding: ${margins}px;
+      background-color: ${theme.colors.background} !important;
+      color: ${theme.colors.text} !important;
+      font-size: ${fontSize}px !important;
+      line-height: ${lineHeight} !important;
+      padding: ${margins}px !important;
     }
-    
+
+    body.pn-reader p,
+    body.pn-reader div,
+    body.pn-reader span,
+    body.pn-reader li,
+    body.pn-reader td,
+    body.pn-reader th,
+    body.pn-reader blockquote,
+    body.pn-reader article,
+    body.pn-reader section {
+      font-size: inherit !important;
+      line-height: inherit !important;
+    }
+
     body.pn-reader a {
       color: ${theme.colors.accent};
     }
-    
+
     body.pn-reader mark,
     body.pn-reader .highlight {
       background-color: ${theme.colors.highlight};
     }
-    
+
     body.pn-reader h1,
     body.pn-reader h2,
     body.pn-reader h3,
@@ -122,12 +135,12 @@ export const generateReaderCSS = (
     body.pn-reader h6 {
       color: ${theme.colors.text};
     }
-    
+
     body.pn-reader blockquote {
       border-left-color: ${theme.colors.border};
       color: ${theme.colors.secondary};
     }
-    
+
     body.pn-reader pre,
     body.pn-reader code {
       background-color: ${theme.colors.card};
