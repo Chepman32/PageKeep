@@ -589,8 +589,11 @@ export class SavePageService {
     readableContent: string,
     baseUrl: string,
   ): string | null {
+    // og:image - try both attribute orderings (property before content, and content before property)
     const ogImageMatch = originalHtml.match(
       /<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i,
+    ) || originalHtml.match(
+      /<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["']/i,
     );
     if (ogImageMatch) {
       const absolute = this.makeAbsoluteUrl(ogImageMatch[1], baseUrl);
@@ -599,8 +602,11 @@ export class SavePageService {
       }
     }
 
+    // twitter:image - try both attribute orderings
     const twitterImageMatch = originalHtml.match(
       /<meta[^>]*name=["']twitter:image["'][^>]*content=["']([^"']+)["']/i,
+    ) || originalHtml.match(
+      /<meta[^>]*content=["']([^"']+)["'][^>]*name=["']twitter:image["']/i,
     );
     if (twitterImageMatch) {
       const absolute = this.makeAbsoluteUrl(twitterImageMatch[1], baseUrl);
