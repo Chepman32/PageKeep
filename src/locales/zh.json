@@ -19,7 +19,7 @@
     "removeFromFavorites": "从收藏中删除"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "暂无文章",
     "emptyHint": "点击 + 按钮保存第一篇文章",
     "readTime_one": "阅读 {{count}} 分钟",

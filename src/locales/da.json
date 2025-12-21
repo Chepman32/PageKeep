@@ -20,7 +20,7 @@
     "removeFromFavorites": "Fjern fra favoritter"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Ingen artikler endnu",
     "emptyHint": "Tryk på + knappen for at gemme din første artikel",
     "readTime_one": "{{count}} min læsning",

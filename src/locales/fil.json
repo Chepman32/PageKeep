@@ -20,7 +20,7 @@
     "removeFromFavorites": "Alisin sa Mga Paborito"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Wala pang mga artikulo",
     "emptyHint": "Pindutin ang + button para i-save ang iyong unang artikulo",
     "readTime_one": "{{count}} minutong pagbasa",

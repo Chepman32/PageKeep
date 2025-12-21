@@ -20,7 +20,7 @@
     "removeFromFavorites": "Eltávolítás a kedvencekből"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Még nincsenek cikkek",
     "emptyHint": "Nyomja meg a + gombot az első cikk mentéséhez",
     "readTime_one": "{{count}} perc olvasás",

@@ -142,31 +142,24 @@ export class SavePageService {
       // 2. Download images and get mapping of old URL to new URL
       const { imageMap, coverImage } = await this.downloadImages(articleId, imageUrls);
 
-      // 3. Rewrite HTML with local image paths (only if we downloaded images)
-      if (imageMap.size > 0) {
+      // 3. Rewrite HTML with local image paths
+      let contentToRewrite = readable.content;
+
+      // Always inject cover image at the top if we have one (og:image is usually the main article image)
+      const currentMeta = await FileSystem.readArticleMeta(articleId);
+      if (currentMeta?.coverImage) {
+        console.log('Injecting cover image into article body');
+        contentToRewrite = `<figure class="pn-cover-image" style="margin: 0 0 1.5em 0;"><img src="${currentMeta.coverImage}" alt="Article image" style="max-width: 100%; height: auto; display: block;" /></figure>` + contentToRewrite;
+      }
+
+      if (imageMap.size > 0 || contentToRewrite !== readable.content) {
         console.log(`Rewriting HTML with ${imageMap.size} image mappings`);
 
-        // Log the main article image mapping
-        const soraImage = Array.from(imageMap.entries()).find(([url]) =>
-          url.includes('sora.jpg')
-        );
-        if (soraImage) {
-          console.log(`Main image (sora.jpg): ${soraImage[0]}`);
-          console.log(`Embedded as data URL of length: ${soraImage[1].length}`);
-        }
-
         const rewrittenHtml = this.htmlRewriter.rewrite(
-          readable.content,
+          contentToRewrite,
           url,
           imageMap,
         );
-
-        // Verify the replacement worked
-        if (soraImage && rewrittenHtml.includes(soraImage[1].substring(0, 50))) {
-          console.log('✅ Main image successfully embedded in HTML');
-        } else if (soraImage) {
-          console.log('❌ Main image NOT found in rewritten HTML');
-        }
 
         // 4. Update HTML file with images
         await FileSystem.writeArticleHtml(articleId, rewrittenHtml);
@@ -251,34 +244,20 @@ export class SavePageService {
       const finalCover = coverImage || (await this.resolveCoverImage(articleId, coverCandidate));
 
       // 8. Rewrite HTML with local image paths
+      let contentToRewrite = readable.content;
+
+      // Always inject cover image at the top if we have one (og:image is usually the main article image)
+      if (finalCover) {
+        console.log('Injecting cover image into article body');
+        contentToRewrite = `<figure class="pn-cover-image" style="margin: 0 0 1.5em 0;"><img src="${finalCover}" alt="Article image" style="max-width: 100%; height: auto; display: block;" /></figure>` + contentToRewrite;
+      }
+
       console.log(`Rewriting HTML with ${imageMap.size} image mappings`);
       const rewrittenHtml = this.htmlRewriter.rewrite(
-        readable.content,
+        contentToRewrite,
         url,
         imageMap,
       );
-
-      // Debug: Check if replacements worked
-      const firstMapping = Array.from(imageMap.entries())[0];
-      if (firstMapping) {
-        const [remoteUrl, localPath] = firstMapping;
-        console.log(`Sample mapping:`);
-        console.log(`  From: ${remoteUrl.substring(0, 80)}...`);
-        console.log(`  To: ${localPath.substring(localPath.length - 60)}`);
-
-        // Check if replacement happened
-        if (rewrittenHtml.includes(localPath)) {
-          console.log('  ✅ Local path found in HTML');
-        } else {
-          console.log('  ❌ Local path NOT in HTML');
-
-          // Check what's actually in the HTML
-          const imgTag = rewrittenHtml.match(new RegExp(`<img[^>]*src=["'][^"']{0,100}${remoteUrl.substring(remoteUrl.length - 20)}[^"']*["'][^>]*>`, 'i'));
-          if (imgTag) {
-            console.log(`  Found img tag: ${imgTag[0].substring(0, 150)}...`);
-          }
-        }
-      }
 
       // 9. Save HTML to file system
       const htmlPath = FileSystem.getArticleHtmlPath(articleId);

@@ -20,7 +20,7 @@
     "removeFromFavorites": "즐겨찾기 제거"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "아직 저장된 글이 없어요",
     "emptyHint": "+ 버튼을 눌러 첫 글을 저장해보세요",
     "readTime_one": "{{count}}분 소요",

@@ -20,7 +20,7 @@
     "removeFromFavorites": "Elimină din favorite"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Niciun articol încă",
     "emptyHint": "Apasă butonul + pentru a salva primul tău articol",
     "readTime_one": "{{count}} min citire",

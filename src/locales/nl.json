@@ -20,7 +20,7 @@
     "removeFromFavorites": "Verwijderen uit favorieten"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Nog geen artikelen",
     "emptyHint": "Tik op de + knop om je eerste artikel op te slaan",
     "readTime_one": "{{count}} min leestijd",

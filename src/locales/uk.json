@@ -19,7 +19,7 @@
     "removeFromFavorites": "Видалити з улюблених"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Ще немає статей",
     "emptyHint": "Натисніть кнопку +, щоб зберегти першу статтю",
     "readTime_one": "{{count}} хв читання",

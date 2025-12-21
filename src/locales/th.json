@@ -20,7 +20,7 @@
     "removeFromFavorites": "ลบออกจากรายการโปรด"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "ยังไม่มีบทความ",
     "emptyHint": "แตะปุ่ม + เพื่อบันทึกบทความแรกของคุณ",
     "readTime_one": "อ่าน {{count}} นาที",

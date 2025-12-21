@@ -19,7 +19,7 @@
     "removeFromFavorites": "पसंदीदा से हटाएँ"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "अभी कोई लेख नहीं",
     "emptyHint": "+ बटन दबाकर अपना पहला लेख सहेजें",
     "readTime_one": "{{count}} मिनट का पढ़ना",

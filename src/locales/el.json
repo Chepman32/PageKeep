@@ -20,7 +20,7 @@
     "removeFromFavorites": "Αφαίρεση από τα αγαπημένα"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Δεν υπάρχουν άρθρα ακόμα",
     "emptyHint": "Πατήστε το κουμπί + για να αποθηκεύσετε το πρώτο σας άρθρο",
     "readTime_one": "{{count}} λεπτό ανάγνωσης",

@@ -20,7 +20,7 @@
     "removeFromFavorites": "Xóa khỏi yêu thích"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Chưa có bài viết nào",
     "emptyHint": "Nhấn nút + để lưu bài viết đầu tiên",
     "readTime_one": "{{count}} phút đọc",

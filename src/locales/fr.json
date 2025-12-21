@@ -19,7 +19,7 @@
     "removeFromFavorites": "Supprimer des favoris"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Pas encore d'article",
     "emptyHint": "Touchez le bouton + pour enregistrer votre premier article",
     "readTime_one": "{{count}} min de lecture",

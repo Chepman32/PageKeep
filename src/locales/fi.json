@@ -20,7 +20,7 @@
     "removeFromFavorites": "Poista suosikeista"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Ei vielä artikkeleita",
     "emptyHint": "Napauta + -painiketta tallentaaksesi ensimmäisen artikkelisi",
     "readTime_one": "{{count}} min lukuaika",

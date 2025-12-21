@@ -20,7 +20,7 @@
     "removeFromFavorites": "Odebrat z oblíbených"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Zatím žádné články",
     "emptyHint": "Klepnutím na tlačítko + uložíte svůj první článek",
     "readTime_one": "{{count}} min čtení",

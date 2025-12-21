@@ -20,7 +20,7 @@
     "removeFromFavorites": "Buang dari Kegemaran"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Tiada artikel lagi",
     "emptyHint": "Ketik butang + untuk menyimpan artikel pertama anda",
     "readTime_one": "{{count}} min bacaan",

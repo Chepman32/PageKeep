@@ -20,7 +20,7 @@
     "removeFromFavorites": "Ta bort från favoriter"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Inga artiklar än",
     "emptyHint": "Tryck på + knappen för att spara din första artikel",
     "readTime_one": "{{count}} min läsning",

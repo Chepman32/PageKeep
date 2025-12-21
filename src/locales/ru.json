@@ -19,7 +19,7 @@
     "removeFromFavorites": "Убрать из избранного"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Пока нет статей",
     "emptyHint": "Нажмите кнопку +, чтобы сохранить первую статью",
     "readTime_one": "{{count}} мин чтения",

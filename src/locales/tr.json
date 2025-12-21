@@ -20,7 +20,7 @@
     "removeFromFavorites": "Favorilerden Kaldır"
   },
   "home": {
-    "title": "PageNest",
+    "title": "PageKeep",
     "emptyState": "Henüz makale yok",
     "emptyHint": "İlk makaleni kaydetmek için + düğmesine dokun",
     "readTime_one": "{{count}} dk okuma",
