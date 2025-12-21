@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -40,6 +40,12 @@ export const ArticleContextMenu: React.FC<ArticleContextMenuProps> = ({
   const { t } = useTranslation();
   const { theme } = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+
+  useEffect(() => {
+    if (visible) {
+      Haptics.light();
+    }
+  }, [visible]);
 
   const screenHeight = Dimensions.get('window').height;
   const isInBottomHalf = position.y > screenHeight / 2;

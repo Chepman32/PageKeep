@@ -357,7 +357,7 @@ const HomeScreen: React.FC = () => {
           >
             <Icon
               name={isSearchExpanded ? 'close' : 'magnify'}
-              size={22}
+              size={26}
               color={theme.colors.secondary}
               style={styles.headerIcon}
             />
@@ -369,7 +369,7 @@ const HomeScreen: React.FC = () => {
             >
               <Icon
                 name="cog-outline"
-                size={22}
+                size={26}
                 color={theme.colors.secondary}
                 style={styles.headerIcon}
               />
@@ -490,8 +490,8 @@ const createStyles = (theme: Theme) =>
       gap: 12,
     },
     headerButton: {
-      width: 40,
-      height: 40,
+      width: 44,
+      height: 44,
       justifyContent: 'center',
       alignItems: 'center',
     },
