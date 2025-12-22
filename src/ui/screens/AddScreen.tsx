@@ -10,7 +10,8 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SavePageService } from '../../services/SavePageService';
 import { useArticleStore } from '../../store/articleStore';
@@ -26,6 +27,7 @@ const AddScreen: React.FC = () => {
   const { fetchArticles } = useArticleStore();
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [clipboardUrl, setClipboardUrl] = useState<string | null>(null);
 
   const savePageService = new SavePageService();
 
@@ -42,6 +44,40 @@ const AddScreen: React.FC = () => {
       ),
     });
   }, [navigation, theme, t]);
+
+  const checkClipboard = async () => {
+    try {
+      const text = await Clipboard.getString();
+
+      // Validate if clipboard contains a URL
+      if (text && (text.trim().startsWith('http://') || text.trim().startsWith('https://'))) {
+        // Only set if it's different from current URL input
+        if (text.trim() !== url.trim()) {
+          setClipboardUrl(text.trim());
+        } else {
+          setClipboardUrl(null);
+        }
+      } else {
+        setClipboardUrl(null);
+      }
+    } catch (error) {
+      console.error('Error checking clipboard:', error);
+      setClipboardUrl(null);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      checkClipboard();
+    }, [url])
+  );
+
+  const handleUseCopiedLink = () => {
+    if (clipboardUrl) {
+      setUrl(clipboardUrl);
+      setClipboardUrl(null); // Hide button after using
+    }
+  };
 
   const handleSave = async () => {
     if (!url.trim()) {
@@ -111,6 +147,18 @@ const AddScreen: React.FC = () => {
           editable={!loading}
         />
 
+        {clipboardUrl && (
+          <TouchableOpacity
+            style={styles.clipboardButton}
+            onPress={handleUseCopiedLink}
+          >
+            <Icon name="content-paste" size={20} color={theme.colors.accent} />
+            <Text style={styles.clipboardButtonText}>
+              {t('add.useCopiedLink')}
+            </Text>
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity
           style={[styles.saveButton, loading && styles.saveButtonDisabled]}
           onPress={handleSave}
@@ -153,6 +201,24 @@ const createStyles = (theme: Theme) =>
       borderColor: theme.colors.border,
       marginBottom: 20,
       color: theme.colors.text,
+    },
+    clipboardButton: {
+      backgroundColor: theme.colors.card,
+      borderRadius: 8,
+      padding: 14,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 20,
+      borderWidth: 1,
+      borderColor: theme.colors.accent,
+      borderStyle: 'dashed',
+    },
+    clipboardButtonText: {
+      color: theme.colors.accent,
+      fontSize: 15,
+      fontWeight: '500',
+      marginLeft: 8,
     },
     saveButton: {
       backgroundColor: theme.colors.accent,

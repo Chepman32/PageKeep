@@ -51,6 +51,7 @@
     "urlPlaceholder": "https://example.com/article",
     "saveButton": "Save Article",
     "hint": "Tip: You can also use the Share Extension from Safari to save articles directly.",
+    "useCopiedLink": "Use copied link",
     "success": "Article is being saved!",
     "errors": {
       "emptyUrl": "Please enter a URL",
