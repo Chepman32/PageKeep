@@ -1931,6 +1931,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - react-native-netinfo (11.4.1):
+    - React-Core
   - react-native-quick-sqlite (8.2.7):
     - boost
     - DoubleConversion
@@ -3048,6 +3050,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-quick-sqlite (from `../node_modules/react-native-quick-sqlite`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
@@ -3194,6 +3197,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-blob-util"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-quick-sqlite:
     :path: "../node_modules/react-native-quick-sqlite"
   react-native-safe-area-context:
@@ -3335,6 +3340,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: d1ee999dc9052e23f6488b730fa2d383a4ea40e5
   react-native-blob-util: d59901fee49a23587af72dffe4451fb25ebe6d49
   react-native-get-random-values: e2acf4070fe4b7325705a05af047449637a27a21
+  react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-quick-sqlite: de1270624ef439261969690aec166f647d63c49f
   react-native-safe-area-context: c6e2edd1c1da07bdce287fa9d9e60c5f7b514616
   react-native-skia: b38c0db1ec08fc0b859e7c83fbfb45f3241812a1

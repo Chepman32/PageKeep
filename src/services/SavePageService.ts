@@ -5,6 +5,10 @@ import { SearchRepository } from '../data/repositories/SearchRepository';
 import { DeviceEventEmitter } from 'react-native';
 import { FileSystem } from '../utils/fileSystem';
 import RNFetchBlob from 'react-native-blob-util';
+import {
+  ARTICLE_PROCESSING_STARTED,
+  ARTICLE_PROCESSING_FAILED,
+} from '../utils/articleProcessingState';
 
 export interface SaveOptions {
   tags?: string[];
@@ -99,7 +103,10 @@ export class SavePageService {
         annotations: [],
       });
 
-      // 11. Process images and update HTML in background (non-blocking)
+      // 11. Emit processing started event
+      DeviceEventEmitter.emit(ARTICLE_PROCESSING_STARTED, { articleId });
+
+      // 12. Process images and update HTML in background (non-blocking)
       this.processArticleContentInBackground(
         articleId,
         url,
@@ -172,6 +179,8 @@ export class SavePageService {
       const updatedMeta = {
         ...meta,
         processingComplete: true,
+        processingError: null,
+        processingRetries: 0,
         // Preserve the og:image cover that was set during initial save
         coverImage: meta?.coverImage ?? null,
       };
@@ -181,18 +190,49 @@ export class SavePageService {
       this.emitMetaUpdate(articleId, updatedMeta);
 
       console.log('✅ Background processing completed for:', articleId);
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ Error in background processing:', error);
-      // Mark as complete even if image download failed
-      // User can still read the article with the basic HTML
+
+      // Detect if this is a network error
+      const isNetworkError =
+        error.message?.includes('Network request failed') ||
+        error.message?.includes('ETIMEDOUT') ||
+        error.message?.includes('ECONNREFUSED') ||
+        error.code === 'ECONNREFUSED';
+
       try {
         const meta = await FileSystem.readArticleMeta(articleId);
-        const updatedMeta = {
-          ...meta,
-          processingComplete: true,
-        };
-        await FileSystem.writeArticleMeta(articleId, updatedMeta);
-        this.emitMetaUpdate(articleId, updatedMeta);
+
+        if (isNetworkError) {
+          // Network error - mark as failed, will retry when connection is restored
+          const updatedMeta = {
+            ...meta,
+            processingComplete: false,
+            processingError: 'No internet connection',
+            processingRetries: meta.processingRetries || 0,
+          };
+          await FileSystem.writeArticleMeta(articleId, updatedMeta);
+
+          // Emit failure event
+          DeviceEventEmitter.emit(ARTICLE_PROCESSING_FAILED, {
+            articleId,
+            error: 'No internet connection',
+          });
+
+          console.log(`[Background] Network error for ${articleId}, will retry when connection is restored`);
+        } else {
+          // Other error - mark as complete anyway (user can read text-only article)
+          const updatedMeta = {
+            ...meta,
+            processingComplete: true,
+            processingError: null,
+            processingRetries: 0,
+          };
+          await FileSystem.writeArticleMeta(articleId, updatedMeta);
+          this.emitMetaUpdate(articleId, updatedMeta);
+
+          console.log(`[Background] Non-network error for ${articleId}, marking as complete`);
+        }
       } catch (metaError) {
         console.error('Failed to update metadata after error:', metaError);
       }
@@ -608,6 +648,82 @@ export class SavePageService {
     }
 
     return null;
+  }
+
+  /**
+   * Retry processing for a failed article
+   * Called by NetworkMonitor when connection is restored
+   */
+  async retryProcessing(articleId: string): Promise<void> {
+    try {
+      console.log(`[Retry] Starting retry for article: ${articleId}`);
+
+      // Read current metadata
+      const meta = await FileSystem.readArticleMeta(articleId);
+
+      // Check retry limit
+      const retryCount = meta.processingRetries || 0;
+      if (retryCount >= 3) {
+        console.log(`[Retry] Max retries reached for ${articleId}, skipping`);
+        return;
+      }
+
+      // Check if still needs processing
+      if (meta.processingComplete === true) {
+        console.log(`[Retry] Article ${articleId} already processed, skipping`);
+        return;
+      }
+
+      // Read article from database to get URL
+      const article = await this.articleRepo.findById(articleId);
+      if (!article) {
+        console.log(`[Retry] Article ${articleId} not found, skipping`);
+        return;
+      }
+
+      // Read article content to get the readable content
+      const content = await this.articleRepo.getContent(articleId);
+      if (!content || !content.meta) {
+        console.log(`[Retry] Article content not found for ${articleId}, skipping`);
+        return;
+      }
+
+      // Increment retry counter
+      await FileSystem.writeArticleMeta(articleId, {
+        ...meta,
+        processingRetries: retryCount + 1,
+        processingError: null, // Clear error before retry
+      });
+
+      console.log(`[Retry] Retry attempt ${retryCount + 1}/3 for ${articleId}`);
+
+      // Emit processing started event
+      DeviceEventEmitter.emit(ARTICLE_PROCESSING_STARTED, { articleId });
+
+      // Re-read the original HTML and extract content
+      const html = await FileSystem.readArticleHtml(articleId);
+
+      // Create a mock readable object for processing
+      const readable = {
+        content: html,
+        title: article.title,
+        byline: content.meta.author,
+        excerpt: content.meta.excerpt,
+        siteName: content.meta.siteName,
+      };
+
+      // Retry background processing
+      await this.processArticleContentInBackground(
+        articleId,
+        article.url,
+        readable,
+      );
+
+      console.log(`[Retry] Successfully started retry for ${articleId}`);
+    } catch (error) {
+      console.error(`[Retry] Failed to retry article ${articleId}:`, error);
+      throw error;
+    }
   }
 
   private async resolveCoverImage(

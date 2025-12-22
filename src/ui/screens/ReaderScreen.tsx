@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
-  ActivityIndicator,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,6 +16,10 @@ import { FileSystem } from '../../utils/fileSystem';
 import { useSettingsStore } from '../../store/settingsStore';
 import { generateReaderCSS, themes, Theme } from '../../constants/themes';
 import { useTheme } from '../../contexts/ThemeContext';
+import { DeviceEventEmitter } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
+import { ARTICLE_META_UPDATED_EVENT } from '../../services/SavePageService';
+import { ArticleErrorOverlay } from '../components/ArticleErrorOverlay';
 
 type ReaderScreenRouteProp = RouteProp<RootStackParamList, 'Reader'>;
 
@@ -28,72 +31,57 @@ const ReaderScreen: React.FC = () => {
   const { articleId } = route.params;
   const { readerDefaults } = useSettingsStore();
 
-  const [loading, setLoading] = useState(false); // Start as false, only show spinner if needed
   const [title, setTitle] = useState('');
-  const [shouldReload, setShouldReload] = useState(0); // Used to force WebView reload
+  const [articleUrl, setArticleUrl] = useState('');
+  const [isProcessingComplete, setIsProcessingComplete] = useState(true);
+  const [isConnected, setIsConnected] = useState(true);
+  const [showError, setShowError] = useState(false);
   const webViewRef = React.useRef<any>(null);
 
   const articleRepo = new ArticleRepository();
-
-  /**
-   * Waits for background processing to complete before showing the page
-   * This prevents showing unstyled pages before images are downloaded
-   * ONLY waits if processingComplete is explicitly false (meaning processing is ongoing)
-   */
-  const waitForProcessingComplete = async (
-    articleId: string,
-  ): Promise<void> => {
-    try {
-      const meta = await FileSystem.readArticleMeta(articleId);
-
-      // If processing is already complete or flag doesn't exist, return immediately
-      if (meta.processingComplete !== false) {
-        console.log('✅ Processing already complete or not needed, showing page');
-        return;
-      }
-
-      // Processing is ongoing (processingComplete === false), so show spinner and wait
-      console.log('⏳ Background processing in progress, waiting...');
-      setLoading(true); // Only show spinner when actually waiting
-
-      const maxWaitTime = 30000; // Maximum 30 seconds
-      const pollInterval = 500; // Check every 500ms
-      const startTime = Date.now();
-
-      while (Date.now() - startTime < maxWaitTime) {
-        await new Promise<void>(resolve => setTimeout(() => resolve(), pollInterval));
-
-        try {
-          const updatedMeta = await FileSystem.readArticleMeta(articleId);
-          if (updatedMeta.processingComplete === true) {
-            console.log('✅ Processing complete, showing page');
-            setLoading(false);
-            return;
-          }
-          console.log('⏳ Still waiting for background processing...');
-        } catch (error) {
-          console.log('⚠️ Error reading metadata, proceeding anyway');
-          setLoading(false);
-          return;
-        }
-      }
-
-      // Timeout reached, show page anyway
-      console.log('⏱️ Processing timeout reached, showing page');
-      setLoading(false);
-    } catch (error) {
-      // If meta file doesn't exist, assume processing is complete (old articles)
-      console.log('⚠️ No metadata file, proceeding anyway');
-      return;
-    }
-  };
 
   useEffect(() => {
     loadArticle();
   }, [articleId]);
 
+  // Monitor network connection
   useEffect(() => {
-    if (!webViewRef.current) {
+    const checkConnection = async () => {
+      const state = await NetInfo.fetch();
+      const connected = !!(state.isConnected && state.isInternetReachable !== false);
+      setIsConnected(connected);
+      updateShowError(isProcessingComplete, connected);
+    };
+
+    checkConnection();
+
+    const unsubscribe = NetInfo.addEventListener(state => {
+      const connected = !!(state.isConnected && state.isInternetReachable !== false);
+      setIsConnected(connected);
+      updateShowError(isProcessingComplete, connected);
+    });
+
+    return () => unsubscribe();
+  }, [isProcessingComplete]);
+
+  // Listen for processing completion
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener(
+      ARTICLE_META_UPDATED_EVENT,
+      (payload: any) => {
+        if (payload.articleId === articleId && payload.meta?.processingComplete === true) {
+          console.log('[ReaderScreen] Processing completed, switching to local content');
+          setIsProcessingComplete(true);
+          setShowError(false);
+        }
+      }
+    );
+
+    return () => listener.remove();
+  }, [articleId]);
+
+  useEffect(() => {
+    if (!webViewRef.current || !isProcessingComplete) {
       return;
     }
 
@@ -122,7 +110,12 @@ const ReaderScreen: React.FC = () => {
     readerDefaults.fontSize,
     readerDefaults.lineHeight,
     readerDefaults.margins,
+    isProcessingComplete,
   ]);
+
+  const updateShowError = (processingComplete: boolean, connected: boolean) => {
+    setShowError(!processingComplete && !connected);
+  };
 
   const loadArticle = async () => {
     try {
@@ -133,18 +126,40 @@ const ReaderScreen: React.FC = () => {
       }
 
       setTitle(article.title);
+      setArticleUrl(article.url);
       navigation.setOptions({ title: article.title });
 
-      // Wait for background processing to complete (only if needed)
-      // This function will set loading to false when done
-      await waitForProcessingComplete(articleId);
+      // Check processing status
+      try {
+        const meta = await FileSystem.readArticleMeta(articleId);
+        const processingComplete = meta.processingComplete !== false;
+        setIsProcessingComplete(processingComplete);
 
-      // Trigger WebView to reload the file (which now has images embedded)
-      setShouldReload(prev => prev + 1);
+        // Determine if we should show error
+        const state = await NetInfo.fetch();
+        const connected = !!(state.isConnected && state.isInternetReachable !== false);
+        setIsConnected(connected);
+        updateShowError(processingComplete, connected);
+
+        console.log('[ReaderScreen] Article loaded:', {
+          processingComplete,
+          connected,
+          showError: !processingComplete && !connected,
+        });
+      } catch (error) {
+        // No metadata file - assume complete (old articles)
+        console.log('[ReaderScreen] No metadata, assuming complete');
+        setIsProcessingComplete(true);
+        setShowError(false);
+      }
     } catch (error) {
       console.error('Error loading article:', error);
-      setLoading(false);
+      navigation.goBack();
     }
+  };
+
+  const handleRetry = () => {
+    loadArticle();
   };
 
   const handleMessage = (event: any) => {
@@ -191,17 +206,39 @@ const ReaderScreen: React.FC = () => {
     webViewRef.current?.injectJavaScript(jsCode);
   };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      {/* Loading or WebView */}
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={appTheme.colors.accent} />
-        </View>
-      ) : (
+  // Determine what to show based on processing state and connection
+  const renderContent = () => {
+    // Show error overlay if processing not complete and no connection
+    if (showError) {
+      return (
+        <ArticleErrorOverlay
+          message="Error downloading the page content. Check your Internet connection"
+          onRetry={handleRetry}
+        />
+      );
+    }
+
+    // Show live web page if processing not complete but has connection
+    if (!isProcessingComplete && isConnected && articleUrl) {
+      return (
         <WebView
+          ref={webViewRef}
+          source={{ uri: articleUrl }}
+          style={styles.webview}
+          onError={handleWebViewError}
+          originWhitelist={['*']}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          mixedContentMode="always"
+        />
+      );
+    }
+
+    // Show local content (processing complete or default)
+    return (
+      <WebView
         ref={webViewRef}
-        key={shouldReload} // Forces WebView to reload when shouldReload changes
+        key={isProcessingComplete ? 'local' : 'loading'}
         source={{
           uri: `file://${FileSystem.getArticleHtmlPath(articleId)}`,
         }}
@@ -218,8 +255,13 @@ const ReaderScreen: React.FC = () => {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         mixedContentMode="always"
-        />
-      )}
+      />
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {renderContent()}
     </SafeAreaView>
   );
 };
@@ -229,11 +271,6 @@ const createStyles = (theme: Theme) =>
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
-    },
-    loadingContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     webview: {
       flex: 1,

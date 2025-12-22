@@ -30,6 +30,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { Theme } from '../../constants/themes';
 import ArticleCoverImage from '../components/ArticleCoverImage';
 import { Haptics } from '../../utils/haptics';
+import { ArticleProcessingIndicator } from '../components/ArticleProcessingIndicator';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -290,6 +291,8 @@ const HomeScreen: React.FC = () => {
           </View>
         </View>
       </View>
+      {/* Processing indicator */}
+      <ArticleProcessingIndicator articleId={item.id} />
     </TouchableOpacity>
   );
 

@@ -9,6 +9,7 @@ import { View, StyleSheet } from 'react-native';
 import { AnimatedSplashScreen } from './src/ui/components/AnimatedSplashScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSettingsStore } from './src/store/settingsStore';
+import { NetworkMonitor } from './src/services/NetworkMonitor';
 
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -16,6 +17,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     initializeApp();
+
+    // Cleanup on unmount
+    return () => {
+      NetworkMonitor.stop();
+    };
   }, []);
 
   const initializeApp = async () => {
@@ -35,6 +41,9 @@ const App: React.FC = () => {
 
       // Process any pending items shared into the app
       IncomingShareService.initialize();
+
+      // Start network monitoring for auto-retry
+      NetworkMonitor.start();
 
       console.log('App initialized successfully');
     } catch (error) {
