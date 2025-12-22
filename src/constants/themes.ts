@@ -72,14 +72,14 @@ export const monoTheme: Theme = {
   isDark: false,
   statusBarStyle: 'dark-content',
   colors: {
-    background: '#F2F2F2',
+    background: '#bcbcbcff',
     text: '#1F1F1F',
     secondary: '#5C5C5C',
-    accent: '#8A8A8A',
-    highlight: '#D9D9D9',
-    border: '#C4C4C4',
-    card: '#FFFFFF',
-    muted: '#9B9B9B',
+    accent: '#6B6B6B',
+    highlight: '#D0D0D0',
+    border: '#B8B8B8',
+    card: '#F0F0F0',
+    muted: '#888888',
   },
 };
 

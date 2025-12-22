@@ -52,7 +52,6 @@ type AnimatedSplashScreenProps = {
   borderRadius?: number;
   cardStylePreset?: CardPreset;
   disableSensors?: boolean;
-  showDebugPanel?: boolean;
 };
 
 type HologramPreset = {
@@ -122,34 +121,6 @@ const DefaultCardContent: React.FC<{ textColor: string }> = ({ textColor }) => (
     <Image source={splashAsset} style={styles.logo} />
     <Text style={[styles.title, { color: textColor }]}>PageKeep</Text>
     <Text style={[styles.subtitle, { color: textColor }]}>Archive what matters</Text>
-  </View>
-);
-
-const DebugPanel: React.FC<{
-  fps: number;
-  sensorActive: boolean;
-  sensorAvailable: boolean;
-  onToggleSensor: () => void;
-  onDemo: () => void;
-  textColor: string;
-}> = ({ fps, sensorActive, sensorAvailable, onToggleSensor, onDemo, textColor }) => (
-  <View style={styles.debugPanel}>
-    <Text style={[styles.debugText, { color: textColor }]}>
-      FPS: {Math.max(1, Math.round(fps))}
-    </Text>
-    <Text style={[styles.debugText, { color: textColor }]}>
-      Sensor: {sensorAvailable ? (sensorActive ? 'on' : 'off') : 'unavailable'}
-    </Text>
-    <View style={styles.debugActions}>
-      <TouchableOpacity onPress={onToggleSensor} style={styles.debugButton}>
-        <Text style={[styles.debugButtonText, { color: textColor }]}>
-          {sensorActive ? 'Disable sensor' : 'Enable sensor'}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={onDemo} style={[styles.debugButton, styles.debugButtonGhost]}>
-        <Text style={[styles.debugButtonText, { color: textColor }]}>Demo tilt</Text>
-      </TouchableOpacity>
-    </View>
   </View>
 );
 
@@ -265,13 +236,11 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
   borderRadius = 24,
   cardStylePreset = 'aurora',
   disableSensors = false,
-  showDebugPanel = false,
 }) => {
   const { theme } = useTheme();
   const preset = HOLOGRAM_PRESETS[cardStylePreset];
   const [sensorActive, setSensorActive] = useState(!disableSensors);
   const [sensorAvailable, setSensorAvailable] = useState(true);
-  const [fps, setFps] = useState(60);
   const [minDurationElapsed, setMinDurationElapsed] = useState(false);
   const [hasExited, setHasExited] = useState(false);
 
@@ -281,8 +250,6 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
   const ambientShift = useSharedValue(0);
   const entryProgress = useSharedValue(0);
   const exitProgress = useSharedValue(0);
-  const fpsValue = useSharedValue(60);
-  const debugTracking = useSharedValue(showDebugPanel ? 1 : 0);
 
   const maxTiltDegX = 18;
   const maxTiltDegY = 22;
@@ -414,29 +381,6 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
     };
   }, [disableSensors, maxTiltDegX, maxTiltDegY, sensorActive, sensorAvailable, tiltX, tiltY]);
 
-  useEffect(() => {
-    debugTracking.value = showDebugPanel ? 1 : 0;
-  }, [debugTracking, showDebugPanel]);
-
-  useFrameCallback(({ timeSincePreviousFrame }) => {
-    if (!timeSincePreviousFrame || debugTracking.value === 0) {
-      return;
-    }
-    const currentFps = clamp(1000 / timeSincePreviousFrame, 1, 144);
-    fpsValue.value = currentFps;
-  });
-
-  useAnimatedReaction(
-    () => fpsValue.value,
-    value => {
-      if (debugTracking.value === 0) {
-        return;
-      }
-      runOnJS(setFps)(value);
-    },
-    [debugTracking],
-  );
-
   const containerStyle = useAnimatedStyle(() => {
     const entryScale = interpolate(entryProgress.value, [0, 1], [0.9, 1], Extrapolation.CLAMP);
     const exitScale = interpolate(exitProgress.value, [0, 1], [1, 1.05], Extrapolation.CLAMP);
@@ -456,9 +400,6 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
   const bgStyle = useMemo(() => {
     return { backgroundColor: theme.colors.background };
   }, [theme.colors.background]);
-
-  const toggleSensor = () => setSensorActive(current => !current);
-  const runDemoTilt = () => setSensorActive(false);
 
   return (
     <View style={[StyleSheet.absoluteFill, styles.container, bgStyle]} pointerEvents="box-none">
@@ -480,16 +421,6 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
           <DefaultCardContent textColor={theme.colors.text} />
         </HologramCard>
       </Animated.View>
-      {showDebugPanel && (
-        <DebugPanel
-          fps={fps}
-          sensorActive={sensorActive}
-          sensorAvailable={sensorAvailable}
-          onToggleSensor={toggleSensor}
-          onDemo={runDemoTilt}
-          textColor={theme.colors.text}
-        />
-      )}
     </View>
   );
 };
@@ -547,36 +478,5 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 13,
     opacity: 0.85,
-  },
-  debugPanel: {
-    position: 'absolute',
-    bottom: 28,
-    left: 20,
-    right: 20,
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  },
-  debugText: {
-    fontSize: 13,
-    marginBottom: 4,
-  },
-  debugActions: {
-    flexDirection: 'row',
-    gap: 8,
-    marginTop: 6,
-  },
-  debugButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.3)',
-  },
-  debugButtonGhost: {
-    borderStyle: 'dashed',
-  },
-  debugButtonText: {
-    fontSize: 12,
   },
 });
