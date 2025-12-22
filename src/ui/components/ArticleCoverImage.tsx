@@ -37,6 +37,7 @@ export const ArticleCoverImage: React.FC<ArticleCoverImageProps> = ({
   const { theme } = useTheme();
   const styles = useMemo(() => createStyles(theme, size), [theme, size]);
   const [coverImage, setCoverImage] = useState<string | null>(null);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -85,12 +86,25 @@ export const ArticleCoverImage: React.FC<ArticleCoverImageProps> = ({
     };
   }, [articleId]);
 
+  // Reset error state when coverImage changes
+  useEffect(() => {
+    setImageError(false);
+  }, [coverImage]);
+
   const placeholderLetter = domain?.trim().charAt(0)?.toUpperCase() ?? '•';
 
   return (
     <View style={[styles.container, style]}>
-      {coverImage ? (
-        <Image source={{ uri: coverImage }} style={styles.image} resizeMode="cover" />
+      {coverImage && !imageError ? (
+        <Image
+          source={{ uri: coverImage }}
+          style={styles.image}
+          resizeMode="cover"
+          onError={() => {
+            console.warn(`[ArticleCoverImage] Failed to load image for: ${articleId}`);
+            setImageError(true);
+          }}
+        />
       ) : (
         <View style={styles.placeholder}>
           <Text style={styles.placeholderText}>{placeholderLetter}</Text>

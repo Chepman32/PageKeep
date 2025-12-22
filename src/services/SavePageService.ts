@@ -140,7 +140,7 @@ export class SavePageService {
       }
 
       // 2. Download images and get mapping of old URL to new URL
-      const { imageMap, coverImage } = await this.downloadImages(articleId, imageUrls);
+      const { imageMap } = await this.downloadImages(articleId, imageUrls);
 
       // 3. Rewrite HTML with local image paths
       let contentToRewrite = readable.content;
@@ -148,12 +148,12 @@ export class SavePageService {
       // Always inject cover image at the top if we have one (og:image is usually the main article image)
       const currentMeta = await FileSystem.readArticleMeta(articleId);
       if (currentMeta?.coverImage) {
-        console.log('Injecting cover image into article body');
+        console.log('[Background] Injecting cover image into article body');
         contentToRewrite = `<figure class="pn-cover-image" style="margin: 0 0 1.5em 0;"><img src="${currentMeta.coverImage}" alt="Article image" style="max-width: 100%; height: auto; display: block;" /></figure>` + contentToRewrite;
       }
 
       if (imageMap.size > 0 || contentToRewrite !== readable.content) {
-        console.log(`Rewriting HTML with ${imageMap.size} image mappings`);
+        console.log(`[Background] Rewriting HTML with ${imageMap.size} image mappings`);
 
         const rewrittenHtml = this.htmlRewriter.rewrite(
           contentToRewrite,
@@ -163,17 +163,20 @@ export class SavePageService {
 
         // 4. Update HTML file with images
         await FileSystem.writeArticleHtml(articleId, rewrittenHtml);
-        console.log('HTML updated with downloaded images');
+        console.log('[Background] HTML updated with downloaded images');
       }
 
       // 5. Update metadata to indicate processing is complete
+      // IMPORTANT: Preserve existing coverImage - don't overwrite with inline images
       const meta = await FileSystem.readArticleMeta(articleId);
       const updatedMeta = {
         ...meta,
         processingComplete: true,
-        coverImage: coverImage || meta?.coverImage || null,
+        // Preserve the og:image cover that was set during initial save
+        coverImage: meta?.coverImage ?? null,
       };
       await FileSystem.writeArticleMeta(articleId, updatedMeta);
+      console.log(`[Background] Completed for ${articleId}, coverImage preserved: ${!!meta?.coverImage}`);
 
       this.emitMetaUpdate(articleId, updatedMeta);
 
@@ -240,8 +243,9 @@ export class SavePageService {
       console.log(`Found ${imageUrls.length} images to download`);
 
       // 7. Download images and get mapping of old URL to new URL
-      const { imageMap, coverImage } = await this.downloadImages(articleId, imageUrls);
-      const finalCover = coverImage || (await this.resolveCoverImage(articleId, coverCandidate));
+      const { imageMap } = await this.downloadImages(articleId, imageUrls);
+      // Use og:image for cover, don't use inline images
+      const finalCover = await this.resolveCoverImage(articleId, coverCandidate);
 
       // 8. Rewrite HTML with local image paths
       let contentToRewrite = readable.content;
@@ -317,22 +321,12 @@ export class SavePageService {
   private extractImageUrls(html: string, baseUrl: string): string[] {
     const imageUrls = new Set<string>();
 
-    // Decode HTML entities helper
-    const decodeHtmlEntities = (str: string): string => {
-      return str
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '"')
-        .replace(/&#039;/g, "'");
-    };
-
     // Extract from <img> src attributes
     const imgRegex = /<img[^>]+src=["']([^"']+)["']/gi;
     let match;
 
     while ((match = imgRegex.exec(html)) !== null) {
-      const src = decodeHtmlEntities(match[1]);
+      const src = this.decodeHtmlEntities(match[1]);
       const absoluteUrl = this.makeAbsoluteUrl(src, baseUrl);
       if (absoluteUrl) {
         imageUrls.add(absoluteUrl);
@@ -393,7 +387,7 @@ export class SavePageService {
     // Extract from CSS background-image in style attributes
     const bgImageRegex = /background-image:\s*url\(["']?([^"')]+)["']?\)/gi;
     while ((match = bgImageRegex.exec(html)) !== null) {
-      const src = decodeHtmlEntities(match[1]);
+      const src = this.decodeHtmlEntities(match[1]);
       const absoluteUrl = this.makeAbsoluteUrl(src, baseUrl);
       if (absoluteUrl) {
         imageUrls.add(absoluteUrl);
@@ -432,7 +426,7 @@ export class SavePageService {
   private async downloadImages(
     articleId: string,
     imageUrls: string[],
-  ): Promise<{ imageMap: Map<string, string>; coverImage: string | null }> {
+  ): Promise<{ imageMap: Map<string, string> }> {
     const imageMap = new Map<string, string>();
     const assetsDir = FileSystem.getArticleAssetsDirectory(articleId);
 
@@ -440,11 +434,10 @@ export class SavePageService {
     // No need to create it again
 
     let imageIndex = 0;
-    let coverImage: string | null = null;
 
     for (const imageUrl of imageUrls) {
       try {
-        console.log(`Downloading image ${imageIndex + 1}/${imageUrls.length}:`, imageUrl);
+        console.log(`[Images] Downloading ${imageIndex + 1}/${imageUrls.length}: ${imageUrl}`);
 
         // Download image
         const response = await RNFetchBlob.config({
@@ -452,7 +445,7 @@ export class SavePageService {
         }).fetch('GET', imageUrl);
 
         if (response.respInfo.status !== 200) {
-          console.warn(`Failed to download image: ${imageUrl} (status ${response.respInfo.status})`);
+          console.warn(`[Images] Failed (status ${response.respInfo.status}): ${imageUrl}`);
           continue;
         }
 
@@ -476,19 +469,15 @@ export class SavePageService {
         const dataUrl = `data:${mimeType};base64,${base64Data}`;
         imageMap.set(imageUrl, dataUrl);
 
-        if (!coverImage) {
-          coverImage = dataUrl;
-        }
-
-        console.log(`Saved image: ${filename}`);
+        console.log(`[Images] Saved: ${filename}`);
         imageIndex++;
       } catch (error) {
-        console.error(`Error downloading image ${imageUrl}:`, error);
+        console.error(`[Images] Error downloading ${imageUrl}:`, error);
       }
     }
 
-    console.log(`Downloaded ${imageIndex} images successfully`);
-    return { imageMap, coverImage };
+    console.log(`[Images] Downloaded ${imageIndex}/${imageUrls.length} successfully`);
+    return { imageMap };
   }
 
   private getExtensionFromContentType(contentType: string): string | null {
@@ -563,6 +552,19 @@ export class SavePageService {
     }
   }
 
+  private decodeHtmlEntities(str: string): string {
+    return str
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'")
+      .replace(/&#x3a;/gi, ':')
+      .replace(/&#x2f;/gi, '/')
+      .replace(/&#x3d;/gi, '=')
+      .replace(/&#x3f;/gi, '?');
+  }
+
   private extractCoverImageCandidate(
     originalHtml: string,
     readableContent: string,
@@ -575,7 +577,8 @@ export class SavePageService {
       /<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["']/i,
     );
     if (ogImageMatch) {
-      const absolute = this.makeAbsoluteUrl(ogImageMatch[1], baseUrl);
+      const decoded = this.decodeHtmlEntities(ogImageMatch[1]);
+      const absolute = this.makeAbsoluteUrl(decoded, baseUrl);
       if (absolute) {
         return absolute;
       }
@@ -588,7 +591,8 @@ export class SavePageService {
       /<meta[^>]*content=["']([^"']+)["'][^>]*name=["']twitter:image["']/i,
     );
     if (twitterImageMatch) {
-      const absolute = this.makeAbsoluteUrl(twitterImageMatch[1], baseUrl);
+      const decoded = this.decodeHtmlEntities(twitterImageMatch[1]);
+      const absolute = this.makeAbsoluteUrl(decoded, baseUrl);
       if (absolute) {
         return absolute;
       }
@@ -596,7 +600,8 @@ export class SavePageService {
 
     const readableImgMatch = readableContent.match(/<img[^>]+src=["']([^"']+)["']/i);
     if (readableImgMatch) {
-      const absolute = this.makeAbsoluteUrl(readableImgMatch[1], baseUrl);
+      const decoded = this.decodeHtmlEntities(readableImgMatch[1]);
+      const absolute = this.makeAbsoluteUrl(decoded, baseUrl);
       if (absolute) {
         return absolute;
       }
@@ -608,20 +613,60 @@ export class SavePageService {
   private async resolveCoverImage(
     articleId: string,
     coverUrl: string | null,
+    retryCount: number = 0,
   ): Promise<string | null> {
     if (!coverUrl) {
+      console.log('[CoverImage] No cover URL provided');
       return null;
     }
 
     if (coverUrl.startsWith('data:')) {
+      console.log('[CoverImage] Already a data URL');
       return coverUrl;
     }
 
-    try {
-      const response = await RNFetchBlob.config({ fileCache: false }).fetch('GET', coverUrl);
+    const MAX_RETRIES = 2;
+    const userAgents = [
+      'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1',
+      'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    ];
 
-      if (response.respInfo.status !== 200) {
-        return coverUrl;
+    try {
+      console.log(`[CoverImage] Attempting download (attempt ${retryCount + 1}): ${coverUrl}`);
+
+      const headers: Record<string, string> = {
+        'User-Agent': userAgents[retryCount] || userAgents[0],
+        Accept: 'image/webp,image/apng,image/*,*/*;q=0.8',
+      };
+
+      // Add Referer header on retry (some sites require it)
+      if (retryCount > 0) {
+        const match = coverUrl.match(/^(https?:\/\/[^/]+)/);
+        if (match) {
+          headers['Referer'] = `${match[1]}/`;
+        }
+      }
+
+      const response = await RNFetchBlob.config({
+        fileCache: false,
+        timeout: 10000, // 10 second timeout
+      }).fetch('GET', coverUrl, headers);
+
+      const status = response.respInfo.status;
+      console.log(`[CoverImage] Response status: ${status}`);
+
+      if (status !== 200) {
+        console.warn(`[CoverImage] Failed with status ${status}: ${coverUrl}`);
+
+        // Retry with different headers
+        if (retryCount < MAX_RETRIES) {
+          console.log('[CoverImage] Retrying with different headers...');
+          return this.resolveCoverImage(articleId, coverUrl, retryCount + 1);
+        }
+
+        // Return null instead of unusable external URL
+        return null;
       }
 
       const contentType = response.respInfo.headers['Content-Type'] ||
@@ -637,10 +682,20 @@ export class SavePageService {
       await RNFetchBlob.fs.writeFile(localPath, base64Data, 'base64');
 
       const mimeType = contentType.split(';')[0] || `image/${extension}`;
-      return `data:${mimeType};base64,${base64Data}`;
+      const dataUrl = `data:${mimeType};base64,${base64Data}`;
+
+      console.log(`[CoverImage] Successfully resolved to data URL (${Math.round(base64Data.length / 1024)}KB)`);
+      return dataUrl;
     } catch (error) {
-      console.warn('Failed to resolve cover image', error);
-      return coverUrl;
+      console.warn(`[CoverImage] Error downloading: ${coverUrl}`, error);
+
+      if (retryCount < MAX_RETRIES) {
+        console.log('[CoverImage] Retrying after error...');
+        return this.resolveCoverImage(articleId, coverUrl, retryCount + 1);
+      }
+
+      // Return null instead of unusable external URL
+      return null;
     }
   }
 }
