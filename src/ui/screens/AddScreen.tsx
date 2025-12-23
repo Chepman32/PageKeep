@@ -18,6 +18,7 @@ import { useArticleStore } from '../../store/articleStore';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme } from '../../constants/themes';
 import { useTranslation } from 'react-i18next';
+import { Haptics } from '../../utils/haptics';
 
 const AddScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -102,6 +103,7 @@ const AddScreen: React.FC = () => {
 
       // Show success immediately (background processing continues)
       setLoading(false);
+      Haptics.success();
 
       Alert.alert(t('common.success'), t('add.success'), [
         {

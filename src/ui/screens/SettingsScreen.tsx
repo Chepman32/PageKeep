@@ -17,7 +17,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSettingsStore } from '../../store/settingsStore';
-import { useIAPStore } from '../../store/iapStore';
 import { FileSystem } from '../../utils/fileSystem';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme, themes } from '../../constants/themes';
@@ -90,9 +89,6 @@ const SettingsScreen: React.FC = () => {
   );
   const loadSettings = useSettingsStore(state => state.loadSettings);
 
-  const isPro = useIAPStore(state => state.isPro);
-  const loadProStatus = useIAPStore(state => state.loadProStatus);
-
   const [storageUsed, setStorageUsed] = useState('0 MB');
   const [isClearing, setIsClearing] = useState(false);
 
@@ -109,12 +105,11 @@ const SettingsScreen: React.FC = () => {
 
   useEffect(() => {
     loadSettings();
-    loadProStatus();
 
     FileSystem.getTotalStorageUsed()
       .then(bytes => setStorageUsed(FileSystem.formatBytes(bytes)))
       .catch(() => setStorageUsed('0 MB'));
-  }, [loadSettings, loadProStatus]);
+  }, [loadSettings]);
 
   useEffect(() => {
     const normalized = normalizeLanguage(preferences.language);
@@ -144,12 +139,14 @@ const SettingsScreen: React.FC = () => {
 
   const handleThemeSelect = (id: ThemeId) => {
     if (id !== themeId) {
+      Haptics.light();
       setTheme(id);
     }
   };
 
   const handleLanguageSelect = (code: LanguageCode) => {
     if (activeLanguage !== code) {
+      Haptics.light();
       updatePreferences({ language: code });
       i18n.changeLanguage(code);
     }
@@ -157,6 +154,7 @@ const SettingsScreen: React.FC = () => {
 
   const handleReaderThemeSelect = (themeKey: string) => {
     if (themeKey !== readerDefaults.theme) {
+      Haptics.light();
       updateReaderDefaults({ theme: themeKey });
     }
   };
@@ -262,16 +260,6 @@ const SettingsScreen: React.FC = () => {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings.account')}</Text>
-          <View style={[styles.row, styles.rowLast]}>
-            <Text style={styles.rowLabel}>{t('settings.status')}</Text>
-            <Text style={styles.rowValue}>
-              {isPro ? t('settings.pro') : t('settings.free')}
-            </Text>
-          </View>
-        </View>
-
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('settings.appearance')}</Text>
           <Text style={styles.sectionSubtitle}>{t('settings.theme')}</Text>

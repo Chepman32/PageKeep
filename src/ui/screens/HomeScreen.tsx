@@ -385,7 +385,10 @@ const HomeScreen: React.FC = () => {
       <View style={styles.tabs}>
         <TouchableOpacity
           style={[styles.tab, selectedTab === 'all' && styles.tabActive]}
-          onPress={() => setSelectedTab('all')}
+          onPress={() => {
+            Haptics.selection();
+            setSelectedTab('all');
+          }}
         >
           <Text
             style={[
@@ -398,7 +401,10 @@ const HomeScreen: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tab, selectedTab === 'favorites' && styles.tabActive]}
-          onPress={() => setSelectedTab('favorites')}
+          onPress={() => {
+            Haptics.selection();
+            setSelectedTab('favorites');
+          }}
         >
           <Text
             style={[
@@ -411,7 +417,10 @@ const HomeScreen: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tab, selectedTab === 'archived' && styles.tabActive]}
-          onPress={() => setSelectedTab('archived')}
+          onPress={() => {
+            Haptics.selection();
+            setSelectedTab('archived');
+          }}
         >
           <Text
             style={[
@@ -438,7 +447,10 @@ const HomeScreen: React.FC = () => {
       {/* FAB */}
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => navigation.navigate('Add')}
+        onPress={() => {
+          Haptics.light();
+          navigation.navigate('Add');
+        }}
       >
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
