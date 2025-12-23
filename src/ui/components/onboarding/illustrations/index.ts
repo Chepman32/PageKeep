@@ -1,0 +1,14 @@
+export { default as Slide01ShareExtension } from './Slide01ShareExtension';
+export { default as Slide02InstantReading } from './Slide02InstantReading';
+export { default as Slide03OfflineReading } from './Slide03OfflineReading';
+export { default as Slide04CleanReader } from './Slide04CleanReader';
+export { default as Slide05Personalization } from './Slide05Personalization';
+export { default as Slide06CoverImages } from './Slide06CoverImages';
+export { default as Slide07Organization } from './Slide07Organization';
+export { default as Slide08Search } from './Slide08Search';
+export { default as Slide09ReadingTime } from './Slide09ReadingTime';
+export { default as Slide10AutoRetry } from './Slide10AutoRetry';
+export { default as Slide11Language } from './Slide11Language';
+export { default as Slide12Storage } from './Slide12Storage';
+export { default as Slide13Haptics } from './Slide13Haptics';
+export { default as Slide14Privacy } from './Slide14Privacy';

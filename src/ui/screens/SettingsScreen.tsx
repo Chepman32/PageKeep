@@ -11,6 +11,7 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
+  DeviceEventEmitter,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSettingsStore } from '../../store/settingsStore';
 import { FileSystem } from '../../utils/fileSystem';
+import { Storage } from '../../utils/storage';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme, themes } from '../../constants/themes';
 import type { ThemeId } from '../../contexts/ThemeContext';
@@ -198,6 +200,32 @@ const SettingsScreen: React.FC = () => {
             } finally {
               setIsClearing(false);
             }
+          },
+        },
+      ],
+    );
+  };
+
+  // TEMPORARY: Reset onboarding for development/testing
+  const handleResetOnboarding = () => {
+    Alert.alert(
+      t('settings.resetOnboarding'),
+      t('settings.resetOnboardingConfirm'),
+      [
+        {
+          text: t('common.cancel'),
+          style: 'cancel',
+        },
+        {
+          text: t('common.ok'),
+          style: 'destructive',
+          onPress: () => {
+            Storage.setOnboardingCompleted(false);
+            DeviceEventEmitter.emit('resetOnboarding');
+            Alert.alert(
+              t('common.success'),
+              t('settings.onboardingReset'),
+            );
           },
         },
       ],
@@ -521,6 +549,22 @@ const SettingsScreen: React.FC = () => {
                   {t('settings.clearCache')}
                 </Text>
               )}
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* TEMPORARY: Developer Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.developer')}</Text>
+          <View style={[styles.row, styles.rowLast]}>
+            <TouchableOpacity
+              style={styles.clearCacheButton}
+              onPress={handleResetOnboarding}
+              accessibilityRole="button"
+            >
+              <Text style={styles.clearCacheButtonText}>
+                {t('settings.resetOnboarding')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

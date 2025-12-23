@@ -5,15 +5,20 @@ import { getDatabase } from './src/data/database';
 import { ThemeProvider } from './src/contexts/ThemeContext';
 import './src/locales';
 import { IncomingShareService } from './src/services/IncomingShareService';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, DeviceEventEmitter } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AnimatedSplashScreen } from './src/ui/components/AnimatedSplashScreen';
+import { OnboardingScreen } from './src/ui/screens/OnboardingScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSettingsStore } from './src/store/settingsStore';
 import { NetworkMonitor } from './src/services/NetworkMonitor';
+import { Storage } from './src/utils/storage';
 
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [isAppReady, setIsAppReady] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboardingChecked, setOnboardingChecked] = useState(false);
 
   useEffect(() => {
     initializeApp();
@@ -57,19 +62,50 @@ const App: React.FC = () => {
     setShowSplash(false);
   };
 
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
+  };
+
+  // Check onboarding status after app is ready
+  useEffect(() => {
+    if (isAppReady && !onboardingChecked) {
+      const completed = Storage.isOnboardingCompleted();
+      setShowOnboarding(!completed);
+      setOnboardingChecked(true);
+    }
+  }, [isAppReady, onboardingChecked]);
+
+  // Listen for reset onboarding event (temporary - for development)
+  useEffect(() => {
+    const subscription = DeviceEventEmitter.addListener(
+      'resetOnboarding',
+      () => {
+        setShowOnboarding(true);
+        setOnboardingChecked(false);
+      },
+    );
+
+    return () => subscription.remove();
+  }, []);
+
   return (
-    <ThemeProvider>
-      <View style={styles.container}>
-        {isAppReady && <AppNavigator />}
-        {showSplash && (
-          <AnimatedSplashScreen
-            isReady={isAppReady}
-            onFinish={handleSplashEnd}
-            showDebugPanel={__DEV__}
-          />
-        )}
-      </View>
-    </ThemeProvider>
+    <GestureHandlerRootView style={styles.container}>
+      <ThemeProvider>
+        <View style={styles.container}>
+          {isAppReady && <AppNavigator />}
+          {showSplash && (
+            <AnimatedSplashScreen
+              isReady={isAppReady}
+              onFinish={handleSplashEnd}
+              showDebugPanel={__DEV__}
+            />
+          )}
+          {showOnboarding && (
+            <OnboardingScreen onComplete={handleOnboardingComplete} />
+          )}
+        </View>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 };
 
