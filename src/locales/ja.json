@@ -15,6 +15,7 @@
     "unarchive": "アーカイブ解除",
     "view": "表示",
     "ok": "OK",
+    "clear": "削除",
     "addToFavorites": "お気に入りに追加",
     "removeFromFavorites": "お気に入りから削除"
   },
@@ -126,6 +127,10 @@
     },
     "storage": "ストレージ",
     "storageUsed": "使用済み",
+    "clearCache": "キャッシュを削除",
+    "clearCacheConfirm": "不要なファイルを削除して空き容量を確保します。続行しますか？",
+    "cacheCleared": "キャッシュを削除しました",
+    "clearCacheFailed": "キャッシュを削除できませんでした。もう一度お試しください。",
     "about": "情報",
     "version": "バージョン",
     "privacy": "プライバシー",

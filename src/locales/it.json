@@ -15,6 +15,7 @@
     "unarchive": "Disarchivia",
     "view": "Apri",
     "ok": "OK",
+    "clear": "Cancella",
     "addToFavorites": "Aggiungi ai Preferiti",
     "removeFromFavorites": "Rimuovi dai Preferiti"
   },
@@ -126,6 +127,10 @@
     },
     "storage": "Archiviazione",
     "storageUsed": "Utilizzato",
+    "clearCache": "Svuota cache",
+    "clearCacheConfirm": "Questo rimuoverà i file inutilizzati e libererà spazio. Continuare?",
+    "cacheCleared": "Cache svuotata con successo",
+    "clearCacheFailed": "Impossibile svuotare la cache. Riprova.",
     "about": "Informazioni",
     "version": "Versione",
     "privacy": "Privacy",

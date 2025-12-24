@@ -15,6 +15,7 @@
     "unarchive": "Désarchiver",
     "view": "Voir",
     "ok": "OK",
+    "clear": "Effacer",
     "addToFavorites": "Ajouter aux favoris",
     "removeFromFavorites": "Supprimer des favoris"
   },
@@ -126,6 +127,10 @@
     },
     "storage": "Stockage",
     "storageUsed": "Utilisé",
+    "clearCache": "Vider le cache",
+    "clearCacheConfirm": "Cela supprimera les fichiers inutilisés et libérera de l'espace. Continuer ?",
+    "cacheCleared": "Cache vidé avec succès",
+    "clearCacheFailed": "Impossible de vider le cache. Veuillez réessayer.",
     "about": "À propos",
     "version": "Version",
     "privacy": "Confidentialité",

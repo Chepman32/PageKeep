@@ -15,6 +15,7 @@
     "unarchive": "Desarchivar",
     "view": "Ver",
     "ok": "Aceptar",
+    "clear": "Limpiar",
     "addToFavorites": "Añadir a Favoritos",
     "removeFromFavorites": "Eliminar de Favoritos"
   },
@@ -126,6 +127,10 @@
     },
     "storage": "Almacenamiento",
     "storageUsed": "Usado",
+    "clearCache": "Limpiar caché",
+    "clearCacheConfirm": "Esto eliminará archivos no utilizados y liberará espacio. ¿Continuar?",
+    "cacheCleared": "Caché limpiada correctamente",
+    "clearCacheFailed": "No se pudo limpiar la caché. Inténtalo de nuevo.",
     "about": "Acerca de",
     "version": "Versión",
     "privacy": "Privacidad",

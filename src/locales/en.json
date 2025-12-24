@@ -135,11 +135,7 @@
     "about": "About",
     "version": "Version",
     "privacy": "Privacy",
-    "noDataCollection": "No data collection",
-    "developer": "Developer",
-    "resetOnboarding": "Reset Onboarding",
-    "resetOnboardingConfirm": "This will show the onboarding tutorial again. Continue?",
-    "onboardingReset": "Onboarding will appear now"
+    "noDataCollection": "No data collection"
   },
   "modals": {
     "rename": {

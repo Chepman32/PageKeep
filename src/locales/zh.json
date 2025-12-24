@@ -15,6 +15,7 @@
     "unarchive": "取消归档",
     "view": "查看",
     "ok": "确定",
+    "clear": "清除",
     "addToFavorites": "添加到收藏",
     "removeFromFavorites": "从收藏中删除"
   },
@@ -126,6 +127,10 @@
     },
     "storage": "存储",
     "storageUsed": "已用",
+    "clearCache": "清除缓存",
+    "clearCacheConfirm": "这将删除未使用的文件并释放空间。是否继续？",
+    "cacheCleared": "缓存已成功清除",
+    "clearCacheFailed": "无法清除缓存，请重试。",
     "about": "关于",
     "version": "版本",
     "privacy": "隐私",

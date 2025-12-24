@@ -15,6 +15,7 @@
     "unarchive": "Przywróć z archiwum",
     "view": "Otwórz",
     "ok": "OK",
+    "clear": "Wyczyść",
     "addToFavorites": "Dodaj do Ulubionych",
     "removeFromFavorites": "Usuń z Ulubionych"
   },
@@ -126,6 +127,10 @@
     },
     "storage": "Pamięć",
     "storageUsed": "Wykorzystano",
+    "clearCache": "Wyczyść pamięć podręczną",
+    "clearCacheConfirm": "Spowoduje to usunięcie nieużywanych plików i zwolnienie miejsca. Kontynuować?",
+    "cacheCleared": "Pamięć podręczna wyczyszczona",
+    "clearCacheFailed": "Nie udało się wyczyścić pamięci podręcznej. Spróbuj ponownie.",
     "about": "Informacje",
     "version": "Wersja",
     "privacy": "Prywatność",

@@ -15,6 +15,7 @@
     "unarchive": "Dearchivieren",
     "view": "Anzeigen",
     "ok": "OK",
+    "clear": "Löschen",
     "addToFavorites": "Zu Favoriten hinzufügen",
     "removeFromFavorites": "Aus Favoriten entfernen"
   },
@@ -126,6 +127,10 @@
     },
     "storage": "Speicher",
     "storageUsed": "Verbraucht",
+    "clearCache": "Cache leeren",
+    "clearCacheConfirm": "Dies entfernt ungenutzte Dateien und gibt Speicherplatz frei. Fortfahren?",
+    "cacheCleared": "Cache erfolgreich geleert",
+    "clearCacheFailed": "Cache konnte nicht geleert werden. Bitte erneut versuchen.",
     "about": "Info",
     "version": "Version",
     "privacy": "Datenschutz",

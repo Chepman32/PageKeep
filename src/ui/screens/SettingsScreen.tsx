@@ -11,7 +11,6 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
-  DeviceEventEmitter,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +18,6 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSettingsStore } from '../../store/settingsStore';
 import { FileSystem } from '../../utils/fileSystem';
-import { Storage } from '../../utils/storage';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Theme, themes } from '../../constants/themes';
 import type { ThemeId } from '../../contexts/ThemeContext';
@@ -83,9 +81,7 @@ const SettingsScreen: React.FC = () => {
   const updateDownloadSettings = useSettingsStore(
     state => state.updateDownloadSettings,
   );
-  const updatePreferences = useSettingsStore(
-    state => state.updatePreferences,
-  );
+  const updatePreferences = useSettingsStore(state => state.updatePreferences);
   const updateReaderDefaults = useSettingsStore(
     state => state.updateReaderDefaults,
   );
@@ -96,7 +92,9 @@ const SettingsScreen: React.FC = () => {
 
   // Local state for slider values (for smooth dragging without excessive updates)
   const [localFontSize, setLocalFontSize] = useState(readerDefaults.fontSize);
-  const [localLineHeight, setLocalLineHeight] = useState(readerDefaults.lineHeight);
+  const [localLineHeight, setLocalLineHeight] = useState(
+    readerDefaults.lineHeight,
+  );
   const [localMargins, setLocalMargins] = useState(readerDefaults.margins);
 
   useLayoutEffect(() => {
@@ -171,65 +169,29 @@ const SettingsScreen: React.FC = () => {
   };
 
   const handleClearCache = () => {
-    Alert.alert(
-      t('settings.clearCache'),
-      t('settings.clearCacheConfirm'),
-      [
-        {
-          text: t('common.cancel'),
-          style: 'cancel',
+    Alert.alert(t('settings.clearCache'), t('settings.clearCacheConfirm'), [
+      {
+        text: t('common.cancel'),
+        style: 'cancel',
+      },
+      {
+        text: t('common.clear'),
+        style: 'destructive',
+        onPress: async () => {
+          setIsClearing(true);
+          try {
+            const orphanedFiles = await FileSystem.findOrphanedFiles();
+            await FileSystem.cleanupOrphanedFiles(orphanedFiles);
+            await updateStorageDisplay();
+            Alert.alert(t('common.success'), t('settings.cacheCleared'));
+          } catch (error) {
+            Alert.alert(t('common.error'), t('settings.clearCacheFailed'));
+          } finally {
+            setIsClearing(false);
+          }
         },
-        {
-          text: t('common.clear'),
-          style: 'destructive',
-          onPress: async () => {
-            setIsClearing(true);
-            try {
-              const orphanedFiles = await FileSystem.findOrphanedFiles();
-              await FileSystem.cleanupOrphanedFiles(orphanedFiles);
-              await updateStorageDisplay();
-              Alert.alert(
-                t('common.success'),
-                t('settings.cacheCleared'),
-              );
-            } catch (error) {
-              Alert.alert(
-                t('common.error'),
-                t('settings.clearCacheFailed'),
-              );
-            } finally {
-              setIsClearing(false);
-            }
-          },
-        },
-      ],
-    );
-  };
-
-  // TEMPORARY: Reset onboarding for development/testing
-  const handleResetOnboarding = () => {
-    Alert.alert(
-      t('settings.resetOnboarding'),
-      t('settings.resetOnboardingConfirm'),
-      [
-        {
-          text: t('common.cancel'),
-          style: 'cancel',
-        },
-        {
-          text: t('common.ok'),
-          style: 'destructive',
-          onPress: () => {
-            Storage.setOnboardingCompleted(false);
-            DeviceEventEmitter.emit('resetOnboarding');
-            Alert.alert(
-              t('common.success'),
-              t('settings.onboardingReset'),
-            );
-          },
-        },
-      ],
-    );
+      },
+    ]);
   };
 
   const withAlpha = (hex: string, alpha: number): string => {
@@ -247,12 +209,14 @@ const SettingsScreen: React.FC = () => {
     value: boolean,
     onValueChange: (next: boolean) => void,
   ) => {
-    const activeTrack = Platform.OS === 'ios'
-      ? withAlpha(theme.colors.accent, 0.75)
-      : theme.colors.accent;
-    const inactiveTrack = Platform.OS === 'ios'
-      ? withAlpha(theme.colors.border, theme.isDark ? 0.45 : 0.35)
-      : theme.colors.border;
+    const activeTrack =
+      Platform.OS === 'ios'
+        ? withAlpha(theme.colors.accent, 0.75)
+        : theme.colors.accent;
+    const inactiveTrack =
+      Platform.OS === 'ios'
+        ? withAlpha(theme.colors.border, theme.isDark ? 0.45 : 0.35)
+        : theme.colors.border;
 
     const handleValueChange = (next: boolean) => {
       Haptics.light();
@@ -376,7 +340,9 @@ const SettingsScreen: React.FC = () => {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings.readerDefaults')}</Text>
+          <Text style={styles.sectionTitle}>
+            {t('settings.readerDefaults')}
+          </Text>
 
           {/* Reader Theme Picker */}
           <Text style={styles.sectionSubtitle}>{t('reader.theme')}</Text>
@@ -436,12 +402,14 @@ const SettingsScreen: React.FC = () => {
               maximumValue={24}
               step={1}
               onValueChange={setLocalFontSize}
-              onSlidingComplete={(value) => {
+              onSlidingComplete={value => {
                 updateReaderDefaults({ fontSize: Math.round(value) });
               }}
               minimumTrackTintColor={theme.colors.accent}
               maximumTrackTintColor={theme.colors.border}
-              thumbTintColor={Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'}
+              thumbTintColor={
+                Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'
+              }
               style={styles.slider}
             />
           </View>
@@ -458,12 +426,16 @@ const SettingsScreen: React.FC = () => {
               maximumValue={2.5}
               step={0.1}
               onValueChange={setLocalLineHeight}
-              onSlidingComplete={(value) => {
-                updateReaderDefaults({ lineHeight: parseFloat(value.toFixed(1)) });
+              onSlidingComplete={value => {
+                updateReaderDefaults({
+                  lineHeight: parseFloat(value.toFixed(1)),
+                });
               }}
               minimumTrackTintColor={theme.colors.accent}
               maximumTrackTintColor={theme.colors.border}
-              thumbTintColor={Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'}
+              thumbTintColor={
+                Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'
+              }
               style={styles.slider}
             />
           </View>
@@ -480,12 +452,14 @@ const SettingsScreen: React.FC = () => {
               maximumValue={48}
               step={4}
               onValueChange={setLocalMargins}
-              onSlidingComplete={(value) => {
+              onSlidingComplete={value => {
                 updateReaderDefaults({ margins: Math.round(value) });
               }}
               minimumTrackTintColor={theme.colors.accent}
               maximumTrackTintColor={theme.colors.border}
-              thumbTintColor={Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'}
+              thumbTintColor={
+                Platform.OS === 'ios' ? theme.colors.accent : '#FFFFFF'
+              }
               style={styles.slider}
             />
           </View>
@@ -504,25 +478,19 @@ const SettingsScreen: React.FC = () => {
             )}
           </View>
           <View style={styles.row}>
-            <Text style={styles.rowLabel}>
-              {t('settings.download.images')}
-            </Text>
+            <Text style={styles.rowLabel}>{t('settings.download.images')}</Text>
             {renderSwitch(downloadSettings.downloadImages, value =>
               updateDownloadSettings({ downloadImages: value }),
             )}
           </View>
           <View style={styles.row}>
-            <Text style={styles.rowLabel}>
-              {t('settings.download.styles')}
-            </Text>
+            <Text style={styles.rowLabel}>{t('settings.download.styles')}</Text>
             {renderSwitch(downloadSettings.downloadStyles, value =>
               updateDownloadSettings({ downloadStyles: value }),
             )}
           </View>
           <View style={[styles.row, styles.rowLast]}>
-            <Text style={styles.rowLabel}>
-              {t('settings.download.fonts')}
-            </Text>
+            <Text style={styles.rowLabel}>{t('settings.download.fonts')}</Text>
             {renderSwitch(downloadSettings.downloadFonts, value =>
               updateDownloadSettings({ downloadFonts: value }),
             )}
@@ -537,7 +505,10 @@ const SettingsScreen: React.FC = () => {
           </View>
           <View style={[styles.row, styles.rowLast]}>
             <TouchableOpacity
-              style={[styles.clearCacheButton, isClearing && styles.clearCacheButtonDisabled]}
+              style={[
+                styles.clearCacheButton,
+                isClearing && styles.clearCacheButtonDisabled,
+              ]}
               onPress={handleClearCache}
               disabled={isClearing}
               accessibilityRole="button"
@@ -553,22 +524,6 @@ const SettingsScreen: React.FC = () => {
           </View>
         </View>
 
-        {/* TEMPORARY: Developer Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings.developer')}</Text>
-          <View style={[styles.row, styles.rowLast]}>
-            <TouchableOpacity
-              style={styles.clearCacheButton}
-              onPress={handleResetOnboarding}
-              accessibilityRole="button"
-            >
-              <Text style={styles.clearCacheButtonText}>
-                {t('settings.resetOnboarding')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
         <View style={[styles.section, styles.sectionLast]}>
           <Text style={styles.sectionTitle}>{t('settings.about')}</Text>
           <View style={styles.row}>
@@ -577,7 +532,9 @@ const SettingsScreen: React.FC = () => {
           </View>
           <View style={[styles.row, styles.rowLast]}>
             <Text style={styles.rowLabel}>{t('settings.privacy')}</Text>
-            <Text style={styles.rowValue}>{t('settings.noDataCollection')}</Text>
+            <Text style={styles.rowValue}>
+              {t('settings.noDataCollection')}
+            </Text>
           </View>
         </View>
       </ScrollView>
