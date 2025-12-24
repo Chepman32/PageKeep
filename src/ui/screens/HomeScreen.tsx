@@ -1,4 +1,10 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   View,
   Text,
@@ -79,7 +85,10 @@ const HomeScreen: React.FC = () => {
   const articleRepo = new ArticleRepository();
 
   useEffect(() => {
-    if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+    if (
+      Platform.OS === 'android' &&
+      UIManager.setLayoutAnimationEnabledExperimental
+    ) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }, []);
@@ -126,7 +135,10 @@ const HomeScreen: React.FC = () => {
       console.log('HomeScreen: Triggering search with query:', query);
       const delaySearch = setTimeout(() => {
         search().then(() => {
-          console.log('HomeScreen: Search completed, results:', searchResults.length);
+          console.log(
+            'HomeScreen: Search completed, results:',
+            searchResults.length,
+          );
         });
       }, 300); // Debounce search
       return () => clearTimeout(delaySearch);
@@ -135,10 +147,7 @@ const HomeScreen: React.FC = () => {
 
   const loadArticles = () => {
     const filters = {
-      archived:
-        selectedTab === 'archived'
-          ? true
-          : false,
+      archived: selectedTab === 'archived' ? true : false,
       favorite: selectedTab === 'favorites' ? true : undefined,
     };
     fetchArticles(filters);
@@ -226,21 +235,25 @@ const HomeScreen: React.FC = () => {
 
   const handleDelete = () => {
     if (contextMenu.article) {
-      Alert.alert(t('home.alerts.deleteTitle'), t('home.alerts.deleteMessage'), [
-        { text: t('common.cancel'), style: 'cancel' },
-        {
-          text: t('common.delete'),
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await deleteArticle(contextMenu.article!.id);
-              loadArticles();
-            } catch (error) {
-              Alert.alert(t('common.error'), t('home.alerts.deleteError'));
-            }
+      Alert.alert(
+        t('home.alerts.deleteTitle'),
+        t('home.alerts.deleteMessage'),
+        [
+          { text: t('common.cancel'), style: 'cancel' },
+          {
+            text: t('common.delete'),
+            style: 'destructive',
+            onPress: async () => {
+              try {
+                await deleteArticle(contextMenu.article!.id);
+                loadArticles();
+              } catch (error) {
+                Alert.alert(t('common.error'), t('home.alerts.deleteError'));
+              }
+            },
           },
-        },
-      ]);
+        ],
+      );
     }
     closeContextMenu();
   };
@@ -262,7 +275,7 @@ const HomeScreen: React.FC = () => {
     <TouchableOpacity
       style={styles.card}
       onPress={() => navigation.navigate('Reader', { articleId: item.id })}
-      onLongPress={(event) => handleLongPress(item, event)}
+      onLongPress={event => handleLongPress(item, event)}
       delayLongPress={500}
     >
       <View style={styles.cardContent}>
@@ -348,7 +361,11 @@ const HomeScreen: React.FC = () => {
                 onPress={handleSearchClear}
                 style={styles.clearButton}
               >
-                <Icon name="close-circle" size={20} color={theme.colors.secondary} />
+                <Icon
+                  name="close-circle"
+                  size={20}
+                  color={theme.colors.secondary}
+                />
               </TouchableOpacity>
             )}
           </View>
@@ -538,20 +555,22 @@ const createStyles = (theme: Theme) =>
     tabs: {
       flexDirection: 'row',
       backgroundColor: theme.colors.card,
-      paddingHorizontal: 20,
       paddingVertical: 12,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.border,
+      width: '100%',
     },
     tab: {
-      paddingHorizontal: 16,
+      width: '30%',
       paddingVertical: 8,
-      marginRight: 8,
       borderRadius: 20,
       backgroundColor: theme.colors.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginHorizontal: '1.66%',
     },
     tabActive: {
-      backgroundColor: theme.colors.accent,
+      backgroundColor: theme.colors.secondary,
     },
     tabText: {
       fontSize: 14,
