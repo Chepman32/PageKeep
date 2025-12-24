@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
-import Svg, {
-  G,
-  Rect,
-  Circle,
-  Path,
-} from 'react-native-svg';
+import Svg, { G, Rect, Circle, Path } from 'react-native-svg';
 import Animated, {
   useSharedValue,
   useAnimatedProps,
@@ -39,7 +34,7 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
         easing: Easing.inOut(Easing.sin),
       }),
       -1,
-      true
+      true,
     );
 
     starGlowOpacity.value = withRepeat(
@@ -48,7 +43,7 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
         easing: Easing.inOut(Easing.sin),
       }),
       -1,
-      true
+      true,
     );
 
     // Press indicator animation (3s loop with pause)
@@ -58,7 +53,7 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
         easing: Easing.inOut(Easing.cubic),
       }),
       -1,
-      true
+      true,
     );
 
     pressOpacity.value = withRepeat(
@@ -67,7 +62,7 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
         easing: Easing.inOut(Easing.cubic),
       }),
       -1,
-      true
+      true,
     );
   }, [starGlowRadius, starGlowOpacity, pressScale, pressOpacity]);
 
@@ -79,7 +74,11 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
 
   // Animated props for long-press indicator
   const pressAnimatedProps = useAnimatedProps(() => ({
-    transform: [{ translateX: 150 }, { translateY: 150 }, { scale: pressScale.value }],
+    transform: [
+      { translateX: 150 },
+      { translateY: 150 },
+      { scale: pressScale.value },
+    ],
     opacity: pressOpacity.value,
   }));
 
@@ -118,7 +117,15 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
             strokeWidth="2"
             opacity="0.4"
           />
-          <Rect x="18" y="18" width="18" height="3" rx="1.5" fill={colors.text} opacity="0.2" />
+          <Rect
+            x="18"
+            y="18"
+            width="18"
+            height="3"
+            rx="1.5"
+            fill={colors.text}
+            opacity="0.2"
+          />
         </G>
 
         {/* Tab 2 - Favorites (active with glow) */}
@@ -144,7 +151,15 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
             d="M 35,5 L 37,11 L 43,11 L 38,15 L 40,21 L 35,17 L 30,21 L 32,15 L 27,11 L 33,11 Z"
             fill={colors.accent}
           />
-          <Rect x="18" y="18" width="34" height="3" rx="1.5" fill={colors.accent} opacity="0.5" />
+          <Rect
+            x="18"
+            y="18"
+            width="34"
+            height="3"
+            rx="1.5"
+            fill={colors.accent}
+            opacity="0.5"
+          />
         </G>
 
         {/* Tab 3 - Archived (inactive) */}
@@ -166,7 +181,15 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
             strokeWidth="2"
             opacity="0.4"
           />
-          <Rect x="18" y="18" width="24" height="3" rx="1.5" fill={colors.text} opacity="0.2" />
+          <Rect
+            x="18"
+            y="18"
+            width="24"
+            height="3"
+            rx="1.5"
+            fill={colors.text}
+            opacity="0.2"
+          />
         </G>
       </G>
 
@@ -196,9 +219,33 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
         />
 
         {/* Text lines */}
-        <Rect x="70" y="15" width="120" height="8" rx="4" fill={colors.text} opacity="0.35" />
-        <Rect x="70" y="30" width="90" height="6" rx="3" fill={colors.text} opacity="0.25" />
-        <Rect x="70" y="42" width="100" height="6" rx="3" fill={colors.text} opacity="0.25" />
+        <Rect
+          x="70"
+          y="15"
+          width="120"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.35"
+        />
+        <Rect
+          x="70"
+          y="30"
+          width="90"
+          height="6"
+          rx="3"
+          fill={colors.text}
+          opacity="0.25"
+        />
+        <Rect
+          x="70"
+          y="42"
+          width="100"
+          height="6"
+          rx="3"
+          fill={colors.text}
+          opacity="0.25"
+        />
 
         {/* Long-press indicator (animated) */}
         <AnimatedG animatedProps={pressAnimatedProps}>
@@ -238,16 +285,64 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
         {/* Menu items */}
         <G transform="translate(10, 12)">
           {/* Rename */}
-          <Rect x="0" y="0" width="70" height="18" rx="6" fill={colors.accent} opacity="0.1" />
-          <Rect x="5" y="6" width="35" height="6" rx="3" fill={colors.text} opacity="0.3" />
+          <Rect
+            x="0"
+            y="0"
+            width="70"
+            height="18"
+            rx="6"
+            fill={colors.accent}
+            opacity="0.1"
+          />
+          <Rect
+            x="5"
+            y="6"
+            width="35"
+            height="6"
+            rx="3"
+            fill={colors.text}
+            opacity="0.3"
+          />
 
           {/* Delete */}
-          <Rect x="0" y="25" width="70" height="18" rx="6" fill={colors.muted} opacity="0.1" />
-          <Rect x="5" y="31" width="30" height="6" rx="3" fill={colors.text} opacity="0.3" />
+          <Rect
+            x="0"
+            y="25"
+            width="70"
+            height="18"
+            rx="6"
+            fill={colors.muted}
+            opacity="0.1"
+          />
+          <Rect
+            x="5"
+            y="31"
+            width="30"
+            height="6"
+            rx="3"
+            fill={colors.text}
+            opacity="0.3"
+          />
 
           {/* Archive */}
-          <Rect x="0" y="50" width="70" height="18" rx="6" fill={colors.muted} opacity="0.1" />
-          <Rect x="5" y="56" width="40" height="6" rx="3" fill={colors.text} opacity="0.3" />
+          <Rect
+            x="0"
+            y="50"
+            width="70"
+            height="18"
+            rx="6"
+            fill={colors.muted}
+            opacity="0.1"
+          />
+          <Rect
+            x="5"
+            y="56"
+            width="40"
+            height="6"
+            rx="3"
+            fill={colors.text}
+            opacity="0.3"
+          />
         </G>
       </G>
     </Svg>

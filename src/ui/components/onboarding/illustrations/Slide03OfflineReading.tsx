@@ -44,7 +44,7 @@ const Slide03OfflineReading: React.FC<Slide03Props> = ({ colors }) => {
         easing: Easing.inOut(Easing.sin),
       }),
       -1,
-      true
+      true,
     );
 
     // Download arrow moving downward (2s loop with pause)
@@ -55,10 +55,10 @@ const Slide03OfflineReading: React.FC<Slide03Props> = ({ colors }) => {
           easing: Easing.in(Easing.cubic),
         }),
         withTiming(40, { duration: 300 }), // Pause at bottom
-        withTiming(0, { duration: 0 }) // Reset instantly
+        withTiming(0, { duration: 0 }), // Reset instantly
       ),
       -1,
-      false
+      false,
     );
 
     // Checkmark appears when arrow reaches bottom
@@ -70,10 +70,10 @@ const Slide03OfflineReading: React.FC<Slide03Props> = ({ colors }) => {
           easing: Easing.out(Easing.back(1.5)),
         }),
         withTiming(1, { duration: 100 }),
-        withTiming(0, { duration: 0 }) // Reset
+        withTiming(0, { duration: 0 }), // Reset
       ),
       -1,
-      false
+      false,
     );
   }, [arrowY, checkmarkScale, cloudY]);
 
@@ -89,7 +89,11 @@ const Slide03OfflineReading: React.FC<Slide03Props> = ({ colors }) => {
 
   // Animated props for checkmark
   const checkmarkAnimatedProps = useAnimatedProps(() => ({
-    transform: [{ translateX: 150 }, { translateY: 165 }, { scale: checkmarkScale.value }],
+    transform: [
+      { translateX: 150 },
+      { translateY: 165 },
+      { scale: checkmarkScale.value },
+    ],
   }));
 
   return (
@@ -129,27 +133,11 @@ const Slide03OfflineReading: React.FC<Slide03Props> = ({ colors }) => {
       {/* Animated download arrow */}
       <AnimatedG animatedProps={arrowAnimatedProps}>
         {/* Arrow shaft */}
-        <Rect
-          x="-4"
-          y="0"
-          width="8"
-          height="35"
-          rx="4"
-          fill={colors.accent}
-        />
+        <Rect x="-4" y="0" width="8" height="35" rx="4" fill={colors.accent} />
         {/* Arrow head */}
-        <Path
-          d="M 0,35 L -12,20 L 0,25 L 12,20 Z"
-          fill={colors.accent}
-        />
+        <Path d="M 0,35 L -12,20 L 0,25 L 12,20 Z" fill={colors.accent} />
         {/* Arrow glow */}
-        <Circle
-          cx="0"
-          cy="17"
-          r="18"
-          fill={colors.accent}
-          opacity="0.15"
-        />
+        <Circle cx="0" cy="17" r="18" fill={colors.accent} opacity="0.15" />
       </AnimatedG>
 
       {/* Device/Phone at bottom */}
@@ -185,9 +173,33 @@ const Slide03OfflineReading: React.FC<Slide03Props> = ({ colors }) => {
         fill={colors.text}
         opacity="0.2"
       />
-      <Rect x="140" y="156" width="20" height="3" rx="1.5" fill={colors.text} opacity="0.15" />
-      <Rect x="140" y="162" width="15" height="3" rx="1.5" fill={colors.text} opacity="0.15" />
-      <Rect x="140" y="168" width="18" height="3" rx="1.5" fill={colors.text} opacity="0.15" />
+      <Rect
+        x="140"
+        y="156"
+        width="20"
+        height="3"
+        rx="1.5"
+        fill={colors.text}
+        opacity="0.15"
+      />
+      <Rect
+        x="140"
+        y="162"
+        width="15"
+        height="3"
+        rx="1.5"
+        fill={colors.text}
+        opacity="0.15"
+      />
+      <Rect
+        x="140"
+        y="168"
+        width="18"
+        height="3"
+        rx="1.5"
+        fill={colors.text}
+        opacity="0.15"
+      />
 
       {/* Animated checkmark on device */}
       <AnimatedCircle

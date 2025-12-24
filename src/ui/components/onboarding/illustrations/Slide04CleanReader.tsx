@@ -40,7 +40,7 @@ const Slide04CleanReader: React.FC<Slide04Props> = ({ colors }) => {
         easing: Easing.inOut(Easing.sin),
       }),
       -1,
-      true
+      true,
     );
 
     // Arrow pulse opacity
@@ -50,7 +50,7 @@ const Slide04CleanReader: React.FC<Slide04Props> = ({ colors }) => {
         easing: Easing.inOut(Easing.sin),
       }),
       -1,
-      true
+      true,
     );
 
     // Clutter fading in/out to show transformation
@@ -60,7 +60,7 @@ const Slide04CleanReader: React.FC<Slide04Props> = ({ colors }) => {
         easing: Easing.inOut(Easing.cubic),
       }),
       -1,
-      true
+      true,
     );
   }, [arrowX, arrowOpacity, clutterOpacity]);
 
@@ -131,7 +131,15 @@ const Slide04CleanReader: React.FC<Slide04Props> = ({ colors }) => {
 
           {/* Messy overlapping elements */}
           <Circle cx="45" cy="125" r="15" fill={colors.muted} opacity="0.6" />
-          <Rect x="25" y="145" width="40" height="25" rx="3" fill={colors.muted} opacity="0.6" />
+          <Rect
+            x="25"
+            y="145"
+            width="40"
+            height="25"
+            rx="3"
+            fill={colors.muted}
+            opacity="0.6"
+          />
           <Path
             d="M 80,130 L 110,130 L 95,160 Z"
             fill={colors.secondary}
@@ -140,8 +148,24 @@ const Slide04CleanReader: React.FC<Slide04Props> = ({ colors }) => {
         </AnimatedG>
 
         {/* Some barely visible text underneath */}
-        <Rect x="30" y="80" width="60" height="4" rx="2" fill={colors.text} opacity="0.15" />
-        <Rect x="30" y="170" width="50" height="4" rx="2" fill={colors.text} opacity="0.15" />
+        <Rect
+          x="30"
+          y="80"
+          width="60"
+          height="4"
+          rx="2"
+          fill={colors.text}
+          opacity="0.15"
+        />
+        <Rect
+          x="30"
+          y="170"
+          width="50"
+          height="4"
+          rx="2"
+          fill={colors.text}
+          opacity="0.15"
+        />
       </G>
 
       {/* Center - Transformation arrow */}
@@ -170,16 +194,80 @@ const Slide04CleanReader: React.FC<Slide04Props> = ({ colors }) => {
         />
 
         {/* Clean, organized text lines */}
-        <Rect x="185" y="50" width="80" height="8" rx="4" fill={colors.text} opacity="0.35" />
-        <Rect x="185" y="65" width="70" height="8" rx="4" fill={colors.text} opacity="0.3" />
-        <Rect x="185" y="80" width="85" height="8" rx="4" fill={colors.text} opacity="0.35" />
+        <Rect
+          x="185"
+          y="50"
+          width="80"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.35"
+        />
+        <Rect
+          x="185"
+          y="65"
+          width="70"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.3"
+        />
+        <Rect
+          x="185"
+          y="80"
+          width="85"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.35"
+        />
 
-        <Rect x="185" y="100" width="75" height="8" rx="4" fill={colors.text} opacity="0.3" />
-        <Rect x="185" y="115" width="80" height="8" rx="4" fill={colors.text} opacity="0.35" />
-        <Rect x="185" y="130" width="65" height="8" rx="4" fill={colors.text} opacity="0.3" />
+        <Rect
+          x="185"
+          y="100"
+          width="75"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.3"
+        />
+        <Rect
+          x="185"
+          y="115"
+          width="80"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.35"
+        />
+        <Rect
+          x="185"
+          y="130"
+          width="65"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.3"
+        />
 
-        <Rect x="185" y="150" width="70" height="8" rx="4" fill={colors.text} opacity="0.35" />
-        <Rect x="185" y="165" width="80" height="8" rx="4" fill={colors.text} opacity="0.3" />
+        <Rect
+          x="185"
+          y="150"
+          width="70"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.35"
+        />
+        <Rect
+          x="185"
+          y="165"
+          width="80"
+          height="8"
+          rx="4"
+          fill={colors.text}
+          opacity="0.3"
+        />
 
         {/* Sparkle effect to show cleanliness */}
         <Path
@@ -195,8 +283,24 @@ const Slide04CleanReader: React.FC<Slide04Props> = ({ colors }) => {
       </G>
 
       {/* Label text placeholders */}
-      <Rect x="45" y="200" width="40" height="8" rx="4" fill={colors.muted} opacity="0.4" />
-      <Rect x="215" y="200" width="40" height="8" rx="4" fill={colors.accent} opacity="0.4" />
+      <Rect
+        x="45"
+        y="200"
+        width="40"
+        height="8"
+        rx="4"
+        fill={colors.muted}
+        opacity="0.4"
+      />
+      <Rect
+        x="215"
+        y="200"
+        width="40"
+        height="8"
+        rx="4"
+        fill={colors.accent}
+        opacity="0.4"
+      />
     </Svg>
   );
 };
