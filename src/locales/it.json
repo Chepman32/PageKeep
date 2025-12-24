@@ -56,7 +56,8 @@
       "emptyUrl": "Inserisci un URL",
       "invalidUrl": "Inserisci un URL valido che inizi con http:// o https://",
       "saveFailed": "Impossibile salvare l'articolo. Riprova."
-    }
+    },
+    "useCopiedLink": "Use copied link"
   },
   "search": {
     "placeholder": "Cerca articoli...",
@@ -141,6 +142,66 @@
       "title": "Rinomina articolo",
       "placeholder": "Inserisci il nuovo titolo",
       "error": "Il titolo non può essere vuoto"
+    }
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "getStarted": "Get Started",
+    "slide1": {
+      "title": "Save Pages Instantly",
+      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+    },
+    "slide2": {
+      "title": "Read Immediately",
+      "description": "Start reading while content processes in background. No waiting required."
+    },
+    "slide3": {
+      "title": "Read Anywhere",
+      "description": "All content stored locally. Read offline after processing completes."
+    },
+    "slide4": {
+      "title": "Distraction-Free",
+      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+    },
+    "slide5": {
+      "title": "Make It Yours",
+      "description": "Customize themes, font size, line height, and margins for perfect readability."
+    },
+    "slide6": {
+      "title": "Beautiful Library",
+      "description": "Automatic cover image extraction creates a visually rich reading collection."
+    },
+    "slide7": {
+      "title": "Stay Organized",
+      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+    },
+    "slide8": {
+      "title": "Find Anything",
+      "description": "Full-text search with highlighted snippets and recent search history."
+    },
+    "slide9": {
+      "title": "Plan Your Reading",
+      "description": "Estimated reading time shown on every article."
+    },
+    "slide10": {
+      "title": "Never Miss Content",
+      "description": "Failed downloads retry automatically when connection returns."
+    },
+    "slide11": {
+      "title": "Your Language",
+      "description": "Choose from 32+ languages for the interface."
+    },
+    "slide12": {
+      "title": "Storage Control",
+      "description": "View storage usage and clear cache with one tap."
+    },
+    "slide13": {
+      "title": "Tactile Feedback",
+      "description": "Optional haptic responses for button presses and interactions."
+    },
+    "slide14": {
+      "title": "Your Privacy Matters",
+      "description": "Zero data collection. Everything stays on your device."
     }
   }
 }
