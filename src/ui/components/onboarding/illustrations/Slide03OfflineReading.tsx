@@ -79,17 +79,17 @@ const Slide03OfflineReading: React.FC<Slide03Props> = ({ colors }) => {
 
   // Animated props for cloud
   const cloudAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(0, ${cloudY.value})`,
+    transform: [{ translateY: cloudY.value }],
   }));
 
   // Animated props for download arrow
   const arrowAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, ${60 + arrowY.value})`,
+    transform: [{ translateX: 150 }, { translateY: 60 + arrowY.value }],
   }));
 
   // Animated props for checkmark
   const checkmarkAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 165) scale(${checkmarkScale.value})`,
+    transform: [{ translateX: 150 }, { translateY: 165 }, { scale: checkmarkScale.value }],
   }));
 
   return (

@@ -78,17 +78,17 @@ const Slide01ShareExtension: React.FC<Slide01Props> = ({ colors }) => {
 
   // Animated props for floating arrow
   const arrowAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(0, ${floatY.value})`,
+    transform: [{ translateY: floatY.value }],
   }));
 
   // Animated props for pulsing link icon
   const linkAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 100) scale(${pulseScale.value})`,
+    transform: [{ translateX: 150 }, { translateY: 100 }, { scale: pulseScale.value }],
   }));
 
   // Animated props for ripple
   const rippleAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 100) scale(${rippleScale.value})`,
+    transform: [{ translateX: 150 }, { translateY: 100 }, { scale: rippleScale.value }],
     opacity: rippleOpacity.value,
   }));
 

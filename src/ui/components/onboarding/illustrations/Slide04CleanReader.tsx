@@ -66,7 +66,7 @@ const Slide04CleanReader: React.FC<Slide04Props> = ({ colors }) => {
 
   // Animated props for arrow
   const arrowAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(${150 + arrowX.value}, 110)`,
+    transform: [{ translateX: 150 + arrowX.value }, { translateY: 110 }],
     opacity: arrowOpacity.value,
   }));
 

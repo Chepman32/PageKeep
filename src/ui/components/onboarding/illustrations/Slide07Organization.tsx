@@ -79,7 +79,7 @@ const Slide07Organization: React.FC<Slide07Props> = ({ colors }) => {
 
   // Animated props for long-press indicator
   const pressAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 150) scale(${pressScale.value})`,
+    transform: [{ translateX: 150 }, { translateY: 150 }, { scale: pressScale.value }],
     opacity: pressOpacity.value,
   }));
 
