@@ -147,12 +147,12 @@ const Slide13Haptics: React.FC<Slide13Props> = ({ colors }) => {
 
   // Animated props for touch point
   const touchAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 120) scale(${touchScale.value})`,
+    transform: [{ translateX: 150 }, { translateY: 120 }, { scale: touchScale.value }],
   }));
 
   // Animated props for vibration lines
   const vibrationAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(${vibrationOffset.value}, 0)`,
+    transform: [{ translateX: vibrationOffset.value }],
   }));
 
   return (

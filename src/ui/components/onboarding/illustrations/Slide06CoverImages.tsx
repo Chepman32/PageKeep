@@ -84,32 +84,32 @@ const Slide06CoverImages: React.FC<Slide06Props> = ({ colors }) => {
   // Create animated props for each card
   const card1AnimatedProps = useAnimatedProps(() => ({
     opacity: card1Opacity.value,
-    transform: `translate(30, 30) scale(${card1Scale.value})`,
+    transform: [{ translateX: 30 }, { translateY: 30 }, { scale: card1Scale.value }],
   }));
 
   const card2AnimatedProps = useAnimatedProps(() => ({
     opacity: card2Opacity.value,
-    transform: `translate(125, 30) scale(${card2Scale.value})`,
+    transform: [{ translateX: 125 }, { translateY: 30 }, { scale: card2Scale.value }],
   }));
 
   const card3AnimatedProps = useAnimatedProps(() => ({
     opacity: card3Opacity.value,
-    transform: `translate(220, 30) scale(${card3Scale.value})`,
+    transform: [{ translateX: 220 }, { translateY: 30 }, { scale: card3Scale.value }],
   }));
 
   const card4AnimatedProps = useAnimatedProps(() => ({
     opacity: card4Opacity.value,
-    transform: `translate(30, 125) scale(${card4Scale.value})`,
+    transform: [{ translateX: 30 }, { translateY: 125 }, { scale: card4Scale.value }],
   }));
 
   const card5AnimatedProps = useAnimatedProps(() => ({
     opacity: card5Opacity.value,
-    transform: `translate(125, 125) scale(${card5Scale.value})`,
+    transform: [{ translateX: 125 }, { translateY: 125 }, { scale: card5Scale.value }],
   }));
 
   const card6AnimatedProps = useAnimatedProps(() => ({
     opacity: card6Opacity.value,
-    transform: `translate(220, 125) scale(${card6Scale.value})`,
+    transform: [{ translateX: 220 }, { translateY: 125 }, { scale: card6Scale.value }],
   }));
 
   return (

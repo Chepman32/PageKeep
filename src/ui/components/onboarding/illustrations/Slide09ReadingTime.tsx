@@ -66,17 +66,17 @@ const Slide09ReadingTime: React.FC<Slide09Props> = ({ colors }) => {
 
   // Animated props for minute hand
   const minuteHandAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 85) rotate(${minuteHandRotation.value})`,
+    transform: [{ translateX: 150 }, { translateY: 85 }, { rotate: `${minuteHandRotation.value}deg` }],
   }));
 
   // Animated props for second hand
   const secondHandAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 85) rotate(${secondHandRotation.value})`,
+    transform: [{ translateX: 150 }, { translateY: 85 }, { rotate: `${secondHandRotation.value}deg` }],
   }));
 
   // Animated props for time label
   const timeLabelAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 175) scale(${timeLabelScale.value})`,
+    transform: [{ translateX: 150 }, { translateY: 175 }, { scale: timeLabelScale.value }],
   }));
 
   return (

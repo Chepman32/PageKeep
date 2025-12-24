@@ -100,7 +100,7 @@ const Slide12Storage: React.FC<Slide12Props> = ({ colors }) => {
 
   // Animated props for trash can
   const trashAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(220, 80) rotate(${trashRotation.value})`,
+    transform: [{ translateX: 220 }, { translateY: 80 }, { rotate: `${trashRotation.value}deg` }],
   }));
 
   return (

@@ -96,7 +96,7 @@ const Slide02InstantReading: React.FC<Slide02Props> = ({ colors }) => {
     return {
       strokeDasharray: pathLength,
       strokeDashoffset: dashOffset,
-      transform: `translate(250, 170) scale(${checkmarkScale.value})`,
+      transform: [{ translateX: 250 }, { translateY: 170 }, { scale: checkmarkScale.value }],
     };
   });
 

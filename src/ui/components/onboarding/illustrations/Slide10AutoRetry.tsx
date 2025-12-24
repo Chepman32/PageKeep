@@ -95,7 +95,7 @@ const Slide10AutoRetry: React.FC<Slide10Props> = ({ colors }) => {
 
   // Animated props for rotating arrows
   const arrowsAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(100, 110) rotate(${arrowsRotation.value})`,
+    transform: [{ translateX: 100 }, { translateY: 110 }, { rotate: `${arrowsRotation.value}deg` }],
   }));
 
   // Animated props for WiFi bars
@@ -116,7 +116,7 @@ const Slide10AutoRetry: React.FC<Slide10Props> = ({ colors }) => {
 
   // Animated props for checkmark
   const checkmarkAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(200, 110) scale(${checkmarkScale.value})`,
+    transform: [{ translateX: 200 }, { translateY: 110 }, { scale: checkmarkScale.value }],
   }));
 
   return (

@@ -87,7 +87,7 @@ const Slide08Search: React.FC<Slide08Props> = ({ colors }) => {
 
   // Animated props for magnifying glass
   const magAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(${70 + magX.value}, ${50 + magY.value})`,
+    transform: [{ translateX: 70 + magX.value }, { translateY: 50 + magY.value }],
   }));
 
   // Animated props for highlights

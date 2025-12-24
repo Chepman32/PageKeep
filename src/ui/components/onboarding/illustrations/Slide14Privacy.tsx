@@ -101,7 +101,7 @@ const Slide14Privacy: React.FC<Slide14Props> = ({ colors }) => {
 
   // Animated props for lock
   const lockAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, ${55 + lockY.value})`,
+    transform: [{ translateX: 150 }, { translateY: 55 + lockY.value }],
   }));
 
   return (

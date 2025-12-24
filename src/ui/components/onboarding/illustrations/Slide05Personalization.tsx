@@ -82,7 +82,7 @@ const Slide05Personalization: React.FC<Slide05Props> = ({ colors }) => {
 
   // Animated props for selected theme
   const themeAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(50, 40) scale(${selectedThemeScale.value})`,
+    transform: [{ translateX: 50 }, { translateY: 40 }, { scale: selectedThemeScale.value }],
   }));
 
   return (

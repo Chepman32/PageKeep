@@ -54,12 +54,12 @@ const Slide11Language: React.FC<Slide11Props> = ({ colors }) => {
 
   // Animated props for orbiting flags
   const orbitAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 110) rotate(${orbitRotation.value})`,
+    transform: [{ translateX: 150 }, { translateY: 110 }, { rotate: `${orbitRotation.value}deg` }],
   }));
 
   // Animated props for globe
   const globeAnimatedProps = useAnimatedProps(() => ({
-    transform: `translate(150, 110) rotate(${globeRotation.value})`,
+    transform: [{ translateX: 150 }, { translateY: 110 }, { rotate: `${globeRotation.value}deg` }],
   }));
 
   return (
