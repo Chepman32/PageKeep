@@ -25,8 +25,7 @@ export const useIAPStore = create<IAPStore>((set, get) => ({
       // const products = await RNIap.getProducts(['pagenest_pro']);
       // set({ products, loading: false });
       set({ loading: false });
-    } catch (error) {
-      console.error('Error loading products:', error);
+    } catch {
       set({ loading: false });
     }
   },
@@ -39,7 +38,6 @@ export const useIAPStore = create<IAPStore>((set, get) => ({
       get().setProStatus(true);
       set({ loading: false });
     } catch (error) {
-      console.error('Error purchasing:', error);
       set({ loading: false });
       throw error;
     }
@@ -54,7 +52,6 @@ export const useIAPStore = create<IAPStore>((set, get) => ({
       // get().setProStatus(hasPro);
       set({ loading: false });
     } catch (error) {
-      console.error('Error restoring purchases:', error);
       set({ loading: false });
       throw error;
     }

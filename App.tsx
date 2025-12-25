@@ -49,10 +49,8 @@ const App: React.FC = () => {
 
       // Start network monitoring for auto-retry
       NetworkMonitor.start();
-
-      console.log('App initialized successfully');
-    } catch (error) {
-      console.error('Error initializing app:', error);
+    } catch {
+      // Error initializing app
     } finally {
       setIsAppReady(true);
     }
@@ -97,7 +95,6 @@ const App: React.FC = () => {
             <AnimatedSplashScreen
               isReady={isAppReady}
               onFinish={handleSplashEnd}
-              showDebugPanel={__DEV__}
             />
           )}
           {showOnboarding && (

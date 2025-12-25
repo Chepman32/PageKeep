@@ -35,9 +35,7 @@ export class ReadabilityService {
         excerpt: this.createExcerpt(textContent),
         siteName,
       };
-    } catch (error) {
-      console.error('Content extraction error:', error);
-
+    } catch {
       const sanitized = this.sanitizeHtml(html);
       const fallbackText = this.extractPlainText(sanitized);
 

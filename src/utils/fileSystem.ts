@@ -153,8 +153,8 @@ export const FileSystem = {
           }
         }
       }
-    } catch (error) {
-      console.error('Error finding orphaned files:', error);
+    } catch {
+      // Error finding orphaned files
     }
 
     return orphaned;
@@ -164,8 +164,8 @@ export const FileSystem = {
     for (const path of paths) {
       try {
         await RNFS.unlink(path);
-      } catch (error) {
-        console.error(`Error deleting ${path}:`, error);
+      } catch {
+        // Error deleting path
       }
     }
   },

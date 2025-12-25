@@ -45,8 +45,7 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
 
       // Add to history
       get().addToHistory(query);
-    } catch (error) {
-      console.error('Search error:', error);
+    } catch {
       set({ results: [], loading: false });
     }
   },

@@ -125,25 +125,18 @@ const HomeScreen: React.FC = () => {
       archived: selectedTab === 'archived' ? true : false,
       favorite: selectedTab === 'favorites' ? true : undefined,
     };
-    console.log('HomeScreen: Setting search filters:', filters);
     setSearchFilters(filters);
   }, [selectedTab, setSearchFilters]);
 
   // Perform search when query changes
   useEffect(() => {
     if (query.trim()) {
-      console.log('HomeScreen: Triggering search with query:', query);
       const delaySearch = setTimeout(() => {
-        search().then(() => {
-          console.log(
-            'HomeScreen: Search completed, results:',
-            searchResults.length,
-          );
-        });
+        search();
       }, 300); // Debounce search
       return () => clearTimeout(delaySearch);
     }
-  }, [query, search, searchResults.length]);
+  }, [query, search]);
 
   const loadArticles = () => {
     const filters = {

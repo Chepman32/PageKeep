@@ -33,7 +33,6 @@ export class ExportService {
       // For now, return a placeholder path
       return exportPath;
     } catch (error) {
-      console.error('Export error:', error);
       throw error;
     }
   }
@@ -52,7 +51,6 @@ export class ExportService {
       // TODO: Implement ZIP extraction and import
       return result;
     } catch (error) {
-      console.error('Import error:', error);
       result.errors.push(
         error instanceof Error ? error.message : 'Unknown error',
       );

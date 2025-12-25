@@ -62,8 +62,7 @@ const AddScreen: React.FC = () => {
       } else {
         setClipboardUrl(null);
       }
-    } catch (error) {
-      console.error('Error checking clipboard:', error);
+    } catch {
       setClipboardUrl(null);
     }
   };
@@ -124,13 +123,10 @@ const AddScreen: React.FC = () => {
       setUrl('');
 
       // Refresh articles list in background
-      fetchArticles().catch(err =>
-        console.error('Error refreshing articles:', err)
-      );
+      fetchArticles().catch(() => {});
     } catch (error: any) {
       setLoading(false);
       const errorMessage = error?.message || String(error) || 'Unknown error';
-      console.error('Error saving article:', error);
       // Show actual error message to help diagnose issues
       Alert.alert(
         t('common.error'),

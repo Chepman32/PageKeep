@@ -8,8 +8,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import App from './App';
 import { name as appName } from './app.json';
 
-MaterialCommunityIcons.loadFont().catch(error => {
-  console.warn('Failed to load MaterialCommunityIcons font:', error);
-});
+MaterialCommunityIcons.loadFont().catch(() => {});
 
 AppRegistry.registerComponent(appName, () => App);

@@ -20,24 +20,14 @@ class NetworkMonitorService {
    */
   start(): void {
     if (this.unsubscribe) {
-      console.log('[NetworkMonitor] Already monitoring');
       return;
     }
-
-    console.log('[NetworkMonitor] Starting network monitoring');
 
     this.unsubscribe = NetInfo.addEventListener(state => {
       const isConnected = state.isConnected && state.isInternetReachable !== false;
 
-      console.log('[NetworkMonitor] Network state:', {
-        connected: isConnected,
-        type: state.type,
-        wasOffline: this.wasOffline,
-      });
-
       // Detect transition from offline → online
       if (isConnected && this.wasOffline) {
-        console.log('[NetworkMonitor] Connection restored, triggering auto-retry');
         this.handleConnectionRestored();
       }
 
@@ -50,7 +40,6 @@ class NetworkMonitorService {
    */
   stop(): void {
     if (this.unsubscribe) {
-      console.log('[NetworkMonitor] Stopping network monitoring');
       this.unsubscribe();
       this.unsubscribe = null;
     }
@@ -64,11 +53,8 @@ class NetworkMonitorService {
     const failedArticles = ArticleProcessingState.getFailedArticles();
 
     if (failedArticles.length === 0) {
-      console.log('[NetworkMonitor] No failed articles to retry');
       return;
     }
-
-    console.log(`[NetworkMonitor] Retrying ${failedArticles.length} failed articles`);
 
     // Retry each failed article with a small delay between them
     for (let i = 0; i < failedArticles.length; i++) {
@@ -80,10 +66,8 @@ class NetworkMonitorService {
           await new Promise<void>(resolve => setTimeout(resolve, 500));
         }
 
-        console.log(`[NetworkMonitor] Retrying article ${i + 1}/${failedArticles.length}: ${articleId}`);
         await this.savePageService.retryProcessing(articleId);
-      } catch (error) {
-        console.error(`[NetworkMonitor] Failed to retry article ${articleId}:`, error);
+      } catch {
         // Continue with next article even if one fails
       }
     }

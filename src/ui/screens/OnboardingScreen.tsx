@@ -113,8 +113,8 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
   const finishOnboarding = () => {
     try {
       Storage.setOnboardingCompleted(true);
-    } catch (error) {
-      console.error('Failed to save onboarding completion status:', error);
+    } catch {
+      // Failed to save onboarding completion status
     }
     onComplete();
   };

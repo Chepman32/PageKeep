@@ -28,7 +28,6 @@ export class SavePageService {
    */
   async saveFromUrlFast(url: string, options: SaveOptions = {}): Promise<string> {
     try {
-      console.log('Fast saving article from URL:', url);
 
       // 1. Fetch HTML (this is unavoidable)
       const html = await this.fetchHtml(url);
@@ -56,8 +55,6 @@ export class SavePageService {
         hasAssets: false,
       });
 
-      console.log('Created article (fast):', articleId);
-
       // 5. Create article directory and save basic content immediately
       await FileSystem.createArticleDirectory(articleId);
 
@@ -65,7 +62,6 @@ export class SavePageService {
       const htmlPath = FileSystem.getArticleHtmlPath(articleId);
       const basicHtml = this.htmlRewriter.rewrite(readable.content, url, new Map());
       await FileSystem.writeArticleHtml(articleId, basicHtml);
-      console.log(`Initial HTML saved to: ${htmlPath}`);
 
       // 7. Save article content record
       await this.articleRepo.createContent({
@@ -110,13 +106,10 @@ export class SavePageService {
         articleId,
         url,
         readable,
-      ).catch(error => {
-        console.error('Error processing article content in background:', error);
-      });
+      ).catch(() => {});
 
       return articleId;
     } catch (error) {
-      console.error('❌ Error fast-saving page:', error);
       throw error;
     }
   }
@@ -131,18 +124,8 @@ export class SavePageService {
     readable: any,
   ): Promise<void> {
     try {
-      console.log('Background processing started for:', articleId);
-
       // 1. Extract all image URLs from HTML
-      // Debug: Check what HTML Readability extracted
-      const htmlSnippet = readable.content.substring(0, 1000);
-      console.log('HTML snippet from Readability:', htmlSnippet);
-
       const imageUrls = this.extractImageUrls(readable.content, url);
-      console.log(`Found ${imageUrls.length} images to download`);
-      if (imageUrls.length > 0) {
-        console.log('First few images:', imageUrls.slice(0, 5));
-      }
 
       // 2. Download images and get mapping of old URL to new URL
       const { imageMap } = await this.downloadImages(articleId, imageUrls);
@@ -153,12 +136,10 @@ export class SavePageService {
       // Always inject cover image at the top if we have one (og:image is usually the main article image)
       const currentMeta = await FileSystem.readArticleMeta(articleId);
       if (currentMeta?.coverImage) {
-        console.log('[Background] Injecting cover image into article body');
         contentToRewrite = `<figure class="pn-cover-image" style="margin: 0 0 1.5em 0;"><img src="${currentMeta.coverImage}" alt="Article image" style="max-width: 100%; height: auto; display: block;" /></figure>` + contentToRewrite;
       }
 
       if (imageMap.size > 0 || contentToRewrite !== readable.content) {
-        console.log(`[Background] Rewriting HTML with ${imageMap.size} image mappings`);
 
         const rewrittenHtml = this.htmlRewriter.rewrite(
           contentToRewrite,
@@ -168,7 +149,6 @@ export class SavePageService {
 
         // 4. Update HTML file with images
         await FileSystem.writeArticleHtml(articleId, rewrittenHtml);
-        console.log('[Background] HTML updated with downloaded images');
       }
 
       // 5. Update metadata to indicate processing is complete
@@ -183,13 +163,9 @@ export class SavePageService {
         coverImage: meta?.coverImage ?? null,
       };
       await FileSystem.writeArticleMeta(articleId, updatedMeta);
-      console.log(`[Background] Completed for ${articleId}, coverImage preserved: ${!!meta?.coverImage}`);
 
       this.emitMetaUpdate(articleId, updatedMeta);
-
-      console.log('✅ Background processing completed for:', articleId);
     } catch (error: any) {
-      console.error('❌ Error in background processing:', error);
 
       // Detect if this is a network error
       const isNetworkError =
@@ -216,8 +192,6 @@ export class SavePageService {
             articleId,
             error: 'No internet connection',
           });
-
-          console.log(`[Background] Network error for ${articleId}, will retry when connection is restored`);
         } else {
           // Other error - mark as complete anyway (user can read text-only article)
           const updatedMeta = {
@@ -228,11 +202,9 @@ export class SavePageService {
           };
           await FileSystem.writeArticleMeta(articleId, updatedMeta);
           this.emitMetaUpdate(articleId, updatedMeta);
-
-          console.log(`[Background] Non-network error for ${articleId}, marking as complete`);
         }
-      } catch (metaError) {
-        console.error('Failed to update metadata after error:', metaError);
+      } catch {
+        // Failed to update metadata after error
       }
     }
   }
@@ -241,7 +213,6 @@ export class SavePageService {
     let articleId: string | null = null;
 
     try {
-      console.log('Saving article from URL:', url);
 
       // 1. Fetch HTML
       const html = await this.fetchHtml(url);
@@ -269,8 +240,6 @@ export class SavePageService {
         hasAssets: false,
       });
 
-      console.log('Created article:', articleId);
-
       // 5. Create article directory
       await FileSystem.createArticleDirectory(articleId);
 
@@ -278,7 +247,6 @@ export class SavePageService {
       const coverCandidate = this.extractCoverImageCandidate(html, readable.content, url);
 
       const imageUrls = this.extractImageUrls(readable.content, url);
-      console.log(`Found ${imageUrls.length} images to download`);
 
       // 7. Download images and get mapping of old URL to new URL
       const { imageMap } = await this.downloadImages(articleId, imageUrls);
@@ -290,11 +258,8 @@ export class SavePageService {
 
       // Always inject cover image at the top if we have one (og:image is usually the main article image)
       if (finalCover) {
-        console.log('Injecting cover image into article body');
         contentToRewrite = `<figure class="pn-cover-image" style="margin: 0 0 1.5em 0;"><img src="${finalCover}" alt="Article image" style="max-width: 100%; height: auto; display: block;" /></figure>` + contentToRewrite;
       }
-
-      console.log(`Rewriting HTML with ${imageMap.size} image mappings`);
       const rewrittenHtml = this.htmlRewriter.rewrite(
         contentToRewrite,
         url,
@@ -304,7 +269,6 @@ export class SavePageService {
       // 9. Save HTML to file system
       const htmlPath = FileSystem.getArticleHtmlPath(articleId);
       await FileSystem.writeArticleHtml(articleId, rewrittenHtml);
-      console.log(`HTML saved to: ${htmlPath}`);
 
       // 10. Save article content
       await this.articleRepo.createContent({
@@ -337,18 +301,15 @@ export class SavePageService {
         annotations: [],
       });
 
-      console.log('✅ Article saved successfully:', articleId);
       return articleId;
     } catch (error) {
-      console.error('❌ Error saving page:', error);
 
       // Cleanup: Delete article from database if it was created
       if (articleId) {
         try {
           await this.articleRepo.delete(articleId);
-          console.log('Cleaned up failed article:', articleId);
-        } catch (cleanupError) {
-          console.error('Failed to cleanup article:', cleanupError);
+        } catch {
+          // Failed to cleanup article
         }
       }
 
@@ -475,7 +436,6 @@ export class SavePageService {
 
     for (const imageUrl of imageUrls) {
       try {
-        console.log(`[Images] Downloading ${imageIndex + 1}/${imageUrls.length}: ${imageUrl}`);
 
         // Download image
         const response = await RNFetchBlob.config({
@@ -483,7 +443,6 @@ export class SavePageService {
         }).fetch('GET', imageUrl);
 
         if (response.respInfo.status !== 200) {
-          console.warn(`[Images] Failed (status ${response.respInfo.status}): ${imageUrl}`);
           continue;
         }
 
@@ -506,15 +465,11 @@ export class SavePageService {
         const mimeType = contentType.split(';')[0] || `image/${extension}`;
         const dataUrl = `data:${mimeType};base64,${base64Data}`;
         imageMap.set(imageUrl, dataUrl);
-
-        console.log(`[Images] Saved: ${filename}`);
         imageIndex++;
-      } catch (error) {
-        console.error(`[Images] Error downloading ${imageUrl}:`, error);
+      } catch {
+        // Error downloading image
       }
     }
-
-    console.log(`[Images] Downloaded ${imageIndex}/${imageUrls.length} successfully`);
     return { imageMap };
   }
 
@@ -589,7 +544,6 @@ export class SavePageService {
         throw new Error('Request timed out. The website is taking too long to respond. Please try again or check your connection.');
       }
 
-      console.error('Error fetching HTML:', error);
       throw error;
     }
   }
@@ -600,8 +554,8 @@ export class SavePageService {
         articleId,
         meta,
       });
-    } catch (error) {
-      console.warn('Failed to emit article meta update', error);
+    } catch {
+      // Failed to emit article meta update
     }
   }
 
@@ -669,7 +623,6 @@ export class SavePageService {
    */
   async retryProcessing(articleId: string): Promise<void> {
     try {
-      console.log(`[Retry] Starting retry for article: ${articleId}`);
 
       // Read current metadata
       const meta = await FileSystem.readArticleMeta(articleId);
@@ -677,27 +630,23 @@ export class SavePageService {
       // Check retry limit
       const retryCount = meta.processingRetries || 0;
       if (retryCount >= 3) {
-        console.log(`[Retry] Max retries reached for ${articleId}, skipping`);
         return;
       }
 
       // Check if still needs processing
       if (meta.processingComplete === true) {
-        console.log(`[Retry] Article ${articleId} already processed, skipping`);
         return;
       }
 
       // Read article from database to get URL
       const article = await this.articleRepo.findById(articleId);
       if (!article) {
-        console.log(`[Retry] Article ${articleId} not found, skipping`);
         return;
       }
 
       // Read article content to get the readable content
       const content = await this.articleRepo.getContent(articleId);
       if (!content || !content.meta) {
-        console.log(`[Retry] Article content not found for ${articleId}, skipping`);
         return;
       }
 
@@ -707,8 +656,6 @@ export class SavePageService {
         processingRetries: retryCount + 1,
         processingError: null, // Clear error before retry
       });
-
-      console.log(`[Retry] Retry attempt ${retryCount + 1}/3 for ${articleId}`);
 
       // Emit processing started event
       DeviceEventEmitter.emit(ARTICLE_PROCESSING_STARTED, { articleId });
@@ -731,10 +678,7 @@ export class SavePageService {
         article.url,
         readable,
       );
-
-      console.log(`[Retry] Successfully started retry for ${articleId}`);
     } catch (error) {
-      console.error(`[Retry] Failed to retry article ${articleId}:`, error);
       throw error;
     }
   }
@@ -745,12 +689,10 @@ export class SavePageService {
     retryCount: number = 0,
   ): Promise<string | null> {
     if (!coverUrl) {
-      console.log('[CoverImage] No cover URL provided');
       return null;
     }
 
     if (coverUrl.startsWith('data:')) {
-      console.log('[CoverImage] Already a data URL');
       return coverUrl;
     }
 
@@ -762,7 +704,6 @@ export class SavePageService {
     ];
 
     try {
-      console.log(`[CoverImage] Attempting download (attempt ${retryCount + 1}): ${coverUrl}`);
 
       const headers: Record<string, string> = {
         'User-Agent': userAgents[retryCount] || userAgents[0],
@@ -783,14 +724,10 @@ export class SavePageService {
       }).fetch('GET', coverUrl, headers);
 
       const status = response.respInfo.status;
-      console.log(`[CoverImage] Response status: ${status}`);
 
       if (status !== 200) {
-        console.warn(`[CoverImage] Failed with status ${status}: ${coverUrl}`);
-
         // Retry with different headers
         if (retryCount < MAX_RETRIES) {
-          console.log('[CoverImage] Retrying with different headers...');
           return this.resolveCoverImage(articleId, coverUrl, retryCount + 1);
         }
 
@@ -813,13 +750,9 @@ export class SavePageService {
       const mimeType = contentType.split(';')[0] || `image/${extension}`;
       const dataUrl = `data:${mimeType};base64,${base64Data}`;
 
-      console.log(`[CoverImage] Successfully resolved to data URL (${Math.round(base64Data.length / 1024)}KB)`);
       return dataUrl;
-    } catch (error) {
-      console.warn(`[CoverImage] Error downloading: ${coverUrl}`, error);
-
+    } catch {
       if (retryCount < MAX_RETRIES) {
-        console.log('[CoverImage] Retrying after error...');
         return this.resolveCoverImage(articleId, coverUrl, retryCount + 1);
       }
 

@@ -50,11 +50,7 @@ const createStorage = (): StorageAdapter => {
     }
 
     return instance;
-  } catch (error) {
-    console.warn(
-      '[storage] Falling back to in-memory storage because MMKV is unavailable.',
-      error,
-    );
+  } catch {
     return new MemoryStorage();
   }
 };

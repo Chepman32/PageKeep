@@ -101,7 +101,6 @@ export const ArticleCoverImage: React.FC<ArticleCoverImageProps> = ({
           style={styles.image}
           resizeMode="cover"
           onError={() => {
-            console.warn(`[ArticleCoverImage] Failed to load image for: ${articleId}`);
             setImageError(true);
           }}
         />

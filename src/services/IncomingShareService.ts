@@ -58,9 +58,6 @@ export class IncomingShareService {
     this.initialized = true;
 
     if (!shareModule) {
-      console.log(
-        '[IncomingShareService] ShareQueueModule not available on this platform.',
-      );
       return;
     }
 
@@ -72,15 +69,11 @@ export class IncomingShareService {
       );
     }
 
-    this.loadInitialItems().catch(error => {
-      console.error('[IncomingShareService] Failed to load initial shares', error);
-    });
+    this.loadInitialItems().catch(() => {});
 
     Linking.getInitialURL()
       .then(url => this.handleIncomingLink(url))
-      .catch(error =>
-        console.error('[IncomingShareService] Failed to read initial URL', error),
-      );
+      .catch(() => {});
 
     this.linkingSubscription = Linking.addEventListener('url', event => {
       this.handleIncomingLink(event.url);
@@ -90,9 +83,7 @@ export class IncomingShareService {
       'change',
       (state: AppStateStatus) => {
         if (state === 'active') {
-          this.loadInitialItems().catch(error =>
-            console.error('[IncomingShareService] Failed to reload shares on foreground', error),
-          );
+          this.loadInitialItems().catch(() => {});
         }
       },
     );
@@ -124,8 +115,8 @@ export class IncomingShareService {
     try {
       const items = await shareModule.getPendingShares();
       this.enqueueItems(items);
-    } catch (error) {
-      console.error('[IncomingShareService] Error fetching pending shares', error);
+    } catch {
+      // Error fetching pending shares
     } finally {
       this.loadingInitialItems = false;
     }
@@ -164,9 +155,7 @@ export class IncomingShareService {
     }
 
     this.queue.push(...deduped);
-    this.processQueue().catch(error => {
-      console.error('[IncomingShareService] Error while processing queue', error);
-    });
+    this.processQueue().catch(() => {});
   }
 
   private static normalizeItem(item: unknown): SharedItem | null {
@@ -228,18 +217,12 @@ export class IncomingShareService {
       }
 
       try {
-        console.log(
-          `[IncomingShareService] Saving shared URL: ${item.url} (id: ${item.id})`,
-        );
         const articleId = await this.saveService.saveFromUrlFast(item.url, {});
         await this.addToStoreIfVisible(articleId);
         this.processedIds.add(item.id);
         listNeedsRefresh = true;
-      } catch (error) {
-        console.error(
-          `[IncomingShareService] Failed to save shared URL ${item.url}`,
-          error,
-        );
+      } catch {
+        // Failed to save shared URL
       }
     }
 
@@ -247,11 +230,8 @@ export class IncomingShareService {
       const { fetchArticles, currentFilters } = useArticleStore.getState();
       try {
         await fetchArticles(currentFilters);
-      } catch (error) {
-        console.error(
-          '[IncomingShareService] Failed to refresh articles after share',
-          error,
-        );
+      } catch {
+        // Failed to refresh articles after share
       }
     }
 
@@ -290,11 +270,9 @@ export class IncomingShareService {
       }
 
       // Also attempt to consume any queued items from native storage
-      this.loadInitialItems().catch(error =>
-        console.error('[IncomingShareService] Failed to consume queue after link', error),
-      );
-    } catch (error) {
-      console.error('[IncomingShareService] Failed to parse incoming URL', error);
+      this.loadInitialItems().catch(() => {});
+    } catch {
+      // Failed to parse incoming URL
     }
   }
 
@@ -319,11 +297,8 @@ export class IncomingShareService {
       if (!alreadyPresent) {
         addArticle(article);
       }
-    } catch (error) {
-      console.error(
-        '[IncomingShareService] Failed to add shared article to store',
-        error,
-      );
+    } catch {
+      // Failed to add shared article to store
     }
   }
 

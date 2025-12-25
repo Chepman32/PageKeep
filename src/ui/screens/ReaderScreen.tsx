@@ -70,7 +70,6 @@ const ReaderScreen: React.FC = () => {
       ARTICLE_META_UPDATED_EVENT,
       (payload: any) => {
         if (payload.articleId === articleId && payload.meta?.processingComplete === true) {
-          console.log('[ReaderScreen] Processing completed, switching to local content');
           setIsProcessingComplete(true);
           setShowError(false);
         }
@@ -140,20 +139,12 @@ const ReaderScreen: React.FC = () => {
         const connected = !!(state.isConnected && state.isInternetReachable !== false);
         setIsConnected(connected);
         updateShowError(processingComplete, connected);
-
-        console.log('[ReaderScreen] Article loaded:', {
-          processingComplete,
-          connected,
-          showError: !processingComplete && !connected,
-        });
-      } catch (error) {
+      } catch {
         // No metadata file - assume complete (old articles)
-        console.log('[ReaderScreen] No metadata, assuming complete');
         setIsProcessingComplete(true);
         setShowError(false);
       }
-    } catch (error) {
-      console.error('Error loading article:', error);
+    } catch {
       navigation.goBack();
     }
   };
@@ -170,18 +161,16 @@ const ReaderScreen: React.FC = () => {
         // Update read progress
         articleRepo.updateReadProgress(articleId, message.progress);
       }
-    } catch (error) {
-      console.error('Error handling message:', error);
+    } catch {
+      // Error handling message
     }
   };
 
-  const handleWebViewError = (event: any) => {
-    console.error('❌ WebView error:', event.nativeEvent);
+  const handleWebViewError = () => {
+    // WebView error
   };
 
   const handleWebViewLoad = () => {
-    console.log('✅ WebView loaded successfully');
-
     // Inject theme CSS after page loads
     const theme =
       themes[readerDefaults.theme as keyof typeof themes] || themes.light;

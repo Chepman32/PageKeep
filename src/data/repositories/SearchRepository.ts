@@ -13,8 +13,6 @@ export class SearchRepository {
     query: string,
     filters?: ArticleFilters,
   ): Promise<SearchResult[]> {
-    console.log('SearchRepository: Searching with query:', query, 'filters:', filters);
-
     let ftsResult;
 
     try {
@@ -32,11 +30,8 @@ export class SearchRepository {
 
       // Build query to only search title column (column 0)
       const searchQuery = `title:${this.buildFTS5Query(query)}`;
-      console.log('SearchRepository: FTS5 query:', searchQuery);
       ftsResult = this.db.execute(ftsQuery, [searchQuery]);
-      console.log('SearchRepository: FTS5 result rows:', ftsResult.rows?.length || 0);
-    } catch (error) {
-      console.warn('FTS5 search failed, using fallback:', error);
+    } catch {
       // Fallback to LIKE search - only search titles
       const fallbackQuery = `
         SELECT
@@ -98,7 +93,6 @@ export class SearchRepository {
     }
 
     const articlesResult = this.db.execute(articlesQuery, params);
-    console.log('SearchRepository: Articles result rows:', articlesResult.rows?.length || 0);
 
     const results: SearchResult[] = [];
     if (articlesResult.rows) {
@@ -114,7 +108,6 @@ export class SearchRepository {
       }
     }
 
-    console.log('SearchRepository: Returning', results.length, 'search results');
     return results.sort((a, b) => b.score - a.score);
   }
 
@@ -140,8 +133,7 @@ export class SearchRepository {
           content.annotations.join(' '),
         ],
       );
-    } catch (error) {
-      console.error('Error updating search index:', error);
+    } catch {
       // Don't throw - search indexing is not critical
     }
   }
