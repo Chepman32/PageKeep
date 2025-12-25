@@ -112,7 +112,7 @@ export class ReadabilityService {
     return truncated + '...';
   }
 
-  calculateReadingTime(wordCount: number, wordsPerMinute: number = 200): number {
+  calculateReadingTime(wordCount: number, wordsPerMinute: number = 300): number {
     return Math.ceil(wordCount / wordsPerMinute);
   }
 
