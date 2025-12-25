@@ -57,7 +57,7 @@
       "invalidUrl": "الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://",
       "saveFailed": "فشل حفظ المقالة. الرجاء المحاولة مرة أخرى."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "استخدام الرابط المنسوخ"
   },
   "search": {
     "placeholder": "البحث في المقالات...",
@@ -144,64 +144,67 @@
       "error": "لا يمكن أن يكون العنوان فارغًا"
     }
   },
+  "splash": {
+    "tagline": "احفظ ما يهمك"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "تخطي",
+    "getStarted": "ابدأ الآن",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "احفظ الصفحات فوراً",
+      "description": "شارك من أي متصفح أو الصق رابطاً. حفظ سريع باستخدام «استخدام الرابط المنسوخ»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "اقرأ فوراً",
+      "description": "ابدأ القراءة بينما يُعالج المحتوى في الخلفية. لا حاجة للانتظار."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "اقرأ في أي مكان",
+      "description": "كل المحتوى مخزن محلياً. اقرأ بدون إنترنت بعد اكتمال المعالجة."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "بدون تشتيت",
+      "description": "تمت إزالة السكربتات وتطبيق أنماط مخصصة للقراءة. تجربة قراءة نظيفة."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "اجعلها خاصة بك",
+      "description": "خصص السمات وحجم الخط وتباعد الأسطر والهوامش لقراءة مثالية."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "مكتبة جميلة",
+      "description": "استخراج تلقائي لصور الغلاف يُنشئ مجموعة قراءة غنية بصرياً."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "ابقَ منظماً",
+      "description": "تبويبات المفضلة والأرشيف. إعادة التسمية والحذف بالضغط المطول."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "ابحث عن أي شيء",
+      "description": "بحث نصي كامل مع مقتطفات مميزة وسجل بحث حديث."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "خطط لقراءتك",
+      "description": "وقت القراءة المقدر معروض على كل مقالة."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "لا تفوت أي محتوى",
+      "description": "التنزيلات الفاشلة تُعاد تلقائياً عند عودة الاتصال."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "لغتك",
+      "description": "اختر من أكثر من 32 لغة للواجهة."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "التحكم في التخزين",
+      "description": "عرض استخدام التخزين ومسح الذاكرة المؤقتة بنقرة واحدة."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "استجابة لمسية",
+      "description": "اهتزازات اختيارية للضغطات والتفاعلات."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "خصوصيتك مهمة",
+      "description": "لا جمع للبيانات. كل شيء يبقى على جهازك."
     }
   }
 }

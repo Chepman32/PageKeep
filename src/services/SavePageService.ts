@@ -63,7 +63,6 @@ export class SavePageService {
 
       // 6. Save a basic version of the HTML without images (for instant viewing)
       const htmlPath = FileSystem.getArticleHtmlPath(articleId);
-      // Use HtmlRewriter to create properly structured HTML (without images for now)
       const basicHtml = this.htmlRewriter.rewrite(readable.content, url, new Map());
       await FileSystem.writeArticleHtml(articleId, basicHtml);
       console.log(`Initial HTML saved to: ${htmlPath}`);
@@ -88,7 +87,7 @@ export class SavePageService {
         title: readable.title,
         url,
         savedAt: Date.now(),
-        processingComplete: false, // Will be set to true after background processing
+        processingComplete: false,
         coverImage: resolvedCover,
       };
       await FileSystem.writeArticleMeta(articleId, initialMeta);
@@ -115,7 +114,6 @@ export class SavePageService {
         console.error('Error processing article content in background:', error);
       });
 
-      // Return immediately
       return articleId;
     } catch (error) {
       console.error('❌ Error fast-saving page:', error);
@@ -547,13 +545,21 @@ export class SavePageService {
   }
 
   private async fetchHtml(url: string): Promise<string> {
+    // Add timeout to prevent hanging on slow/unresponsive sites
+    const TIMEOUT_MS = 30000; // 30 seconds
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
     try {
       const response = await fetch(url, {
         headers: {
           'User-Agent':
             'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1',
         },
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
@@ -575,7 +581,14 @@ export class SavePageService {
       }
 
       return await response.text();
-    } catch (error) {
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+
+      // Handle timeout abort
+      if (error.name === 'AbortError') {
+        throw new Error('Request timed out. The website is taking too long to respond. Please try again or check your connection.');
+      }
+
       console.error('Error fetching HTML:', error);
       throw error;
     }

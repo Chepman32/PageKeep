@@ -20,6 +20,9 @@ import { Theme } from '../../constants/themes';
 import { useTranslation } from 'react-i18next';
 import { Haptics } from '../../utils/haptics';
 
+// Module-level singleton to avoid recreating on every render
+const savePageService = new SavePageService();
+
 const AddScreen: React.FC = () => {
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -29,8 +32,6 @@ const AddScreen: React.FC = () => {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [clipboardUrl, setClipboardUrl] = useState<string | null>(null);
-
-  const savePageService = new SavePageService();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -126,10 +127,15 @@ const AddScreen: React.FC = () => {
       fetchArticles().catch(err =>
         console.error('Error refreshing articles:', err)
       );
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
+      const errorMessage = error?.message || String(error) || 'Unknown error';
       console.error('Error saving article:', error);
-      Alert.alert(t('common.error'), t('add.errors.saveFailed'));
+      // Show actual error message to help diagnose issues
+      Alert.alert(
+        t('common.error'),
+        `${t('add.errors.saveFailed')}\n\n${errorMessage}`,
+      );
     }
   };
 

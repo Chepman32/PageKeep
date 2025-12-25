@@ -57,7 +57,7 @@
       "invalidUrl": "Zadejte prosím platnou URL začínající http:// nebo https://",
       "saveFailed": "Uložení článku se nezdařilo. Zkuste to prosím znovu."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "Použít zkopírovaný odkaz"
   },
   "search": {
     "placeholder": "Hledat články...",
@@ -75,7 +75,7 @@
     "themes": {
       "light": "Světlý",
       "dark": "Tmavý",
-      "solar": "Solar",
+      "solar": "Solární",
       "mono": "Mono"
     },
     "feedback": "Zpětná vazba",
@@ -144,64 +144,67 @@
       "error": "Název nesmí být prázdný"
     }
   },
+  "splash": {
+    "tagline": "Archivujte, co je důležité"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "Přeskočit",
+    "getStarted": "Začít",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "Ukládejte stránky okamžitě",
+      "description": "Sdílejte z libovolného prohlížeče nebo vložte URL. Rychlé uložení pomocí «použít zkopírovaný odkaz»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "Čtěte ihned",
+      "description": "Začněte číst, zatímco se obsah zpracovává na pozadí. Žádné čekání."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "Čtěte kdekoli",
+      "description": "Veškerý obsah uložen lokálně. Čtěte offline po dokončení zpracování."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "Bez rozptylování",
+      "description": "Skripty odstraněny, aplikovány styly pro čtení. Čistý zážitek ze čtení."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "Přizpůsobte si to",
+      "description": "Upravte motivy, velikost písma, výšku řádku a okraje pro dokonalou čitelnost."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "Krásná knihovna",
+      "description": "Automatická extrakce obrázků obálek vytváří vizuálně bohatou sbírku."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "Zůstaňte organizovaní",
+      "description": "Záložky Oblíbené a Archiv. Přejmenování a mazání dlouhým stiskem."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "Najděte cokoli",
+      "description": "Fulltextové vyhledávání se zvýrazněnými úryvky a historií vyhledávání."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "Plánujte své čtení",
+      "description": "Odhadovaná doba čtení zobrazena u každého článku."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "Nepřijďte o obsah",
+      "description": "Neúspěšná stahování se automaticky opakují po obnovení připojení."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "Váš jazyk",
+      "description": "Vyberte si z více než 32 jazyků rozhraní."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "Kontrola úložiště",
+      "description": "Zobrazte využití úložiště a vymažte mezipaměť jedním klepnutím."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "Hmatová odezva",
+      "description": "Volitelné vibrace při stisknutí tlačítek a interakcích."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "Na vašem soukromí záleží",
+      "description": "Žádné shromažďování dat. Vše zůstává na vašem zařízení."
     }
   }
 }

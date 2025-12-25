@@ -144,6 +144,9 @@
       "error": "Title cannot be empty"
     }
   },
+  "splash": {
+    "tagline": "Archive what matters"
+  },
   "onboarding": {
     "skip": "Skip",
     "getStarted": "Get Started",

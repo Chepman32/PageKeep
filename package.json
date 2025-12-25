@@ -35,6 +35,7 @@
     "react-native-haptic-feedback": "^2.3.3",
     "react-native-html-parser": "^0.1.0",
     "react-native-iap": "^14.4.33",
+    "react-native-localize": "^3.6.0",
     "react-native-mmkv": "^4.0.0",
     "react-native-nitro-modules": "^0.31.2",
     "react-native-quick-sqlite": "^8.2.7",

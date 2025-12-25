@@ -57,7 +57,7 @@
       "invalidUrl": "אנא הזן URL תקין המתחיל ב-http:// או https://",
       "saveFailed": "נכשל בשמירת הכתבה. אנא נסה שוב."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "השתמש בקישור שהועתק"
   },
   "search": {
     "placeholder": "חפש כתבות...",
@@ -75,8 +75,8 @@
     "themes": {
       "light": "בהיר",
       "dark": "כהה",
-      "solar": "Solar",
-      "mono": "Mono"
+      "solar": "שמשי",
+      "mono": "מונו"
     },
     "feedback": "משוב",
     "sound": "צליל",
@@ -144,64 +144,67 @@
       "error": "הכותרת לא יכולה להיות ריקה"
     }
   },
+  "splash": {
+    "tagline": "שמור את מה שחשוב"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "דלג",
+    "getStarted": "התחל",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "שמור דפים מיידית",
+      "description": "שתף מכל דפדפן או הדבק URL. שמירה מהירה עם «השתמש בקישור שהועתק»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "קרא מיד",
+      "description": "התחל לקרוא בזמן שהתוכן מעובד ברקע. ללא המתנה."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "קרא בכל מקום",
+      "description": "כל התוכן נשמר מקומית. קרא אופליין לאחר סיום העיבוד."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "ללא הסחות דעת",
+      "description": "סקריפטים הוסרו, סגנונות קריאה הוחלו. חוויית קריאה נקייה."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "התאם אישית",
+      "description": "התאם ערכות נושא, גודל גופן, גובה שורה ושוליים לקריאות מושלמת."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "ספרייה יפה",
+      "description": "חילוץ אוטומטי של תמונות שער יוצר אוסף עשיר חזותית."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "הישאר מאורגן",
+      "description": "לשוניות מועדפים וארכיון. שנה שם ומחק בלחיצה ארוכה."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "מצא כל דבר",
+      "description": "חיפוש טקסט מלא עם קטעים מודגשים והיסטוריית חיפוש אחרונה."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "תכנן את הקריאה שלך",
+      "description": "זמן קריאה משוער מוצג בכל כתבה."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "אל תפספס תוכן",
+      "description": "הורדות שנכשלו מנסות שוב אוטומטית כשהחיבור חוזר."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "השפה שלך",
+      "description": "בחר מתוך 32+ שפות לממשק."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "שליטה באחסון",
+      "description": "צפה בשימוש באחסון ונקה מטמון בהקשה אחת."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "משוב מישושי",
+      "description": "רטט אופציונלי ללחיצות כפתורים ואינטראקציות."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "הפרטיות שלך חשובה",
+      "description": "ללא איסוף נתונים. הכל נשאר במכשיר שלך."
     }
   }
 }

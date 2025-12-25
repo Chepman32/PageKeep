@@ -268,8 +268,12 @@ export const Storage = {
   },
 
   // Language
-  getLanguage(): string {
-    const value = this.getString(StorageKeys.LANGUAGE) || 'en';
+  getLanguage(): string | null {
+    const value = this.getString(StorageKeys.LANGUAGE);
+    // If no language saved, return null to signal first launch
+    if (!value) {
+      return null;
+    }
     switch (value) {
       case 'es':
         return 'sp';

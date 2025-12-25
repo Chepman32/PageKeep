@@ -57,7 +57,7 @@
       "invalidUrl": "请输入以 http:// 或 https:// 开头的有效 URL",
       "saveFailed": "保存文章失败，请重试。"
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "使用已复制的链接"
   },
   "search": {
     "placeholder": "搜索文章...",
@@ -144,64 +144,67 @@
       "error": "标题不能为空"
     }
   },
+  "splash": {
+    "tagline": "保存重要内容"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "跳过",
+    "getStarted": "开始使用",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "即时保存页面",
+      "description": "从任何浏览器分享或粘贴URL。使用'使用已复制的链接'快速保存。"
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "立即阅读",
+      "description": "内容在后台处理时即可开始阅读。无需等待。"
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "随处阅读",
+      "description": "所有内容本地存储。处理完成后可离线阅读。"
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "专注阅读",
+      "description": "移除脚本，应用阅读样式。干净的阅读体验。"
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "个性定制",
+      "description": "自定义主题、字体大小、行距和边距，获得完美阅读体验。"
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "精美书库",
+      "description": "自动提取封面图片，打造视觉丰富的阅读收藏。"
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "井井有条",
+      "description": "收藏夹、归档标签。长按可重命名和删除。"
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "搜索一切",
+      "description": "全文搜索，高亮显示片段和最近搜索历史。"
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "规划阅读",
+      "description": "每篇文章显示预计阅读时间。"
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "不错过内容",
+      "description": "下载失败时，恢复连接后自动重试。"
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "您的语言",
+      "description": "界面支持32+种语言可选。"
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "存储管理",
+      "description": "查看存储使用情况，一键清除缓存。"
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "触觉反馈",
+      "description": "按钮和交互的可选触觉响应。"
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "隐私至上",
+      "description": "零数据收集。一切都保存在您的设备上。"
     }
   }
 }

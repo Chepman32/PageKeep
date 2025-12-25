@@ -134,7 +134,7 @@ final class ShareViewController: UIViewController {
 
     ShareQueue.enqueue(payload: payload)
 
-    statusLabel.text = "Saved! Opening PageKeep…"
+    statusLabel.text = "Saved!"
     spinner.stopAnimating()
 
     openHostAppIfPossible(

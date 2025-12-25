@@ -57,7 +57,7 @@
       "invalidUrl": "กรุณาใส่ URL ที่ถูกต้องซึ่งขึ้นต้นด้วย http:// หรือ https://",
       "saveFailed": "ไม่สามารถบันทึกบทความได้ กรุณาลองอีกครั้ง"
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "ใช้ลิงก์ที่คัดลอก"
   },
   "search": {
     "placeholder": "ค้นหาบทความ...",
@@ -75,8 +75,8 @@
     "themes": {
       "light": "สว่าง",
       "dark": "มืด",
-      "solar": "Solar",
-      "mono": "Mono"
+      "solar": "โซลาร์",
+      "mono": "โมโน"
     },
     "feedback": "ข้อเสนอแนะ",
     "sound": "เสียง",
@@ -144,64 +144,67 @@
       "error": "ชื่อต้องไม่ว่างเปล่า"
     }
   },
+  "splash": {
+    "tagline": "เก็บสิ่งที่สำคัญ"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "ข้าม",
+    "getStarted": "เริ่มต้น",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "บันทึกหน้าทันที",
+      "description": "แชร์จากเบราว์เซอร์ใดก็ได้หรือวาง URL บันทึกเร็วด้วย «ใช้ลิงก์ที่คัดลอก»"
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "อ่านได้ทันที",
+      "description": "เริ่มอ่านขณะที่เนื้อหาประมวลผลในพื้นหลัง ไม่ต้องรอ"
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "อ่านได้ทุกที่",
+      "description": "เนื้อหาทั้งหมดเก็บไว้ในเครื่อง อ่านออฟไลน์หลังประมวลผลเสร็จ"
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "ไม่มีสิ่งรบกวน",
+      "description": "ลบสคริปต์ ใช้สไตล์สำหรับการอ่าน ประสบการณ์การอ่านที่สะอาด"
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "ปรับแต่งตามใจ",
+      "description": "ปรับแต่งธีม ขนาดตัวอักษร ระยะห่างบรรทัด และระยะขอบเพื่อการอ่านที่สมบูรณ์แบบ"
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "ห้องสมุดสวยงาม",
+      "description": "การดึงภาพปกอัตโนมัติสร้างคอลเลกชันที่สวยงาม"
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "จัดระเบียบ",
+      "description": "แท็บรายการโปรดและที่เก็บถาวร เปลี่ยนชื่อและลบด้วยการกดค้าง"
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "ค้นหาอะไรก็ได้",
+      "description": "ค้นหาข้อความเต็มพร้อมส่วนที่ไฮไลต์และประวัติการค้นหาล่าสุด"
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "วางแผนการอ่าน",
+      "description": "เวลาอ่านโดยประมาณแสดงในทุกบทความ"
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "ไม่พลาดเนื้อหา",
+      "description": "การดาวน์โหลดที่ล้มเหลวจะลองใหม่อัตโนมัติเมื่อการเชื่อมต่อกลับมา"
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "ภาษาของคุณ",
+      "description": "เลือกจากกว่า 32 ภาษาสำหรับอินเทอร์เฟซ"
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "ควบคุมพื้นที่จัดเก็บ",
+      "description": "ดูการใช้พื้นที่จัดเก็บและล้างแคชด้วยการแตะครั้งเดียว"
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "การตอบสนองสัมผัส",
+      "description": "การสั่นสะเทือนเสริมสำหรับการกดปุ่มและการโต้ตอบ"
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "ความเป็นส่วนตัวของคุณสำคัญ",
+      "description": "ไม่มีการเก็บข้อมูล ทุกอย่างอยู่ในอุปกรณ์ของคุณ"
     }
   }
 }

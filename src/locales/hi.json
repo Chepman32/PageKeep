@@ -57,7 +57,7 @@
       "invalidUrl": "कृपया http:// या https:// से शुरू होने वाला मान्य URL दर्ज करें",
       "saveFailed": "लेख सहेजा नहीं जा सका। पुनः प्रयास करें।"
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "कॉपी किए गए लिंक का उपयोग करें"
   },
   "search": {
     "placeholder": "लेख खोजें...",
@@ -144,64 +144,67 @@
       "error": "शीर्षक खाली नहीं हो सकता"
     }
   },
+  "splash": {
+    "tagline": "जो मायने रखता है उसे सहेजें"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "छोड़ें",
+    "getStarted": "शुरू करें",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "पेज तुरंत सहेजें",
+      "description": "किसी भी ब्राउज़र से शेयर करें या URL पेस्ट करें। «कॉपी किए गए लिंक का उपयोग करें» से त्वरित सेव।"
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "तुरंत पढ़ें",
+      "description": "बैकग्राउंड में कंटेंट प्रोसेस होते समय पढ़ना शुरू करें। कोई प्रतीक्षा नहीं।"
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "कहीं भी पढ़ें",
+      "description": "सभी कंटेंट स्थानीय रूप से संग्रहीत। प्रोसेसिंग पूर्ण होने के बाद ऑफ़लाइन पढ़ें।"
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "बिना विचलन के",
+      "description": "स्क्रिप्ट हटाए गए, पढ़ने के लिए स्टाइल लागू। स्वच्छ पढ़ने का अनुभव।"
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "इसे अपना बनाएं",
+      "description": "थीम, फ़ॉन्ट आकार, लाइन हाइट और मार्जिन को परफेक्ट पठनीयता के लिए कस्टमाइज़ करें।"
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "सुंदर लाइब्रेरी",
+      "description": "स्वचालित कवर इमेज निष्कर्षण एक दृश्य रूप से समृद्ध संग्रह बनाता है।"
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "व्यवस्थित रहें",
+      "description": "पसंदीदा और आर्काइव टैब। लंबे प्रेस से नाम बदलें और हटाएं।"
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "कुछ भी खोजें",
+      "description": "हाइलाइटेड स्निपेट और हाल की खोज इतिहास के साथ फुल-टेक्स्ट सर्च।"
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "अपनी पढ़ाई की योजना बनाएं",
+      "description": "प्रत्येक लेख पर अनुमानित पढ़ने का समय दिखाया गया।"
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "कंटेंट मिस न करें",
+      "description": "कनेक्शन वापस आने पर विफल डाउनलोड स्वचालित रूप से पुनः प्रयास करते हैं।"
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "आपकी भाषा",
+      "description": "इंटरफ़ेस के लिए 32+ भाषाओं में से चुनें।"
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "स्टोरेज नियंत्रण",
+      "description": "स्टोरेज उपयोग देखें और एक टैप से कैश साफ़ करें।"
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "स्पर्श प्रतिक्रिया",
+      "description": "बटन प्रेस और इंटरैक्शन के लिए वैकल्पिक वाइब्रेशन।"
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "आपकी गोपनीयता मायने रखती है",
+      "description": "कोई डेटा संग्रह नहीं। सब कुछ आपके डिवाइस पर रहता है।"
     }
   }
 }

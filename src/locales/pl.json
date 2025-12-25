@@ -57,7 +57,7 @@
       "invalidUrl": "Podaj poprawny adres URL zaczynający się od http:// lub https://",
       "saveFailed": "Nie udało się zapisać artykułu. Spróbuj ponownie."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "Użyj skopiowanego linku"
   },
   "search": {
     "placeholder": "Szukaj artykułów...",
@@ -144,64 +144,67 @@
       "error": "Tytuł nie może być pusty"
     }
   },
+  "splash": {
+    "tagline": "Archiwizuj to, co ważne"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "Pomiń",
+    "getStarted": "Rozpocznij",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "Zapisuj strony natychmiast",
+      "description": "Udostępnij z dowolnej przeglądarki lub wklej URL. Szybkie zapisywanie przez «użyj skopiowanego linku»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "Czytaj od razu",
+      "description": "Zacznij czytać, gdy treść jest przetwarzana w tle. Bez czekania."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "Czytaj wszędzie",
+      "description": "Cała treść przechowywana lokalnie. Czytaj offline po zakończeniu przetwarzania."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "Bez rozpraszania",
+      "description": "Skrypty usunięte, zastosowane style do czytania. Czyste doświadczenie czytania."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "Dostosuj do siebie",
+      "description": "Dostosuj motywy, rozmiar czcionki, interlinię i marginesy dla idealnej czytelności."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "Piękna biblioteka",
+      "description": "Automatyczne wyodrębnianie obrazów okładek tworzy wizualnie bogatą kolekcję."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "Bądź zorganizowany",
+      "description": "Zakładki Ulubione i Archiwum. Zmiana nazwy i usuwanie przez długie naciśnięcie."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "Znajdź cokolwiek",
+      "description": "Wyszukiwanie pełnotekstowe z podświetlonymi fragmentami i historią wyszukiwania."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "Planuj czytanie",
+      "description": "Szacowany czas czytania wyświetlany przy każdym artykule."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "Nie przegap treści",
+      "description": "Nieudane pobierania są automatycznie ponawiane po powrocie połączenia."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "Twój język",
+      "description": "Wybierz spośród 32+ języków interfejsu."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "Kontrola pamięci",
+      "description": "Zobacz wykorzystanie pamięci i wyczyść cache jednym dotknięciem."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "Dotykowa informacja zwrotna",
+      "description": "Opcjonalne wibracje przy naciskaniu przycisków i interakcjach."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "Twoja prywatność ma znaczenie",
+      "description": "Brak gromadzenia danych. Wszystko pozostaje na Twoim urządzeniu."
     }
   }
 }

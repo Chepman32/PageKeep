@@ -57,7 +57,7 @@
       "invalidUrl": "Silakan masukkan URL yang valid dimulai dengan http:// atau https://",
       "saveFailed": "Gagal menyimpan artikel. Silakan coba lagi."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "Gunakan link yang disalin"
   },
   "search": {
     "placeholder": "Cari artikel...",
@@ -75,7 +75,7 @@
     "themes": {
       "light": "Terang",
       "dark": "Gelap",
-      "solar": "Solar",
+      "solar": "Surya",
       "mono": "Mono"
     },
     "feedback": "Masukan",
@@ -144,64 +144,67 @@
       "error": "Judul tidak boleh kosong"
     }
   },
+  "splash": {
+    "tagline": "Arsipkan yang penting"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "Lewati",
+    "getStarted": "Mulai",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "Simpan Halaman Seketika",
+      "description": "Bagikan dari browser mana pun atau tempel URL. Simpan cepat dengan «gunakan link yang disalin»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "Baca Segera",
+      "description": "Mulai membaca sementara konten diproses di latar belakang. Tanpa menunggu."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "Baca Di Mana Saja",
+      "description": "Semua konten disimpan secara lokal. Baca offline setelah pemrosesan selesai."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "Tanpa Gangguan",
+      "description": "Skrip dihapus, gaya pembaca diterapkan. Pengalaman membaca yang bersih."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "Jadikan Milik Anda",
+      "description": "Sesuaikan tema, ukuran font, tinggi baris, dan margin untuk keterbacaan sempurna."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "Perpustakaan Indah",
+      "description": "Ekstraksi gambar sampul otomatis menciptakan koleksi yang kaya secara visual."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "Tetap Terorganisir",
+      "description": "Tab Favorit dan Arsip. Ubah nama dan hapus dengan tekan lama."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "Temukan Apa Saja",
+      "description": "Pencarian teks lengkap dengan cuplikan yang disorot dan riwayat pencarian terbaru."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "Rencanakan Bacaan Anda",
+      "description": "Perkiraan waktu baca ditampilkan di setiap artikel."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "Jangan Lewatkan Konten",
+      "description": "Unduhan yang gagal dicoba ulang secara otomatis saat koneksi kembali."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "Bahasa Anda",
+      "description": "Pilih dari 32+ bahasa untuk antarmuka."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "Kontrol Penyimpanan",
+      "description": "Lihat penggunaan penyimpanan dan bersihkan cache dengan satu ketukan."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "Umpan Balik Sentuhan",
+      "description": "Getaran opsional untuk penekanan tombol dan interaksi."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "Privasi Anda Penting",
+      "description": "Tanpa pengumpulan data. Semuanya tetap di perangkat Anda."
     }
   }
 }

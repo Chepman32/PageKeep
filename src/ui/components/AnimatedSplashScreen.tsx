@@ -35,6 +35,7 @@ import Animated, {
   withTiming,
   type SharedValue,
 } from 'react-native-reanimated';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../contexts/ThemeContext';
 
 const { height: windowHeight, width: windowWidth } = Dimensions.get('window');
@@ -88,20 +89,33 @@ const HOLOGRAM_PRESETS: Record<CardPreset, HologramPreset> = {
   aurora: {
     baseColor: '#0B1021',
     gradientColors: ['#34D5FF', '#7C3AED', '#FF61D2', '#FFE98A'],
-    shineColors: ['rgba(255,255,255,0.12)', 'rgba(255,255,255,0.4)', 'rgba(255,255,255,0.05)'],
+    shineColors: [
+      'rgba(255,255,255,0.12)',
+      'rgba(255,255,255,0.4)',
+      'rgba(255,255,255,0.05)',
+    ],
     borderColor: '#6DDCFF',
     shadowColor: 'rgba(12, 181, 255, 0.35)',
   },
   carbon: {
     baseColor: '#0F131A',
     gradientColors: ['#F2C94C', '#9B51E0', '#56CCF2', '#2F80ED'],
-    shineColors: ['rgba(255,255,255,0.08)', 'rgba(255,255,255,0.32)', 'rgba(255,255,255,0.04)'],
+    shineColors: [
+      'rgba(255,255,255,0.08)',
+      'rgba(255,255,255,0.32)',
+      'rgba(255,255,255,0.04)',
+    ],
     borderColor: '#5C7CFF',
     shadowColor: 'rgba(20, 41, 82, 0.55)',
   },
 };
 
-const SPRING_CONFIG = { damping: 18, mass: 1, stiffness: 120, overshootClamping: true };
+const SPRING_CONFIG = {
+  damping: 18,
+  mass: 1,
+  stiffness: 120,
+  overshootClamping: true,
+};
 
 const clamp = (value: number, min: number, max: number): number => {
   'worklet';
@@ -116,13 +130,18 @@ const mapToUnit = (value: number, min: number, max: number): number => {
   return clamp((value - min) / (max - min), 0, 1);
 };
 
-const DefaultCardContent: React.FC<{ textColor: string }> = ({ textColor }) => (
-  <View style={styles.cardContent}>
-    <Image source={splashAsset} style={styles.logo} />
-    <Text style={[styles.title, { color: textColor }]}>PageKeep</Text>
-    <Text style={[styles.subtitle, { color: textColor }]}>Archive what matters</Text>
-  </View>
-);
+const DefaultCardContent: React.FC<{ textColor: string }> = ({ textColor }) => {
+  const { t } = useTranslation();
+  return (
+    <View style={styles.cardContent}>
+      <Image source={splashAsset} style={styles.logo} />
+      <Text style={[styles.title, { color: textColor }]}>PageKeep</Text>
+      <Text style={[styles.subtitle, { color: textColor }]}>
+        {t('splash.tagline')}
+      </Text>
+    </View>
+  );
+};
 
 const HologramCard: React.FC<HologramCardProps> = ({
   width,
@@ -166,26 +185,42 @@ const HologramCard: React.FC<HologramCardProps> = ({
     const effectiveY = tiltY.value * tiltEnabled.value;
     const u = mapToUnit(effectiveY, -maxTiltDegY, maxTiltDegY);
     const ambient = ambientShift.value * 2 - 1;
-    return { x: width * (0.24 + 0.55 * u + 0.08 * ambient), y: height * (0.18 + 0.28 * ambient) };
+    return {
+      x: width * (0.24 + 0.55 * u + 0.08 * ambient),
+      y: height * (0.18 + 0.28 * ambient),
+    };
   });
 
   const shineEnd = useDerivedValue<PointValue>(() => {
     const effectiveY = tiltY.value * tiltEnabled.value;
     const u = mapToUnit(effectiveY, -maxTiltDegY, maxTiltDegY);
     const ambient = ambientShift.value * 2 - 1;
-    return { x: width * (0.78 + 0.25 * ambient - 0.22 * u), y: height * (0.82 + 0.18 * ambient) };
+    return {
+      x: width * (0.78 + 0.25 * ambient - 0.22 * u),
+      y: height * (0.82 + 0.18 * ambient),
+    };
   });
 
   const hologramStyle = useAnimatedStyle(() => {
-    const clampedX = clamp(tiltX.value * tiltEnabled.value, -maxTiltDegX, maxTiltDegX);
-    const clampedY = clamp(tiltY.value * tiltEnabled.value, -maxTiltDegY, maxTiltDegY);
-    const magnitude = Math.abs(clampedX) + Math.abs(clampedY);
-    const scale = 1 + interpolate(
-      magnitude,
-      [0, maxTiltDegX + maxTiltDegY],
-      [0, 0.03],
-      Extrapolation.CLAMP,
+    const clampedX = clamp(
+      tiltX.value * tiltEnabled.value,
+      -maxTiltDegX,
+      maxTiltDegX,
     );
+    const clampedY = clamp(
+      tiltY.value * tiltEnabled.value,
+      -maxTiltDegY,
+      maxTiltDegY,
+    );
+    const magnitude = Math.abs(clampedX) + Math.abs(clampedY);
+    const scale =
+      1 +
+      interpolate(
+        magnitude,
+        [0, maxTiltDegX + maxTiltDegY],
+        [0, 0.03],
+        Extrapolation.CLAMP,
+      );
 
     return {
       transform: [
@@ -195,18 +230,47 @@ const HologramCard: React.FC<HologramCardProps> = ({
         { scale },
       ],
       shadowColor: preset.shadowColor,
-      shadowOpacity: 0.35 + 0.15 * clamp(magnitude / (maxTiltDegX + maxTiltDegY), 0, 1),
+      shadowOpacity:
+        0.35 + 0.15 * clamp(magnitude / (maxTiltDegX + maxTiltDegY), 0, 1),
       shadowRadius: 18,
       shadowOffset: { width: clampedY * 1.5, height: clampedX * 1.5 },
       elevation: 14,
     };
-  }, [maxTiltDegX, maxTiltDegY, perspective, preset.shadowColor, tiltEnabled, tiltX, tiltY]);
+  }, [
+    maxTiltDegX,
+    maxTiltDegY,
+    perspective,
+    preset.shadowColor,
+    tiltEnabled,
+    tiltX,
+    tiltY,
+  ]);
 
   return (
-    <Animated.View style={[styles.hologramCard, { width, height, borderRadius }, hologramStyle]}>
+    <Animated.View
+      style={[
+        styles.hologramCard,
+        { width, height, borderRadius },
+        hologramStyle,
+      ]}
+    >
       <Canvas style={{ width, height }}>
-        <RoundedRect x={0} y={0} width={width} height={height} r={borderRadius} color={preset.baseColor} />
-        <RoundedRect x={0} y={0} width={width} height={height} r={borderRadius} color={preset.baseColor}>
+        <RoundedRect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          r={borderRadius}
+          color={preset.baseColor}
+        />
+        <RoundedRect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          r={borderRadius}
+          color={preset.baseColor}
+        >
           <LinearGradient
             start={gradientStart as unknown as PointValue}
             end={gradientEnd as unknown as PointValue}
@@ -214,11 +278,27 @@ const HologramCard: React.FC<HologramCardProps> = ({
             positions={[0, 0.35, 0.72, 1]}
           />
         </RoundedRect>
-        <RoundedRect x={0} y={0} width={width} height={height} r={borderRadius} color={preset.baseColor}>
-          <LinearGradient start={shineStart as unknown as PointValue} end={shineEnd as unknown as PointValue} colors={preset.shineColors} />
+        <RoundedRect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          r={borderRadius}
+          color={preset.baseColor}
+        >
+          <LinearGradient
+            start={shineStart as unknown as PointValue}
+            end={shineEnd as unknown as PointValue}
+            colors={preset.shineColors}
+          />
         </RoundedRect>
       </Canvas>
-      <View style={[styles.borderOverlay, { borderRadius, borderColor: preset.borderColor }]} />
+      <View
+        style={[
+          styles.borderOverlay,
+          { borderRadius, borderColor: preset.borderColor },
+        ]}
+      />
       <View style={[styles.cardInner, { borderRadius }]} pointerEvents="none">
         {children}
       </View>
@@ -256,7 +336,10 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
   const perspective = 1100;
 
   useEffect(() => {
-    const timer = setTimeout(() => setMinDurationElapsed(true), minVisibleDurationMs);
+    const timer = setTimeout(
+      () => setMinDurationElapsed(true),
+      minVisibleDurationMs,
+    );
     return () => clearTimeout(timer);
   }, [minVisibleDurationMs]);
 
@@ -309,7 +392,14 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
         }
       },
     );
-  }, [exitProgress, hasExited, isReady, minDurationElapsed, onAnimationEnd, onFinish]);
+  }, [
+    exitProgress,
+    hasExited,
+    isReady,
+    minDurationElapsed,
+    onAnimationEnd,
+    onFinish,
+  ]);
 
   useEffect(() => {
     if (!sensorActive || disableSensors) {
@@ -365,12 +455,18 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
     }
 
     tiltX.value = withRepeat(
-      withTiming(maxTiltDegX * 0.75, { duration: 1900, easing: Easing.inOut(Easing.sin) }),
+      withTiming(maxTiltDegX * 0.75, {
+        duration: 1900,
+        easing: Easing.inOut(Easing.sin),
+      }),
       -1,
       true,
     );
     tiltY.value = withRepeat(
-      withTiming(-maxTiltDegY * 0.75, { duration: 2200, easing: Easing.inOut(Easing.sin) }),
+      withTiming(-maxTiltDegY * 0.75, {
+        duration: 2200,
+        easing: Easing.inOut(Easing.sin),
+      }),
       -1,
       true,
     );
@@ -379,19 +475,44 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
       cancelAnimation(tiltX);
       cancelAnimation(tiltY);
     };
-  }, [disableSensors, maxTiltDegX, maxTiltDegY, sensorActive, sensorAvailable, tiltX, tiltY]);
+  }, [
+    disableSensors,
+    maxTiltDegX,
+    maxTiltDegY,
+    sensorActive,
+    sensorAvailable,
+    tiltX,
+    tiltY,
+  ]);
 
   const containerStyle = useAnimatedStyle(() => {
-    const entryScale = interpolate(entryProgress.value, [0, 1], [0.9, 1], Extrapolation.CLAMP);
-    const exitScale = interpolate(exitProgress.value, [0, 1], [1, 1.05], Extrapolation.CLAMP);
-    const opacity = Math.max(0, entryProgress.value - exitProgress.value * 0.95);
+    const entryScale = interpolate(
+      entryProgress.value,
+      [0, 1],
+      [0.9, 1],
+      Extrapolation.CLAMP,
+    );
+    const exitScale = interpolate(
+      exitProgress.value,
+      [0, 1],
+      [1, 1.05],
+      Extrapolation.CLAMP,
+    );
+    const opacity = Math.max(
+      0,
+      entryProgress.value - exitProgress.value * 0.95,
+    );
 
     return {
       opacity,
       transform: [
         { scale: entryScale * exitScale },
         {
-          translateY: interpolate(exitProgress.value, [0, 1], [0, -windowHeight * 0.02]),
+          translateY: interpolate(
+            exitProgress.value,
+            [0, 1],
+            [0, -windowHeight * 0.02],
+          ),
         },
       ],
     };
@@ -402,7 +523,10 @@ export const AnimatedSplashScreen: React.FC<AnimatedSplashScreenProps> = ({
   }, [theme.colors.background]);
 
   return (
-    <View style={[StyleSheet.absoluteFill, styles.container, bgStyle]} pointerEvents="box-none">
+    <View
+      style={[StyleSheet.absoluteFill, styles.container, bgStyle]}
+      pointerEvents="box-none"
+    >
       <StatusBar hidden animated translucent />
       <Animated.View style={[styles.cardWrapper, containerStyle]}>
         <HologramCard

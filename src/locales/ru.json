@@ -51,7 +51,7 @@
     "urlPlaceholder": "https://example.com/article",
     "saveButton": "Сохранить статью",
     "hint": "Совет: вы также можете использовать расширение Safari, чтобы сохранять статьи напрямую.",
-    "useCopiedLink": "Use copied link",
+    "useCopiedLink": "Использовать скопированную ссылку",
     "success": "Статья сохраняется!",
     "errors": {
       "emptyUrl": "Введите URL",
@@ -144,64 +144,67 @@
       "error": "Название не может быть пустым"
     }
   },
+  "splash": {
+    "tagline": "Сохраняй важное"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "Пропустить",
+    "getStarted": "Начать",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "Сохраняйте страницы мгновенно",
+      "description": "Делитесь из любого браузера или вставьте URL. Быстрое сохранение через «использовать скопированную ссылку»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "Читайте сразу",
+      "description": "Начинайте читать, пока контент обрабатывается в фоне. Никакого ожидания."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "Читайте где угодно",
+      "description": "Весь контент хранится локально. Читайте офлайн после завершения обработки."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "Без отвлечений",
+      "description": "Скрипты удалены, применены стили для чтения. Чистый опыт чтения."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "Настройте под себя",
+      "description": "Темы, размер шрифта, межстрочный интервал и поля для идеальной читаемости."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "Красивая библиотека",
+      "description": "Автоматическое извлечение обложек создаёт визуально богатую коллекцию."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "Будьте организованы",
+      "description": "Вкладки «Избранное» и «Архив». Переименование и удаление долгим нажатием."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "Найдите что угодно",
+      "description": "Полнотекстовый поиск с подсветкой и историей запросов."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "Планируйте чтение",
+      "description": "Расчётное время чтения показано для каждой статьи."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "Не пропустите контент",
+      "description": "Неудачные загрузки автоматически повторяются при восстановлении связи."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "Ваш язык",
+      "description": "Выбирайте из 32+ языков интерфейса."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "Контроль хранилища",
+      "description": "Просматривайте использование памяти и очищайте кэш одним нажатием."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "Тактильная отдача",
+      "description": "Опциональная вибрация при нажатиях и взаимодействиях."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "Ваша приватность важна",
+      "description": "Никакого сбора данных. Всё остаётся на вашем устройстве."
     }
   }
 }

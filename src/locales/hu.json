@@ -57,7 +57,7 @@
       "invalidUrl": "Kérem adjon meg egy érvényes URL-t, amely http:// vagy https:// kezdetű",
       "saveFailed": "A cikk mentése sikertelen. Kérem próbálja újra."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "Másolt link használata"
   },
   "search": {
     "placeholder": "Cikkek keresése...",
@@ -75,7 +75,7 @@
     "themes": {
       "light": "Világos",
       "dark": "Sötét",
-      "solar": "Solar",
+      "solar": "Napfény",
       "mono": "Mono"
     },
     "feedback": "Visszajelzés",
@@ -144,64 +144,67 @@
       "error": "A cím nem lehet üres"
     }
   },
+  "splash": {
+    "tagline": "Archiváld, ami fontos"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "Kihagyás",
+    "getStarted": "Kezdés",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "Oldalak azonnali mentése",
+      "description": "Ossza meg bármely böngészőből vagy illesszen be URL-t. Gyors mentés a «másolt link használata» funkcióval."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "Olvasson azonnal",
+      "description": "Kezdjen el olvasni, miközben a tartalom a háttérben feldolgozódik. Nincs várakozás."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "Olvasson bárhol",
+      "description": "Minden tartalom helyben tárolva. Olvasson offline a feldolgozás után."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "Zavarásmentes",
+      "description": "Szkriptek eltávolítva, olvasásra optimalizált stílusok alkalmazva. Tiszta olvasási élmény."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "Tegye sajátjává",
+      "description": "Testreszabhatja a témákat, betűméretet, sorközt és margókat a tökéletes olvashatóságért."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "Gyönyörű könyvtár",
+      "description": "Az automatikus borítókép-kinyerés vizuálisan gazdag gyűjteményt hoz létre."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "Maradjon szervezett",
+      "description": "Kedvencek és Archívum fülek. Átnevezés és törlés hosszú nyomással."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "Találjon meg bármit",
+      "description": "Teljes szöveges keresés kiemelt részletekkel és legutóbbi keresési előzményekkel."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "Tervezze meg olvasását",
+      "description": "Becsült olvasási idő minden cikknél megjelenik."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "Ne maradjon le tartalomról",
+      "description": "A sikertelen letöltések automatikusan újrapróbálkoznak, amikor visszatér a kapcsolat."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "Az Ön nyelve",
+      "description": "Válasszon 32+ nyelv közül a felülethez."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "Tárhely kezelése",
+      "description": "Tekintse meg a tárhelyhasználatot és törölje a gyorsítótárat egyetlen érintéssel."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "Tapintási visszajelzés",
+      "description": "Opcionális rezgések gombnyomásokhoz és interakciókhoz."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "Az Ön adatvédelme fontos",
+      "description": "Nincs adatgyűjtés. Minden az eszközén marad."
     }
   }
 }

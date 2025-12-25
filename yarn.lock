@@ -2982,6 +2982,7 @@ __metadata:
     react-native-haptic-feedback: "npm:^2.3.3"
     react-native-html-parser: "npm:^0.1.0"
     react-native-iap: "npm:^14.4.33"
+    react-native-localize: "npm:^3.6.0"
     react-native-mmkv: "npm:^4.0.0"
     react-native-nitro-modules: "npm:^0.31.2"
     react-native-quick-sqlite: "npm:^8.2.7"
@@ -8784,6 +8785,23 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/b7a37437f439b1e27a4d980de01994aa71b9091dc3ed00c21172d5505fb11978cd5ed3a43f97c89d502a3a08cf26e5cea6435b8d6e93d3557a92dd43563f7021
+  languageName: node
+  linkType: hard
+
+"react-native-localize@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "react-native-localize@npm:3.6.0"
+  peerDependencies:
+    "@expo/config-plugins": "*"
+    react: "*"
+    react-native: "*"
+    react-native-macos: "*"
+  peerDependenciesMeta:
+    "@expo/config-plugins":
+      optional: true
+    react-native-macos:
+      optional: true
+  checksum: 10c0/3ab63261152f56a9ef9d7413f206b50615483d2fa2f0f07b4fda34b3f95bd66d54c1ec35c8eb445326252855db0299ff6fdb7167422711bb0337994d9605a94d
   languageName: node
   linkType: hard
 

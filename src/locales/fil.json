@@ -57,7 +57,7 @@
       "invalidUrl": "Pakiusap maglagay ng wastong URL na nagsisimula sa http:// o https://",
       "saveFailed": "Hindi ma-save ang artikulo. Pakisubukan ulit."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "Gamitin ang kinopyang link"
   },
   "search": {
     "placeholder": "Maghanap ng mga artikulo...",
@@ -144,64 +144,67 @@
       "error": "Ang pamagat ay hindi maaaring blangko"
     }
   },
+  "splash": {
+    "tagline": "I-archive ang mahalaga"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "Laktawan",
+    "getStarted": "Magsimula",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "Mag-save ng Mga Pahina Agad",
+      "description": "Mag-share mula sa anumang browser o mag-paste ng URL. Mabilis na pag-save gamit ang «gamitin ang kinopyang link»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "Magbasa Agad",
+      "description": "Magsimulang magbasa habang pinoproseso ang nilalaman sa background. Walang paghihintay."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "Magbasa Kahit Saan",
+      "description": "Lahat ng nilalaman ay naka-imbak sa lokal. Magbasa offline pagkatapos ng pagproseso."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "Walang Abala",
+      "description": "Tinanggal ang mga script, inilapat ang mga estilo para sa pagbabasa. Malinis na karanasan sa pagbabasa."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "Gawin Itong Sa Iyo",
+      "description": "I-customize ang mga tema, laki ng font, taas ng linya, at mga margin para sa perpektong pagbabasa."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "Magandang Library",
+      "description": "Awtomatikong pagkuha ng mga larawan ng cover na lumilikha ng mayamang visual na koleksyon."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "Manatiling Organisado",
+      "description": "Mga tab ng Paborito at Archive. Palitan ang pangalan at tanggalin gamit ang mahabang pindot."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "Hanapin Kahit Ano",
+      "description": "Full-text na paghahanap na may mga naka-highlight na snippet at kamakailang kasaysayan ng paghahanap."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "Planuhin ang Iyong Pagbabasa",
+      "description": "Ipinapakita ang tinatayang oras ng pagbabasa sa bawat artikulo."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "Huwag Palampasin ang Nilalaman",
+      "description": "Awtomatikong umuulit ang mga nabigong pag-download kapag bumalik ang koneksyon."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "Ang Iyong Wika",
+      "description": "Pumili mula sa 32+ na wika para sa interface."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "Kontrol sa Imbakan",
+      "description": "Tingnan ang paggamit ng imbakan at linisin ang cache sa isang tap."
     },
     "slide13": {
       "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "description": "Opsyonal na mga vibration para sa mga pagpindot at interaksyon."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "Mahalaga ang Iyong Privacy",
+      "description": "Walang pagkolekta ng data. Lahat ay nananatili sa iyong device."
     }
   }
 }

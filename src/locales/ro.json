@@ -57,7 +57,7 @@
       "invalidUrl": "Te rog introdu un URL valid care începe cu http:// sau https://",
       "saveFailed": "Nu s-a putut salva articolul. Te rog încearcă din nou."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "Folosește linkul copiat"
   },
   "search": {
     "placeholder": "Caută articole...",
@@ -144,64 +144,67 @@
       "error": "Titlul nu poate fi gol"
     }
   },
+  "splash": {
+    "tagline": "Arhivează ce contează"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "Omite",
+    "getStarted": "Începe",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "Salvează pagini instant",
+      "description": "Partajează din orice browser sau lipește un URL. Salvare rapidă cu «folosește linkul copiat»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "Citește imediat",
+      "description": "Începe să citești în timp ce conținutul se procesează în fundal. Fără așteptare."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "Citește oriunde",
+      "description": "Tot conținutul stocat local. Citește offline după finalizarea procesării."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "Fără distrageri",
+      "description": "Scripturi eliminate, stiluri de citire aplicate. Experiență de citire curată."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "Personalizează",
+      "description": "Personalizează temele, dimensiunea fontului, înălțimea liniei și marginile pentru lizibilitate perfectă."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "Bibliotecă frumoasă",
+      "description": "Extragerea automată a imaginilor de copertă creează o colecție bogată vizual."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "Rămâi organizat",
+      "description": "File Favorite și Arhivă. Redenumește și șterge cu apăsare lungă."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "Găsește orice",
+      "description": "Căutare text complet cu fragmente evidențiate și istoric de căutare recent."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "Planifică-ți citirea",
+      "description": "Timp estimat de citire afișat la fiecare articol."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "Nu rata conținut",
+      "description": "Descărcările eșuate sunt reîncercate automat când revine conexiunea."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "Limba ta",
+      "description": "Alege din peste 32 de limbi pentru interfață."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "Control stocare",
+      "description": "Vezi utilizarea stocării și șterge cache-ul cu o singură atingere."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "Feedback tactil",
+      "description": "Vibrații opționale pentru apăsări de butoane și interacțiuni."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "Confidențialitatea ta contează",
+      "description": "Fără colectare de date. Totul rămâne pe dispozitivul tău."
     }
   }
 }

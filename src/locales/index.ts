@@ -31,6 +31,7 @@ import el from './el.json';
 import ms from './ms.json';
 import fil from './fil.json';
 import { Storage } from '../utils/storage';
+import { detectDeviceLanguage } from '../utils/deviceLocale';
 
 const resources = {
   en: { translation: en },
@@ -69,12 +70,29 @@ const resources = {
   fil: { translation: fil },
 };
 
-const savedLanguage = Storage.getLanguage();
+// Get saved language or detect from device on first launch
+const getInitialLanguage = (): string => {
+  const savedLanguage = Storage.getLanguage();
+  console.log('[i18n] Saved language from storage:', savedLanguage);
+
+  if (savedLanguage) {
+    return savedLanguage;
+  }
+
+  // First launch - detect device language and save it
+  const detectedLanguage = detectDeviceLanguage();
+  console.log('[i18n] Detected device language:', detectedLanguage);
+  Storage.setLanguage(detectedLanguage);
+  return detectedLanguage;
+};
+
+const initialLanguage = getInitialLanguage();
+console.log('[i18n] Initializing with language:', initialLanguage);
 
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources,
-    lng: savedLanguage,
+    lng: initialLanguage,
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,

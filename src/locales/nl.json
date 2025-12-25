@@ -57,7 +57,7 @@
       "invalidUrl": "Voer een geldige URL in die begint met http:// of https://",
       "saveFailed": "Kan artikel niet opslaan. Probeer het opnieuw."
     },
-    "useCopiedLink": "Use copied link"
+    "useCopiedLink": "Gekopieerde link gebruiken"
   },
   "search": {
     "placeholder": "Artikelen zoeken...",
@@ -75,7 +75,7 @@
     "themes": {
       "light": "Licht",
       "dark": "Donker",
-      "solar": "Solar",
+      "solar": "Zon",
       "mono": "Mono"
     },
     "feedback": "Feedback",
@@ -144,64 +144,67 @@
       "error": "Titel mag niet leeg zijn"
     }
   },
+  "splash": {
+    "tagline": "Archiveer wat belangrijk is"
+  },
   "onboarding": {
-    "skip": "Skip",
-    "getStarted": "Get Started",
+    "skip": "Overslaan",
+    "getStarted": "Aan de slag",
     "slide1": {
-      "title": "Save Pages Instantly",
-      "description": "Share from any browser or paste a URL. Quick save with 'use copied link' shortcut."
+      "title": "Pagina's direct opslaan",
+      "description": "Deel vanuit elke browser of plak een URL. Snel opslaan met «gekopieerde link gebruiken»."
     },
     "slide2": {
-      "title": "Read Immediately",
-      "description": "Start reading while content processes in background. No waiting required."
+      "title": "Direct lezen",
+      "description": "Begin met lezen terwijl de inhoud op de achtergrond wordt verwerkt. Geen wachten."
     },
     "slide3": {
-      "title": "Read Anywhere",
-      "description": "All content stored locally. Read offline after processing completes."
+      "title": "Overal lezen",
+      "description": "Alle inhoud lokaal opgeslagen. Lees offline na verwerking."
     },
     "slide4": {
-      "title": "Distraction-Free",
-      "description": "Scripts removed, reader-focused styles applied. Clean reading experience."
+      "title": "Zonder afleiding",
+      "description": "Scripts verwijderd, leesvriendelijke stijlen toegepast. Schone leeservaring."
     },
     "slide5": {
-      "title": "Make It Yours",
-      "description": "Customize themes, font size, line height, and margins for perfect readability."
+      "title": "Maak het je eigen",
+      "description": "Pas thema's, lettergrootte, regelhoogte en marges aan voor perfecte leesbaarheid."
     },
     "slide6": {
-      "title": "Beautiful Library",
-      "description": "Automatic cover image extraction creates a visually rich reading collection."
+      "title": "Mooie bibliotheek",
+      "description": "Automatische extractie van omslagafbeeldingen creëert een visueel rijke collectie."
     },
     "slide7": {
-      "title": "Stay Organized",
-      "description": "Favorites, Archive tabs. Rename and delete with long-press."
+      "title": "Blijf georganiseerd",
+      "description": "Favorieten en Archief tabbladen. Hernoemen en verwijderen met lang indrukken."
     },
     "slide8": {
-      "title": "Find Anything",
-      "description": "Full-text search with highlighted snippets and recent search history."
+      "title": "Vind alles",
+      "description": "Volledige tekstzoekopdracht met gemarkeerde fragmenten en recente zoekgeschiedenis."
     },
     "slide9": {
-      "title": "Plan Your Reading",
-      "description": "Estimated reading time shown on every article."
+      "title": "Plan je leestijd",
+      "description": "Geschatte leestijd getoond bij elk artikel."
     },
     "slide10": {
-      "title": "Never Miss Content",
-      "description": "Failed downloads retry automatically when connection returns."
+      "title": "Mis geen inhoud",
+      "description": "Mislukte downloads worden automatisch opnieuw geprobeerd wanneer de verbinding terugkeert."
     },
     "slide11": {
-      "title": "Your Language",
-      "description": "Choose from 32+ languages for the interface."
+      "title": "Jouw taal",
+      "description": "Kies uit 32+ talen voor de interface."
     },
     "slide12": {
-      "title": "Storage Control",
-      "description": "View storage usage and clear cache with one tap."
+      "title": "Opslagbeheer",
+      "description": "Bekijk opslaggebruik en wis cache met één tik."
     },
     "slide13": {
-      "title": "Tactile Feedback",
-      "description": "Optional haptic responses for button presses and interactions."
+      "title": "Tactiele feedback",
+      "description": "Optionele trillingen voor knoppen en interacties."
     },
     "slide14": {
-      "title": "Your Privacy Matters",
-      "description": "Zero data collection. Everything stays on your device."
+      "title": "Je privacy is belangrijk",
+      "description": "Geen gegevensverzameling. Alles blijft op je apparaat."
     }
   }
 }

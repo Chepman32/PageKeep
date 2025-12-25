@@ -3,6 +3,7 @@ import { AppNavigator } from './src/ui/navigation/AppNavigator';
 import { FileSystem } from './src/utils/fileSystem';
 import { getDatabase } from './src/data/database';
 import { ThemeProvider } from './src/contexts/ThemeContext';
+import { Storage } from './src/utils/storage';
 import './src/locales';
 import { IncomingShareService } from './src/services/IncomingShareService';
 import { View, StyleSheet, DeviceEventEmitter } from 'react-native';
@@ -12,7 +13,6 @@ import { OnboardingScreen } from './src/ui/screens/OnboardingScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSettingsStore } from './src/store/settingsStore';
 import { NetworkMonitor } from './src/services/NetworkMonitor';
-import { Storage } from './src/utils/storage';
 
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
