@@ -381,7 +381,7 @@
 				CODE_SIGN_ENTITLEMENTS = PageKeep/PageKeep.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = 8A6D95WMNG;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PageKeep/Info.plist;
@@ -415,7 +415,7 @@
 				CODE_SIGN_ENTITLEMENTS = PageKeep/PageKeep.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = 8A6D95WMNG;
 				INFOPLIST_FILE = PageKeep/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
